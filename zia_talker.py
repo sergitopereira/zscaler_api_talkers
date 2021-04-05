@@ -14,7 +14,7 @@ class ZiaTalker(object):
 
     def __init__(self, cloud_name):
         self.base_uri = f'https://{cloud_name}/api/v1'
-        self.hp_http = HttpCalls(host=self.base_uri, verify=False)
+        self.hp_http = HttpCalls(host=self.base_uri, verify=True)
         self.jsessionid = None
         self.version = '1.0'
 
@@ -98,7 +98,7 @@ class ZiaTalker(object):
         return response.json()
 
     # URL Categories
-    def url_categories(self, custom=False):
+    def list_url_categories(self, custom=False):
         """
         Gets information about all or custom URL categories
         :param custom: Boolean, if True it will return custom categories only
@@ -144,7 +144,7 @@ class ZiaTalker(object):
         print(response.json())
         return response.json()
 
-    def url_categories_urlquota(self):
+    def list_url_categories_urlquota(self):
         """
         Gets information on the number of unique URLs that are currently provisioned for your organization as well as
         how many URLs you can add before reaching that number.
@@ -156,7 +156,7 @@ class ZiaTalker(object):
         print(response.json())
         return response.json()
 
-    def url_categories_id(self, category_id):
+    def list_url_categories_id(self, category_id):
         """
         Gets the URL category information for the specified ID
         :param category_id:
@@ -185,9 +185,9 @@ class ZiaTalker(object):
                                           error_handling=True)
         print(response.json())
         return response.json()
-    
+
     # User Management
-    def get_departments(self, id=None):
+    def list_departments(self, department_id=""):
         """
         Gets a list of departments. The search parameters find matching values within the "name" or "comments"
         attributes.
@@ -197,47 +197,44 @@ class ZiaTalker(object):
         :return:json()
         """
 
-        if id:
+        if department_id:
             url = "/departments"
         else:
-            url = f'/departments/{id}'
+            url = f'/departments/{department_id}'
 
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         print(response.json())
         return response.json()
 
-    def get_groups(self, id=None):
+    def list_groups(self, group_id=""):
         """
         Gets a list of groups
         if ID, gets the group for the specified ID
-        :param id: group ID
+        :param group_id: group ID
         :return:json()
         """
-
-        if id:
+        if group_id:
             url = "/groups"
         else:
-            url = f'/groups/{id}'
-
+            url = f'/groups/{group_id}'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         print(response.json())
         return response.json()
 
-    def get_users(self, id=None):
+    def list_users(self, user_id=""):
         """
         Gets a list of users
         if ID, gets user information for the specified ID
-        :param id: user ID
+        :param user_id: user ID
         :return:json()
         """
-
-        if id:
-            url = "/user"
+        if user_id:
+            url = "/users"
         else:
-            url = f'/user/{id}'
-
+            url = f'/users/{user_id}'
+        print(url)
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         print(response.json())
