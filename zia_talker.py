@@ -185,3 +185,60 @@ class ZiaTalker(object):
                                           error_handling=True)
         print(response.json())
         return response.json()
+    
+    # User Management
+    def get_departments(self, id=None):
+        """
+        Gets a list of departments. The search parameters find matching values within the "name" or "comments"
+        attributes.
+        if ID, gets the department for the specified ID
+
+        :param id: department ID
+        :return:json()
+        """
+
+        if id:
+            url = "/departments"
+        else:
+            url = f'/departments/{id}'
+
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        print(response.json())
+        return response.json()
+
+    def get_groups(self, id=None):
+        """
+        Gets a list of groups
+        if ID, gets the group for the specified ID
+        :param id: group ID
+        :return:json()
+        """
+
+        if id:
+            url = "/groups"
+        else:
+            url = f'/groups/{id}'
+
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        print(response.json())
+        return response.json()
+
+    def get_users(self, id=None):
+        """
+        Gets a list of users
+        if ID, gets user information for the specified ID
+        :param id: user ID
+        :return:json()
+        """
+
+        if id:
+            url = "/user"
+        else:
+            url = f'/user/{id}'
+
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        print(response.json())
+        return response.json()
