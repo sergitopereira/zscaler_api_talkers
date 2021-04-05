@@ -12,3 +12,9 @@
 * Create a bash alias alias 
 
 ##Usage
+
+from zia_talker.zia_talker import ZiaTalker
+a=ZiaTalker('admin.zscalerthree.net')
+a.authenticate('APIKEY,'admin@/*****zscalerthree.net')
+a.url_categories()
+dir(a)
