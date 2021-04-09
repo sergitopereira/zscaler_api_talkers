@@ -74,7 +74,6 @@ class ZiaTalker(object):
         url = '/authenticatedSession'
         response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid}, error_handling=True,
                                             payload={})
-        print(response)
         return response.json()
 
     def get_status(self):
@@ -84,7 +83,6 @@ class ZiaTalker(object):
         """
         url = '/status'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid}, error_handling=True)
-        print(response.json())
         return response.json()
 
     def activate_status(self):
@@ -94,7 +92,6 @@ class ZiaTalker(object):
         """
         url = '/status/activate'
         response = self.hp_http.post_call(url, payload={}, cookies={'JSESSIONID': self.jsessionid}, error_handling=True)
-        print(response.json())
         return response.json()
 
     # URL Categories
@@ -111,7 +108,6 @@ class ZiaTalker(object):
                                              error_handling=True)
         else:
             response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid}, error_handling=True)
-        print(response.json())
         return response.json()
 
     def add_url_categories(self, name, supercategory, keywords=None, urls=None):
@@ -141,7 +137,6 @@ class ZiaTalker(object):
         }
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
-        print(response.json())
         return response.json()
 
     def list_url_categories_urlquota(self):
@@ -171,7 +166,6 @@ class ZiaTalker(object):
             raise ValueError("Invalid Category ID")
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
-        print(response.json())
         return response.json()
 
     def url_lookup(self, url_list):
@@ -183,7 +177,6 @@ class ZiaTalker(object):
         url = '/urlLookup'
         response = self.hp_http.post_call(url, payload=url_list, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
-        print(response.json())
         return response.json()
 
     # User Management
@@ -204,7 +197,6 @@ class ZiaTalker(object):
 
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
-        print(response.json())
         return response.json()
 
     def list_groups(self, group_id=""):
@@ -220,7 +212,6 @@ class ZiaTalker(object):
             url = f'/groups/{group_id}'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
-        print(response.json())
         return response.json()
 
     def list_users(self, user_id=""):
@@ -237,5 +228,31 @@ class ZiaTalker(object):
         print(url)
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
-        print(response.json())
+        return response.json()
+
+    def add_users(self, name, email, groups, department, comments, password, adminuser=False, ):
+        """
+        Adds a new user. A user can belong to multiple groups, but can only belong to one department.
+
+        :param name: string, user name
+        :param email: string user email address
+        :param groups: list. each member is a dictionary, key id, value name [{"id":1234, "name":"guest-wifi"}]
+        :param department: dictionary, key is the id and value is the name {"id":1234, "name":"guests"}
+        :param comments: string, comments
+        :param password: string password,
+        :param adminuser: True if user is admin user. default False
+        :return: Json
+        """
+        url = '/users'
+        payload = {
+            "name": name,
+            "email": email,
+            "groups": groups,
+            "department": department,
+            "comments": comments,
+            "adminUser": adminuser,
+            "password": password
+        }
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
         return response.json()
