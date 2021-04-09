@@ -9,7 +9,7 @@
   source .zia_talker/bin/activate
 * Install requirements
   pip install requirements.txt
-* Create a bash alias alias 
+* Create a bash alias
 
 ##Usage
 ```
@@ -17,5 +17,7 @@ from zia_talker.zia_talker import ZiaTalker
 a=ZiaTalker('admin.zscalerthree.net')
 a.authenticate('APIKEY,'admin@/*****zscalerthree.net')
 a.url_categories()
-dir(a)
+a.list_users()
+# To view all methods available
+print(dir(a))
 ```
