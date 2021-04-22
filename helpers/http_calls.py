@@ -84,10 +84,32 @@ class HttpCalls(object):
         except requests.HTTPError as e:
             raise ValueError(e)
 
-    def delete_call(self, url, payload, cookies=None, error_handling=False):
+    def put_call(self, url, payload, cookies=None, error_handling=False):
+        """
+        Method to perform an HTTP PUT call
+        :param url: url
+        :param cookies: cookies
+        :param error_handling: Boolean, when TRUE will use Zscaler HTTP codes
+        :return: response
+        """
+        full_url = f'{self.host}{url}'
+        try:
+            response = requests.put(url=full_url, headers=self.headers, cookies=cookies, json=payload,
+                                    verify=self.verify)
+            if error_handling:
+                self._zia_http_codes(response)
+            else:
+                if response.status_code != 200:
+                    raise ValueError(response.status_code)
+            return response
+        except requests.HTTPError as e:
+            raise ValueError(e)
+
+    def delete_call(self, url, payload=None, cookies=None, error_handling=False):
         """
         Method to perform an HTTP DELETE call
         :param url: url
+        :param payload: json payload
         :param cookies: cookies
         :param error_handling: Boolean, when TRUE will use Zscaler HTTP codes
         :return: response
