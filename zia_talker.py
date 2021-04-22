@@ -148,7 +148,7 @@ class ZiaTalker(object):
         :return: json response
         """
         url = f'/urlCategories/{categoryid}'
-        response = self.hp_http.delete_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
                                             error_handling=True)
         return response.json()
 
