@@ -185,8 +185,7 @@ class ZiaTalker(object):
         Gets a list of departments. The search parameters find matching values within the "name" or "comments"
         attributes.
         if ID, gets the department for the specified ID
-
-        :param id: department ID
+        :param department_id: department ID
         :return:json()
         """
 
