@@ -28,13 +28,11 @@ print(dir(a))
 #ZPA Talker
 ZPA API talker is a python library to leverage ZPA public API Documentation: https://help.zscaler.com/zpa/api-reference
 
-##Usage zia_talker
+##Usage zpa_talker
 ```
-from from zscaler_api_talkers.zia_talker import ZiaTalker
-a=ZiaTalker('admin.zscalerthree.net')
-a.authenticate('APIKEY,'admin@/*****zscalerthree.net')
-a.url_categories()
-a.list_users()
+from from zscaler_api_talkers.zpa_talker import ZpaTalker
+a=ZpaTalker('customerID')
+a.authenticate('clientID','clientSecret')
 # To view all methods available
 print(dir(a))
 ```
