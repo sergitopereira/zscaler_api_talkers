@@ -297,7 +297,8 @@ class ZiaTalker(object):
             "lastModifiedTime": 0,
             "lastModifiedBy": lastmodified
             },'''
-        # User Management
+
+    # User Management
 
     def list_departments(self, department_id=""):
         """
@@ -373,4 +374,18 @@ class ZiaTalker(object):
         }
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
+        return response.json()
+
+    def delete_bulk_users(self, user_ids):
+        """
+        Bulk delete users up to a maximum of 500 users per request. The response returns the user IDs that were successfully deleted.
+        :param user_ids:  List of user IDS to be deleted
+        """
+        url = '/users/bulkDelete'
+        if len(user_ids) < 500:
+            payload = {
+                "ids": user_ids
+            }
+            response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                              error_handling=True)
         return response.json()
