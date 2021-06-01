@@ -1,3 +1,5 @@
+import pdb
+
 import requests
 
 
@@ -23,7 +25,7 @@ class HttpCalls(object):
         self.cookies = None
         self.verify = verify
 
-    def get_call(self, url, cookies=None, params=None, error_handling=False):
+    def get_call(self, url, cookies=None, headers=None, params=None, error_handling=False):
         """
         Method to perform a GET HTTP  call
         :param url: url
@@ -33,8 +35,10 @@ class HttpCalls(object):
         :return: response
         """
         full_url = f'{self.host}{url}'
+        if not headers:
+            headers = self.headers
         try:
-            response = requests.get(url=full_url, headers=self.headers, cookies=cookies, params=params,
+            response = requests.get(url=full_url, headers=headers, cookies=cookies, params=params,
                                     verify=self.verify)
             # print(response.url)
             if error_handling:
@@ -46,7 +50,7 @@ class HttpCalls(object):
         except requests.HTTPError as e:
             raise ValueError(e)
 
-    def post_call(self, url, payload, cookies=None, error_handling=False):
+    def post_call(self, url, payload, headers=None, cookies=None, error_handling=False, urlencoded=False):
         """
         Method to perform an HTTP POST call
         :param url: url
@@ -55,9 +59,16 @@ class HttpCalls(object):
         :return: response
         """
         full_url = f'{self.host}{url}'
+        if headers:
+            headers = self.headers.update(headers)
         try:
-            response = requests.post(url=full_url, headers=self.headers, cookies=cookies, json=payload,
-                                     verify=self.verify)
+            if urlencoded:
+                url_endoced_headers = headers
+                response = requests.post(url=full_url, headers=url_endoced_headers, cookies=cookies, data=payload,
+                                         verify=self.verify)
+            else:
+                response = requests.post(url=full_url, headers=headers, cookies=cookies, json=payload,
+                                         verify=self.verify)
             if error_handling:
                 self._zia_http_codes(response)
             else:
@@ -84,10 +95,32 @@ class HttpCalls(object):
         except requests.HTTPError as e:
             raise ValueError(e)
 
-    def delete_call(self, url, payload, cookies=None, error_handling=False):
+    def put_call(self, url, payload, cookies=None, error_handling=False):
+        """
+        Method to perform an HTTP PUT call
+        :param url: url
+        :param cookies: cookies
+        :param error_handling: Boolean, when TRUE will use Zscaler HTTP codes
+        :return: response
+        """
+        full_url = f'{self.host}{url}'
+        try:
+            response = requests.put(url=full_url, headers=self.headers, cookies=cookies, json=payload,
+                                    verify=self.verify)
+            if error_handling:
+                self._zia_http_codes(response)
+            else:
+                if response.status_code != 200:
+                    raise ValueError(response.status_code)
+            return response
+        except requests.HTTPError as e:
+            raise ValueError(e)
+
+    def delete_call(self, url, payload=None, cookies=None, error_handling=False):
         """
         Method to perform an HTTP DELETE call
         :param url: url
+        :param payload: json payload
         :param cookies: cookies
         :param error_handling: Boolean, when TRUE will use Zscaler HTTP codes
         :return: response

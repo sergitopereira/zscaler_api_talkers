@@ -139,6 +139,49 @@ class ZiaTalker(object):
                                           error_handling=True)
         return response.json()
 
+    def delete_url_categories(self, categoryid):
+        """
+        Deletes the custom URL category for the specified ID.
+        You cannot delete a custom category while it is being used by a URL policy or NSS feed. Also, predefined
+        categories cannot be deleted.
+        :param categoryid: Category ID
+        :return: json response
+        """
+        url = f'/urlCategories/{categoryid}'
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                            error_handling=True)
+        return response.json()
+
+    def update_url_categories(self, categoryid, supercategory, urls, description, cat_id):
+        """
+        Updates the URL category for the specified ID. You can perform a full update for the specified URL category.
+        However, if attributes are omitted within the update request, the values for those attributes are cleared.
+        :param categoryid: Category ID
+        :return: json response
+        """
+
+        if supercategory not in super_categories:
+            print(f'Error -> Invalid Super Category')
+            print(f'{super_categories}')
+            raise ValueError("Invalid super category")
+
+        if categoryid not in valid_category_ids:
+            print(f'Error -> Invalid Category ID')
+            print(f'{valid_category_ids}')
+            raise ValueError("Invalid super category")
+
+        url = f'/urlCategories/{categoryid}'
+        payload = {
+            "customCategory": "false",
+            "superCategory": supercategory,
+            "urls": urls,
+            "description": description,
+            "id": cat_id
+        }
+        response = self.hp_http.put_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
     def list_url_categories_urlquota(self):
         """
         Gets information on the number of unique URLs that are currently provisioned for your organization as well as
@@ -179,14 +222,89 @@ class ZiaTalker(object):
                                           error_handling=True)
         return response.json()
 
-    # User Management
+    # URL filtering Policies
+    def list_url_filtering_rules(self, ):
+        """
+        Gets a list of all of URL Filtering Policy rules
+        :return:
+        """
+        url = 'urlFilteringRules'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    '''def add_url_filtering_rules(self, name, order, state, action, protocols, urlcategories,
+                                admin_rack=7):
+        """
+         Adds a URL Filtering Policy rule.
+         If you are using the Admin Rank feature, refer to About Admin Rank to determine which value to provide for rank
+         when adding a policy rule. If you are not using Admin Rank, the rank value must be 7.
+        :param name:  Name of the rule
+        :param order: Rule order
+        :param state: enabled/disabled
+        :param action: Allow, Caution, Block
+        :param protocols: list [ SMRULEF_ZPA_BROKERS_RULE, ANY_RULE, TCP_RULE, UDP_RULE, DOHTTPS_RULE, TUNNELSSL_RULE,
+        HTTP_PROXY, FOHTTP_RULE, FTP_RULE, HTTPS_RULE, HTTP_RULE, SSL_RULE, TUNNEL_RULE ]
+        :param locations: Name-ID pairs of locations for which rule must be applied
+        :param groups: Name-ID pairs of groups for which rule must be applied
+        :param departments: Name-ID pairs of departments for which rule will be applied
+        :param users: Name-ID pairs of users for which rule must be applied
+        :param urlcategories: List of URL categories for which rule must be applied
+        :param admin_rack:Admin rank of the admin who creates this rule
+        :param timewindows: Name-ID pairs of time interval during which rule must be enforced.
+        :param requestmethods: Request method for which the rule must be applied. If not set, rule will be applied to all
+         methods
+        :param eun: URL of end user notification page to be displayed when the rule is matched. Not applicable if either
+        'overrideUsers' or 'overrideGroups' is specified.
+        :param overrideusers: Name-ID pairs of users for which this rule can be overridden. Applicable only if
+         blockOverride is set to 'true', action is 'BLOCK' and overrideGroups is not set.If this overrideUsers is not
+         set, 'BLOCK' action can be overridden for any user.
+        :param overridegroups: Name-ID pairs of groups for which this rule can be overridden. Applicable only if
+        blockOverride is set to 'true' and action is 'BLOCK'. If this overrideGroups is not set, 'BLOCK' action can be
+        overridden for any group
+        :param blockOverride: boolean: When set to true, a 'BLOCK' action triggered by the rule could be overridden.
+        If true and both overrideGroup and overrideUsers are not set, the BLOCK triggered by this rule could be
+        overridden for any users. If blockOverride is not set, 'BLOCK' action cannot be overridden.
+        :param description: Additional information about the URL Filtering rule
+        :return:
+        """
+
+        payload = {
+            "id": 0,
+            "name": name,
+            "order": order,
+            "protocols": protocols,
+            "locations": location,
+            "groups": groups,
+            "departments": departments,
+            "users": users,
+            "urlCategories": urlcategories,
+            "state": state,
+            "timeWindows": timewindoes,
+            "rank": rank,
+            "requestMethods": requestmethods,
+            "endUserNotificationUrl": eun,
+            "overrideUsers": overrideusers,
+            "overrideGroups": overridegroups,
+            "blockOverride": blockoverride,
+            "timeQuota": timequota,
+            "sizeQuota": sizequota,
+            "description": description,
+            "locationGroups": locationgroups,
+            "validityStartTime": 0,
+            "validityEndTime": 0,
+            "validityTimeZoneId": "string",
+            "lastModifiedTime": 0,
+            "lastModifiedBy": lastmodified
+            },'''
+        # User Management
+
     def list_departments(self, department_id=""):
         """
         Gets a list of departments. The search parameters find matching values within the "name" or "comments"
         attributes.
         if ID, gets the department for the specified ID
-
-        :param id: department ID
+        :param department_id: department ID
         :return:json()
         """
 
