@@ -1,3 +1,5 @@
+import re
+
 from helpers.http_calls import HttpCalls
 import time
 from getpass import getpass
@@ -217,10 +219,32 @@ class ZiaTalker(object):
         :param url_list: list of urls
         :return:  json
         """
+        result = []
         url = '/urlLookup'
-        response = self.hp_http.post_call(url, payload=url_list, cookies={'JSESSIONID': self.jsessionid},
-                                          error_handling=True)
-        return response.json()
+        # Verify urls format
+        list(set(url_list))
+        urls = []
+        urls = []
+        for i in url_list:
+            if '[' not in i:
+                if not re.search(r'http', i):
+                    if '*' in i:
+                        if re.search(r'^\*', i):
+                            if len(re.findall(r'\.', i)) < 2:
+                                urls.append(i)
+                    else:
+                        urls.append(i)
+
+        # Rate limit 1/sec  and 400 hr and 100 URLs per call
+        list_of_lists = [urls[i:i + 100] for i in range(0, len(urls), 100)]
+        for item in list_of_lists:
+            print(item)
+            response = self.hp_http.post_call(url, payload=item, cookies={'JSESSIONID': self.jsessionid},
+                                              error_handling=True)
+            print(response.json())
+            result.append(response.json())
+            time.sleep(5)
+        return result
 
     # URL filtering Policies
     def list_url_filtering_rules(self, ):
@@ -333,7 +357,7 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
-    def list_users(self, user_id=""):
+    def list_users(self, user_id=None):
         """
         Gets a list of users
         if ID, gets user information for the specified ID
@@ -341,10 +365,9 @@ class ZiaTalker(object):
         :return:json()
         """
         if user_id:
-            url = "/users"
-        else:
             url = f'/users/{user_id}'
-        print(url)
+        else:
+            url = "/users"
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
@@ -378,7 +401,8 @@ class ZiaTalker(object):
 
     def delete_bulk_users(self, user_ids):
         """
-        Bulk delete users up to a maximum of 500 users per request. The response returns the user IDs that were successfully deleted.
+        Bulk delete users up to a maximum of 500 users per request. The response returns the user IDs that were
+        successfully deleted.
         :param user_ids:  List of user IDS to be deleted
         """
         url = '/users/bulkDelete'
@@ -388,4 +412,22 @@ class ZiaTalker(object):
             }
             response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                               error_handling=True)
+            return response.json()
+        else:
+            raise ValueError("Maximum 500 users per request")
+
+
+    # Location Management
+
+    def list_locations(self, locationId=None):
+        """
+        Gets locations only, not sub-locations. When a location matches the given search parameter criteria only its
+        parent location is included in the result set, not its sub-locations.
+        """
+        if locationId:
+            url = f'/locations/{locationId}'
+        else:
+            url = f'/locations'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
         return response.json()
