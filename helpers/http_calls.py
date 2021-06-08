@@ -44,7 +44,7 @@ class HttpCalls(object):
             if error_handling:
                 self._zia_http_codes(response)
             else:
-                if response.status_code != 200:
+                if response.status_code not in [200, 201, 204]:
                     raise ValueError(response.status_code)
             return response
         except requests.HTTPError as e:
@@ -72,7 +72,7 @@ class HttpCalls(object):
             if error_handling:
                 self._zia_http_codes(response)
             else:
-                if response.status_code != 200:
+                if response.status_code not in [200, 201, 204]:
                     raise ValueError(response.status_code)
             return response
         except requests.HTTPError as e:
@@ -89,7 +89,7 @@ class HttpCalls(object):
         try:
             response = requests.patch(url=full_url, headers=self.headers, cookies=cookies, json=payload,
                                       verify=self.verify)
-            if response.status_code != 200:
+            if response.status_code not in [200, 201, 204]:
                 raise ValueError(response.status_code)
             return response
         except requests.HTTPError as e:
@@ -110,7 +110,7 @@ class HttpCalls(object):
             if error_handling:
                 self._zia_http_codes(response)
             else:
-                if response.status_code != 200:
+                if response.status_code not in [200, 201, 204]:
                     raise ValueError(response.status_code)
             return response
         except requests.HTTPError as e:
@@ -132,7 +132,7 @@ class HttpCalls(object):
             if error_handling:
                 self._zia_http_codes(response)
             else:
-                if response.status_code != 200:
+                if response.status_code not in [200, 201, 204]:
                     raise ValueError(response.status_code)
             return response
         except requests.HTTPError as e:
@@ -145,7 +145,7 @@ class HttpCalls(object):
         :param response:
         :return: None
         """
-        if response.status_code in [200, 202]:
+        if response.status_code in [200, 201, 202]:
             return
         elif response.status_code == 401:
             raise ValueError(f'{response.status_code} :Session is not authenticated or timed out')

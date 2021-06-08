@@ -223,28 +223,20 @@ class ZiaTalker(object):
         url = '/urlLookup'
         # Verify urls format
         list(set(url_list))
-        urls = []
-        urls = []
-        for i in url_list:
-            if '[' not in i:
-                if not re.search(r'http', i):
-                    if '*' in i:
-                        if re.search(r'^\*', i):
-                            if len(re.findall(r'\.', i)) < 2:
-                                urls.append(i)
-                    else:
-                        urls.append(i)
-
         # Rate limit 1/sec  and 400 hr and 100 URLs per call
-        list_of_lists = [urls[i:i + 100] for i in range(0, len(urls), 100)]
+        list_of_lists = [url_list[i:i + 100] for i in range(0, len(url_list), 100)]
         for item in list_of_lists:
             print(item)
             response = self.hp_http.post_call(url, payload=item, cookies={'JSESSIONID': self.jsessionid},
                                               error_handling=True)
             print(response.json())
             result.append(response.json())
-            time.sleep(5)
-        return result
+            time.sleep(10)
+        final_result = []
+        for i in result:
+            for j in i:
+                final_result.append(j)
+        return final_result
 
     # URL filtering Policies
     def list_url_filtering_rules(self, ):
@@ -416,13 +408,13 @@ class ZiaTalker(object):
         else:
             raise ValueError("Maximum 500 users per request")
 
-
     # Location Management
 
     def list_locations(self, locationId=None):
         """
         Gets locations only, not sub-locations. When a location matches the given search parameter criteria only its
         parent location is included in the result set, not its sub-locations.
+        :param locationId: Location id
         """
         if locationId:
             url = f'/locations/{locationId}'
@@ -430,4 +422,44 @@ class ZiaTalker(object):
             url = f'/locations'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
+        return response.json()
+
+    def list_sublocations(self, locationId):
+        """
+        Gets the sub-location information for the location with the specified ID
+        :param locationId: Location id
+        """
+        if locationId:
+            url = f'/locations/{locationId}'
+        else:
+            url = f'/locations'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def delete_bulk_locations(self, locationIds):
+        """
+        Bulk delete locations up to a maximum of 100 users per request. The response returns the location IDs that were successfully deleted..
+        :param locationIds: list of location IDs
+        """
+        url = '/locations/bulkDelete'
+        if len(locationIds) < 100:
+            payload = {
+                "ids": locationIds
+            }
+            response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                              error_handling=True)
+            return response.json()
+        else:
+            raise ValueError("Maximum 100 users per request")
+
+    def delete_locations(self, locationId):
+        """
+        Deletes the location or sub-location for the specified ID
+        :param locationIds: location ID
+        """
+        url = f'/locations/{locationId}'
+
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                            error_handling=True)
         return response.json()
