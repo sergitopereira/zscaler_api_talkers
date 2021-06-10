@@ -17,8 +17,8 @@ ZIA API talker is a python library to leverage ZIA public API Documentation: htt
 ##Usage zia_talker
 ```
 from zscaler_api_talkers.zia_talker import ZiaTalker
-a=ZiaTalker('admin.zscalerthree.net')
-a.authenticate('APIKEY,'admin@/*****zscalerthree.net')
+a=ZiaTalker('admin.<Zscaler Cloud Name>')
+a.authenticate('APIKEY,'admin@<Zscaler Cloud Name>')
 a.url_categories()
 a.list_users()
 # To view all methods available
