@@ -1,3 +1,5 @@
+import json
+import pdb
 import re
 
 from helpers.http_calls import HttpCalls
@@ -378,15 +380,13 @@ class ZiaTalker(object):
         :return: Json
         """
         url = '/users'
-        payload = {
-            "name": name,
-            "email": email,
-            "groups": groups,
-            "department": department,
-            "comments": comments,
-            "adminUser": adminuser,
-            "password": password
-        }
+        payload = {"name": name,
+                   "email": email,
+                   "groups": groups,
+                   "department": department,
+                   "comments": comments,
+                   "password": password,
+                   "adminUser": adminuser}
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
         return response.json()
@@ -456,10 +456,127 @@ class ZiaTalker(object):
     def delete_locations(self, locationId):
         """
         Deletes the location or sub-location for the specified ID
-        :param locationIds: location ID
+        :param locationId: location ID
         """
         url = f'/locations/{locationId}'
 
         response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
                                             error_handling=True)
+        return response.json()
+
+    #   Traffic Forwarding
+
+    def list_greTunnels(self, greTunnelId=None):
+        """
+        Gets the GRE tunnel information for the specified ID
+        :param greTunnelId: The unique identifier for the GRE tunnel
+        """
+        if greTunnelId:
+            url = f'/greTunnels/{greTunnelId}'
+        else:
+            url = f'/greTunnels'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    # User Authentication Settings
+    def list_exemptedUrls(self):
+        """
+        Gets a list of URLs that were exempted from cookie authentication
+        """
+        url = '/authSettings/exemptedUrls'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def add_exemptedUrls(self, urls):
+        """
+        Adds URLs to the cookie authentication exempt list to the list
+        :param urls: List of urls. Example ['url1','url2']
+        """
+        url = '/authSettings/exemptedUrls?action=ADD_TO_LIST'
+        payload = {"urls": urls}
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
+
+    def delete_exemptedUrls(self, urls):
+        """
+        Adds URLs to the cookie authentication exempt list to the list
+        :param urls: List of urls. Example ['url1','url2']
+        """
+        url = '/authSettings/exemptedUrls?action=REMOVE_FROM_LIST'
+        payload = {"urls": urls}
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
+
+    # Security Policy Settings
+    def list_security_whitelisted_urls(self):
+        """
+        Gets a list of white-listed URLs
+        """
+        url = '/security'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def update_security_whitelisted_urls(self, urls):
+        """
+        Updates the list of white-listed URLs. This will overwrite a previously-generated white list.
+        If you need to completely erase the white list, submit an empty list.
+        :param urls: list of urls ['www.zscaler.com', 'www.example.com']
+        """
+        url = '/security'
+        payload = {
+            "whitelistUrls": urls
+        }
+        response = self.hp_http.put_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_security_blacklisted_urls(self):
+        """
+        Gets a list of white-listed URLs
+        """
+        url = '/security/advanced'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def update_security_blacklisted_urls(self, urls):
+        """
+       Updates the list of black-listed URLs. This will overwrite a previously-generated black list.
+       If you need to completely erase the black list, submit an empty list.
+        """
+        url = '/security/advanced'
+        payload = {
+            "blacklistUrls": urls
+        }
+        response = self.hp_http.put_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def add_security_blacklistUrls(self, urls):
+        """
+        Adds a URL from the black list. To add a URL to the black list.
+        """
+        url = '/security/advanced/blacklistUrls?action=ADD_TO_LIST'
+        payload = {
+            "blacklistUrls": urls
+        }
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
+
+    def remove_security_blacklistUrls(self, urls):
+        """
+        Removes a URL from the black list.
+        """
+        url = '/security/advanced/blacklistUrls?action=REMOVE_FROM_LIST'
+        payload = {
+            "blacklistUrls": urls
+        }
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
         return response.json()
