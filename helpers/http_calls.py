@@ -1,3 +1,4 @@
+import json
 import pdb
 
 import requests
@@ -63,8 +64,8 @@ class HttpCalls(object):
             headers = self.headers.update(headers)
         try:
             if urlencoded:
-                url_endoced_headers = headers
-                response = requests.post(url=full_url, headers=url_endoced_headers, cookies=cookies, data=payload,
+                url_encoded_headers = headers
+                response = requests.post(url=full_url, headers=url_encoded_headers, cookies=cookies, data=payload,
                                          verify=self.verify)
             else:
                 response = requests.post(url=full_url, headers=headers, cookies=cookies, json=payload,
@@ -145,7 +146,7 @@ class HttpCalls(object):
         :param response:
         :return: None
         """
-        if response.status_code in [200, 201, 202]:
+        if response.status_code in [200, 201, 202, 204]:
             return
         elif response.status_code == 401:
             raise ValueError(f'{response.status_code} :Session is not authenticated or timed out')
