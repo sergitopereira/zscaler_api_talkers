@@ -216,7 +216,7 @@ class ZiaTalker(object):
         Gets a list of all of URL Filtering Policy rules
         :return:
         """
-        url = 'urlFilteringRules'
+        url = '/urlFilteringRules'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
