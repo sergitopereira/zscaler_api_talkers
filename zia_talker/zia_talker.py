@@ -101,28 +101,30 @@ class ZiaTalker(object):
         :param custom: Boolean, if True it will return custom categories only
         :return: json
         """
-        url = '/urlCategories'
+
         if custom:
-            response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
-                                             params={'customonly': 'true'},
-                                             error_handling=True)
+            url = '/urlCategories?customOnly=true'
         else:
-            response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid}, error_handling=True)
+            url = '/urlCategories'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid}, error_handling=True)
         return response.json()
 
-    def add_url_categories(self, name, supercategory, keywords=None, urls=None):
+    def add_url_categories(self, name, superCategory, urls, catID, keywords=None, customCategory=False):
         """
-
+         Adds a new custom URL category.
         :param name: Name of the custom category
-        :param supercategory: super category
-        :param keywords: list of key works
+        :param superCategory: super category
         :param urls: list of urls
+        :param catID: Category id
+        :param keywords: list of key works
+        :param customCategory: Default False. Set to Tye for custom category
+
         :return:  json
         """
         if keywords is None:
             keywords = [""]
 
-        if supercategory not in super_categories:
+        if superCategory not in super_categories:
             print(f'Error -> Invalid Super Category')
             print(f'{super_categories}')
             raise ValueError("Invalid super category")
@@ -130,11 +132,13 @@ class ZiaTalker(object):
         url = '/urlCategories'
         payload = {
             "configuredName": name,
-            "customCategory": "true",
-            "superCategory": supercategory,
+            "customCategory": customCategory,
+            "superCategory": superCategory,
             "keywords": keywords,
-            "urls": urls
+            "urls": urls,
+            "id": catID
         }
+        print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
         return response.json()
@@ -150,36 +154,6 @@ class ZiaTalker(object):
         url = f'/urlCategories/{categoryid}'
         response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
                                             error_handling=True)
-        return response.json()
-
-    def update_url_categories(self, categoryid, supercategory, urls, description, cat_id):
-        """
-        Updates the URL category for the specified ID. You can perform a full update for the specified URL category.
-        However, if attributes are omitted within the update request, the values for those attributes are cleared.
-        :param categoryid: Category ID
-        :return: json response
-        """
-
-        if supercategory not in super_categories:
-            print(f'Error -> Invalid Super Category')
-            print(f'{super_categories}')
-            raise ValueError("Invalid super category")
-
-        if categoryid not in valid_category_ids:
-            print(f'Error -> Invalid Category ID')
-            print(f'{valid_category_ids}')
-            raise ValueError("Invalid super category")
-
-        url = f'/urlCategories/{categoryid}'
-        payload = {
-            "customCategory": "false",
-            "superCategory": supercategory,
-            "urls": urls,
-            "description": description,
-            "id": cat_id
-        }
-        response = self.hp_http.put_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
-                                         error_handling=True)
         return response.json()
 
     def list_url_categories_urlquota(self):
