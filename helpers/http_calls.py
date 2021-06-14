@@ -1,3 +1,5 @@
+import pdb
+
 import requests
 
 
@@ -58,7 +60,7 @@ class HttpCalls(object):
         """
         full_url = f'{self.host}{url}'
         if headers:
-            headers = self.headers.update(headers)
+            self.headers.update(headers)
         try:
             if urlencoded:
                 url_encoded_headers = headers
@@ -67,6 +69,7 @@ class HttpCalls(object):
             else:
                 response = requests.post(url=full_url, headers=headers, cookies=cookies, json=payload,
                                          verify=self.verify)
+                #print(response.json())
             if error_handling:
                 self._zia_http_codes(response)
             else:
