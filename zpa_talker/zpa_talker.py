@@ -13,7 +13,7 @@ class ZpaTalkerPublic(object):
 
     def __init__(self, customerID, cloud='https://config.private.zscaler.com'):
         """
-        :param cloud: examplehttps://config.zpabeta.net
+        :param cloud: example https://config.zpabeta.net
         :param customerID: The unique identifier of the ZPA tenant
         """
         self.base_uri = f'{cloud}'
@@ -202,4 +202,3 @@ class ZpaTalkerPublic(object):
         url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/idp{query}'
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
-
