@@ -59,17 +59,18 @@ class HttpCalls(object):
         :return: response
         """
         full_url = f'{self.host}{url}'
-        if headers:
-            self.headers.update(headers)
         try:
             if urlencoded:
                 url_encoded_headers = headers
                 response = requests.post(url=full_url, headers=url_encoded_headers, cookies=cookies, data=payload,
                                          verify=self.verify)
             else:
+                if headers:
+                    headers.update(self.headers)
                 response = requests.post(url=full_url, headers=headers, cookies=cookies, json=payload,
                                          verify=self.verify)
-                #print(response.json())
+                print(response.status_code)
+                print(response.json())
             if error_handling:
                 self._zia_http_codes(response)
             else:
