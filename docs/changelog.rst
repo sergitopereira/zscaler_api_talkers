@@ -1,3 +1,8 @@
+v1.1 ( to be released)
+=========================
+1. Updated README file (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+   - Updated instructions of zpa usage
+
 v1.0 ( June 2021)
 =========================
 1. Released Version 1.0 (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
