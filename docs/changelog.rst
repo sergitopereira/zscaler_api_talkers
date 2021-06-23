@@ -2,6 +2,8 @@ v1.1 ( to be released)
 =========================
 1. Updated README file (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
    - Updated instructions of zpa usage
+2. Updated zpa_talker for SAML method (by `Rohit Luthra <mailto:rluthra@zscaler.com>`_)
+    - Added method for SAML Attribute pull from the customer portal
 
 v1.0 ( June 2021)
 =========================
