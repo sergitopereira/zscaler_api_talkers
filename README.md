@@ -30,7 +30,7 @@ ZPA API talker is a python library to leverage ZPA public API Documentation: htt
 
 ##Usage zpa_talker
 ```
-from from zscaler_api_talkers.zpa_talker import ZpaTalker
+from zpa_talker.zpa_talker import ZpaTalkerPublic as ZpaTalker
 a=ZpaTalker('customerID')
 a.authenticate('clientID','clientSecret')
 # To view all methods available
