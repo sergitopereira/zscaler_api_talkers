@@ -109,6 +109,22 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
+
+    #saml-attr-controller
+    def list_saml_group_controller(self, query=False):
+        """
+        Method details for all SAML Attributes
+        :param query: ?page=1&pagesize=20&search=consequat
+        """
+        if not query:
+            query = '?pagesize=500'
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/samlAttribute{query}'
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
+
+
+
     # Connector-group-controller
     def list_connector_group(self, query=False):
         """
