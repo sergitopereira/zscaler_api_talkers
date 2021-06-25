@@ -227,15 +227,27 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
-
-    def add_policySet(self, applicationId, RuleName, Action, policySetId,SAML_operands, SCIM_operands):
+    def add_policySet(self, applicationId, RuleName, Action, policySetId, SAML_operands, SCIM_operands):
         """
         Method to create a new access Policy
-        :param applicationId:
-        :param RuleName:
-        :param Action:
-        :param policySetId:
-        :return: json
+        :param applicationId: Application id
+        :param RuleName: Policy set Rule Name
+        :param Action: ALLOW / DENY
+        :param policySetId:  Global Policy ID. can be obtained from list_global_policy_id
+        :param SAML_operands:  List of operands. Example
+        [{
+            "objectType": "SAML",
+            "lhs": "<samlAttrId>",
+            "rhs": "<samlAttrValue>",
+        }]
+        :param SCIM_operands:list of SCIM operands. Example
+        [{
+            "objectType": "SCIM",
+            "lhs": "<scimAttrId>",
+            "rhs": "<scimAttrValue>”
+        }]
+
+        :return:
         """
         url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/{policySetId}/rule'
         payload = {
@@ -244,10 +256,6 @@ class ZpaTalkerPublic(object):
                     "objectType": "APP",
                     "lhs": "id",
                     "rhs": applicationId,
-                }, {
-                    "objectType": "APP_GROUP",
-                    "lhs": "id",
-                    "rhs": "<applicationGroupId>",
                 }]
             }, {
                 "operands": SAML_operands,
@@ -261,3 +269,6 @@ class ZpaTalkerPublic(object):
             "action": Action,
             "customMsg": "MsgString"
         }
+        print(payload)
+        response = self.hp_http.post_call(url=url, headers=self.header, error_handling=True, payload=payload)
+        return response.json()
