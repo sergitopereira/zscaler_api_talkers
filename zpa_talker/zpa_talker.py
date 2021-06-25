@@ -122,6 +122,18 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
+    # global-policy-controller
+    def list_global_policy_id(self, query=False):
+        """
+        Method to get the global policy
+        :param query: ?page=1&pagesize=20&search=consequat
+        """
+        if not query:
+            query = '?pagesize=500'
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/global{query}'
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
 
 
 

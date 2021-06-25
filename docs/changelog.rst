@@ -4,6 +4,8 @@ v1.1 ( to be released)
    - Updated instructions of zpa usage
 2. Updated zpa_talker for SAML method (by `Rohit Luthra <mailto:rluthra@zscaler.com>`_)
     - Added method for SAML Attribute pull from the customer portal
+3. Updated zpa_talker for Getting Global policy ID (by `Rohit Luthra <mailto:rluthra@zscaler.com>`_)
+    - Added method for fetching the global policy
 
 v1.0 ( June 2021)
 =========================
