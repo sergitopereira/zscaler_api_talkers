@@ -97,7 +97,7 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.post_call(url=url, payload=payload, headers=self.header, error_handling=True)
         return response.json()
 
-    def list_scim_group_controller(self, idpId, query=False):
+    def list_scim_attributes(self, idpId, query=False):
         """
         Method details for all SCIM groups
         :param idpId: The unique identifies of the Idp
@@ -109,11 +109,10 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
-
-    #saml-attr-controller
-    def list_saml_group_controller(self, query=False):
+    # saml-attr-controller
+    def list_saml_attributes(self, query=False):
         """
-        Method details for all SAML Attributes
+        Method to det all SAML attributes
         :param query: ?page=1&pagesize=20&search=consequat
         """
         if not query:
@@ -133,9 +132,6 @@ class ZpaTalkerPublic(object):
         url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/global{query}'
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
-
-
-
 
     # Connector-group-controller
     def list_connector_group(self, query=False):
@@ -230,3 +226,38 @@ class ZpaTalkerPublic(object):
         url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/idp{query}'
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
+
+
+    def add_policySet(self, applicationId, RuleName, Action, policySetId,SAML_operands, SCIM_operands):
+        """
+        Method to create a new access Policy
+        :param applicationId:
+        :param RuleName:
+        :param Action:
+        :param policySetId:
+        :return: json
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/{policySetId}/rule'
+        payload = {
+            "conditions": [{
+                "operands": [{
+                    "objectType": "APP",
+                    "lhs": "id",
+                    "rhs": applicationId,
+                }, {
+                    "objectType": "APP_GROUP",
+                    "lhs": "id",
+                    "rhs": "<applicationGroupId>",
+                }]
+            }, {
+                "operands": SAML_operands,
+                "operator": "OR"
+            }, {
+                "operands": SCIM_operands,
+                "operator": "OR"
+            }],
+            "name": RuleName,
+            "description": "Description",
+            "action": Action,
+            "customMsg": "MsgString"
+        }
