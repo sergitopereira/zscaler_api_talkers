@@ -75,6 +75,7 @@ class HttpCalls(object):
                 self._zia_http_codes(response)
             else:
                 if response.status_code not in [200, 201, 204]:
+                    print(response.json())
                     raise ValueError(response.status_code)
             return response
         except requests.HTTPError as e:
