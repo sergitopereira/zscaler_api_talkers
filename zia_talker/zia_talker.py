@@ -439,12 +439,25 @@ class ZiaTalker(object):
     def list_greTunnels(self, greTunnelId=None):
         """
         Gets the GRE tunnel information for the specified ID
-        :param greTunnelId: The unique identifier for the GRE tunnel
+        :param greTunnelId: Optional. The unique identifier for the GRE tunnel
         """
         if greTunnelId:
             url = f'/greTunnels/{greTunnelId}'
         else:
             url = f'/greTunnels'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_vpnCredentials(self, vpnId=None):
+        """
+        Gets VPN credentials that can be associated to locations.
+        :param vpnId: Optional. Gets the VPN credentials for the specified ID.
+        """
+        if vpnId:
+            url = f'/vpnCredentials/{vpnId}'
+        else:
+            url = f'/vpnCredentials'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()

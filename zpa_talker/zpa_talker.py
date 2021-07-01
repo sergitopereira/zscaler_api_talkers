@@ -227,7 +227,7 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
-    def add_policySet(self, applicationId, RuleName, Action, policySetId, operands,MsgString=None):
+    def add_policySet(self, applicationId, RuleName, Action, policySetId, operands,operator, MsgString=None):
         """
         Method to create a new access Policy
         :param applicationId: Application id
@@ -257,8 +257,10 @@ class ZpaTalkerPublic(object):
                     "rhs": applicationId,
                 }]
             }, {
-                "operands": operands
-            }],
+                "operands": operands,
+                "operator": operator,
+            },],
+            "operator": operator,
             "name": RuleName,
             "description": "Description",
             "action": Action,
