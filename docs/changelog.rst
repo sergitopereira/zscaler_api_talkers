@@ -3,7 +3,8 @@ v1.1 ( to be released)
 1. Updated README file (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
    - Updated instructions of zpa usage
    - Added method to create access policy
-   - Added method to obtian VPN credentials in zia_talker
+   - Added method to obtain VPN credentials in zia_talker
+   - Added method to add static IP address in zia_talker
 
 2. Updated zpa_talker for SAML method (by `Rohit Luthra <mailto:rluthra@zscaler.com>`_)
     - Added method for SAML Attribute pull from the customer portal

@@ -452,7 +452,7 @@ class ZiaTalker(object):
     def list_vpnCredentials(self, vpnId=None):
         """
         Gets VPN credentials that can be associated to locations.
-        :param vpnId: Optional. Gets the VPN credentials for the specified ID.
+        :param vpnId: Optional. If specified, get VPN credentials for the specified ID.
         """
         if vpnId:
             url = f'/vpnCredentials/{vpnId}'
@@ -460,6 +460,51 @@ class ZiaTalker(object):
             url = f'/vpnCredentials'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
+        return response.json()
+
+    def list_staticIP(self, IPId=None):
+        """
+        Gets all provisioned static IP addresses.
+        :param IPId: Optional. If specified, get IP address for the specified id
+        """
+        if IPId:
+            url = f'/staticIP/{IPId}'
+        else:
+            url = f'/staticIP'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def add_staticIP(self, ipAddress, geoOverrride=False, routableIP=True, latitude=0, longitude=0, comment=''):
+        """
+        Adds a static IP address
+        :param ipAddress: String. The satic IP address
+        :param geoOverrride: Boolean. If not set, geographic coordinates and city are automatically determined from
+        the IP address. Otherwise, the latitude and longitude coordinates must be provided.
+        :param routableIP: Boolean. Indicates whether a non-RFC 1918 IP address is publicly routable. This attribute is
+        ignored if there is no ZIA Private Service Edge associated to the organization.
+        :param latitude: Required only if the geoOverride attribute is set. Latitude with 7 digit precision after
+        decimal point, ranges between -90 and 90 degrees.
+        :param longitude: Required only if the geoOverride attribute is set. Longitude with 7 digit precision after
+        decimal point, ranges between -180 and 180 degrees.
+        :param comment: String Additional information about this static IP address
+        """
+        url = '/staticIP'
+
+        payload = {
+            "ipAddress": ipAddress,
+            "latitude": latitude,
+            "longitude": longitude,
+            "routableIP": routableIP,
+            "comment": comment
+        }
+        if geoOverrride:
+            payload.update(geoOverrride=geoOverrride)
+            payload.update(latitude=latitude)
+            payload.update(longitude=longitude)
+
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
         return response.json()
 
     # User Authentication Settings
