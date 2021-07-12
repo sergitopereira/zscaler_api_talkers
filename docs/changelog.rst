@@ -1,4 +1,4 @@
-v1.1 ( to be released)
+v1.1 ( July 2021)
 =========================
 1. Updated README file (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
    - Updated instructions of zpa usage

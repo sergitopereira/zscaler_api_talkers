@@ -16,7 +16,7 @@ class ZiaTalker(object):
         self.base_uri = f'https://{cloud_name}/api/v1'
         self.hp_http = HttpCalls(host=self.base_uri, verify=True)
         self.jsessionid = None
-        self.version = '1.0'
+        self.version = '1.1'
 
     def _obfuscateApiKey(self, seed):
         """

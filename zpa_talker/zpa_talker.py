@@ -20,7 +20,7 @@ class ZpaTalkerPublic(object):
         # self.base_uri = f'https://config.zpabeta.net'
         self.hp_http = HttpCalls(host=self.base_uri, verify=True)
         self.jsessionid = None
-        self.version = '1.1'
+        self.version = '1.2'
         self.header = None
         self.customerId = customerID
 
@@ -227,10 +227,15 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
-    def add_policySet(self, applicationId, RuleName, Action, policySetId, operands,operator, MsgString=None):
+    def add_policySet(self, app_operands, RuleName, Action, policySetId, operands, operator, MsgString=None):
         """
         Method to create a new access Policy
-        :param applicationId: Application id
+        :param app_operands: list of app_operands: Examples
+        [{
+                    "objectType": "APP",
+                    "lhs": "id",
+                    "rhs": applicationId,
+        }]
         :param RuleName: Policy set Rule Name
         :param Action: ALLOW / DENY
         :param policySetId:  Global Policy ID. can be obtained from list_global_policy_id
@@ -251,15 +256,11 @@ class ZpaTalkerPublic(object):
         url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/{policySetId}/rule'
         payload = {
             "conditions": [{
-                "operands": [{
-                    "objectType": "APP",
-                    "lhs": "id",
-                    "rhs": applicationId,
-                }]
+                "operands": app_operands
             }, {
                 "operands": operands,
                 "operator": operator,
-            },],
+            }, ],
             "operator": operator,
             "name": RuleName,
             "description": "Description",
@@ -269,4 +270,3 @@ class ZpaTalkerPublic(object):
         print(payload)
         response = self.hp_http.post_call(url=url, headers=self.header, error_handling=True, payload=payload)
         return response.json()
-
