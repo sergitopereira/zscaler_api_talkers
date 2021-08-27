@@ -3,6 +3,7 @@ import time
 from getpass import getpass
 from models.models import valid_category_ids
 from models.models import super_categories
+from models.models import valid_countries
 
 
 class ZiaTalker(object):
@@ -605,6 +606,107 @@ class ZiaTalker(object):
         payload = {
             "blacklistUrls": urls
         }
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
+
+    # Firewall Policies
+
+    def list_networkServices(self):
+        """
+        Gets a list of all network service groups. The search parameters find matching values within the "name" or
+        "description" attributes.
+        """
+        url = '/networkServices'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_ipSourceGroups(self, ipGroupId=None):
+        """
+        Gets a list of all IP source groups. The search parameters find matching values within the "name" or
+        "description" attributes.
+        :param ipGroupId: Option ip group id
+        """
+        if ipGroupId:
+            url = f'/ipSourceGroups/{ipGroupId}'
+        else:
+            url = '/ipSourceGroups'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def add_ipSourceGroups(self, name, ipAddresses, description=None):
+        """
+        :param name: mame
+        :param ipAddresses: list of IP addresses
+        :param description: description
+        """
+
+        url = '/ipSourceGroups'
+        payload = {
+            "name": name,
+            "ipAddresses": ipAddresses,
+            "description": description
+        }
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
+
+    def add_ipSourceGroups(self, name, ipAddresses, description=None):
+        """
+        :param name: mame
+        :param ipAddresses: list of IP addresses
+        :param description: description
+        """
+
+        url = '/ipSourceGroups'
+        payload = {
+            "name": name,
+            "ipAddresses": ipAddresses,
+            "description": description
+        }
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
+
+    def add_ipDestinationGroups(self, name, type, addresses, ipCategories=None, countries=None, description=None):
+        """
+        :param name: mame
+        :param type: Destination IP group type. Either DSTN_IP or DSTN_FQDN
+        :param addresses: List of Destination IP addresses within the group.
+        :param description: description
+        :param ipCategories: List of Destination IP address URL categories. You can identify destination based
+        on the URL category of the domain. Default value ANY
+        :param countries: list of destination IP address countries. You can identify destinations based on the location
+        of a server.Default value ANY
+        """
+        if type not in ["DSTN_IP", "DSTN_FQDN"]:
+            raise ValueError("Invalid destination type ")
+        if countries:
+            for i in countries:
+                if i not in valid_countries:
+                     raise ValueError("Invalid country ")
+        else:
+            countries=[]
+
+        if ipCategories:
+            for j in ipCategories:
+                if j  not in valid_category_ids:
+                     raise ValueError("Invalid country ")
+        else:
+            ipCategories=[]
+
+        url = '/ipDestinationGroups'
+        payload = {
+            "name": name,
+            "type": type,
+            "addresses": addresses,
+            "ipCategories": ipCategories,
+            "countries": countries,
+            "description": description
+        }
+        print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
         return response.json()

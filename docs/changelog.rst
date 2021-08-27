@@ -1,3 +1,9 @@
+v1.2(August 2021)  to be release
+=========================
+1. Added the following ZIA methods (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+- Firewall methods
+2. Updated instructions of zpa usage(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
 v1.1 ( July 2021)
 =========================
 1. Updated README file (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)

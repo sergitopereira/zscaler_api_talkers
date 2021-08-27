@@ -258,10 +258,12 @@ class ZpaTalkerPublic(object):
             "conditions": [{
                 "operands": app_operands
             }, {
+
                 "operands": operands,
                 "operator": operator,
             }, ],
-            "operator": operator,
+            # Seems here needs to be AND
+            "operator": 'AND',
             "name": RuleName,
             "description": "Description",
             "action": Action,
