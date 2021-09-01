@@ -70,6 +70,8 @@ class HttpCalls(object):
                 response = requests.post(url=full_url, headers=headers, cookies=cookies, json=payload,
                                          verify=self.verify)
                 print(response.status_code)
+                print(response)
+                print(response.text)
             if error_handling:
                 self._zia_http_codes(response)
             else:
