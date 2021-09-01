@@ -3,6 +3,8 @@ v1.2(August 2021)  to be release
 1. Added the following ZIA methods (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 - Firewall methods
 2. Updated instructions of zpa usage(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+3. Added the following ZIA methods (by `Hasan Faraz <mailto:hfaraz@zscaler.com>`_)
+- DLP Dictionaries
 
 v1.1 ( July 2021)
 =========================
