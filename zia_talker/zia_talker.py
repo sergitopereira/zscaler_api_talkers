@@ -635,55 +635,36 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
-    def add_firewallFilteringRules(self, name, order, state, action, rank, description, defaultRule= False, predefined= False ):
-        """
-        Adds a new Firewall Filtering policy rule.
-		:param id: Unique identifier for the Firewall Filtering policy rule
-		:param name: Name of the Firewall Filtering policy rule ["String"]
-		:param order: Rule order number of the Firewall Filtering policy rule
-		:param rank: Admin rank of the Firewall Filtering policy rule ["Integer"]
-		:param locations: The locations to which the Firewall Filtering policy rule applies ["List"]
-		:param locationGroups: The location groups to which the Firewall Filtering policy rule applies ["List"]
-		:param departments: The departments to which the Firewall Filtering policy rule applies ["List"]
-		:param groups: The groups to which the Firewall Filtering policy rule applies ["List"]
-		:param users: The users to which the Firewall Filtering policy rule applies ["List"]
-		:param timeWindows: The time interval in which the Firewall Filtering policy rule applies ["List"]
-		:param action: The action the Firewall Filtering policy rule takes when packets match the rule [ ALLOW, BLOCK_DROP, BLOCK_RESET, BLOCK_ICMP, EVAL_NWAPP ]
-		:param state: Determines whether the Firewall Filtering policy rule is enabled or disabled [ DISABLED, ENABLED ]
-		:param description: Additional information about the rule
-		:param lastModifiedTime: Timestamp when the rule was last modified. Ignored if the request is POST or PUT. For GET, ignored if or the rule is current version.
-		:param lastModifiedBy: This is an immutable reference to an entity. which mainly consists of id and name
-		:param srcIps: User-defined source IP addresses for which the rule is applicable. If not set, the rule is not restricted to a specific source IP address.
-		:param srcIpGroups: User-defined source IP address groups for which the rule is applicable. If not set, the rule is not restricted to a specific source IP address group.
-		:param destAddresses: List of destination IP addresses to which this rule will be applied. CIDR notation can be used for destination IP addresses. If not set, the rule is not restricted to a specific destination addresses unless specified by destCountries, destIpGroups or destIpCategories.
-		:param destIpCategories: IP address categories of destination for which the DNAT rule is applicable. If not set, the rule is not restricted to specific destination IP categories.
-		:param destCountries: Destination countries for which the rule is applicable. If not set, the rule is not restricted to specific destination countries.
-		:param destIpGroups: User-defined destination IP address groups on which the rule is applied. If not set, the rule is not restricted to a specific destination IP address group.
-		:param nwServices: User-defined network services on which the rule is applied. If not set, the rule is not restricted to a specific network service.
-		:param nwServiceGroups: User-defined network service group on which the rule is applied. If not set, the rule is not restricted to a specific network service group.
-		:param nwApplications: User-defined network service applications on which the rule is applied. If not set, the rule is not restricted to a specific network service application.
-		:param nwApplicationGroups: User-defined network service application group on which the rule is applied. If not set, the rule is not restricted to a specific network service application group.
-		:param appServices: Application services on which this rule is applied
-		:param appServiceGroups: Application service groups on which this rule is applied
-		:param labels: Labels that are applicable to the rule.
-		:param defaultRule: Default is false.If set to true, the default rule is applied
-		:param predefined: Default is false.If set to true, a predefined rule is applied
+    def add_firewallFilteringRules(self, name, order, state, action, rank, description, defaultRule=False,
+                                   predefined=False):
         """
 
-        url = '​/firewallFilteringRules'
+        :param name: type str,  Name of the Firewall Filtering policy rule ["String"]
+        :param order: type int, Rule order number of the Firewall Filtering policy rule
+        :param state: type str, Possible values : DISABLED or  ENABLED
+        :param action: type str, Possible values: ALLOW, BLOCK_DROP, BLOCK_RESET, BLOCK_ICMP, EVAL_NWAPP
+        :param rank: type int, Admin rank of the Firewall Filtering policy rule
+        :param description: type str, Additional information about the rule
+        :param defaultRule: Default is false.If set to true, the default rule is applied
+        :param predefined:
+        :return: Default is false.If set to true, a predefined rule is applied
+        """
+
+
+        url = '/firewallFilteringRules'
         payload = {
-        "accessControl": "READ_WRITE",
-        "enableFullLogging": False,
-        "name": "Sanku Testing API",
-        "order": 1,
-        "rank": 0,
-        "action": "ALLOW",
-        "state": "ENABLED",
-        "predefined": False,
-        "defaultRule": False,
-        "description": "Test Postman"
+            "accessControl": "READ_WRITE",
+            "enableFullLogging": False,
+            "name": name,
+            "order": order,
+            "rank": rank,
+            "action": action,
+            "state": state,
+            "predefined": predefined,
+            "defaultRule": defaultRule,
+            "description": description
 
-    }
+        }
         print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
@@ -753,16 +734,16 @@ class ZiaTalker(object):
         if countries:
             for i in countries:
                 if i not in valid_countries:
-                     raise ValueError("Invalid country ")
+                    raise ValueError("Invalid country ")
         else:
-            countries=[]
+            countries = []
 
         if ipCategories:
             for j in ipCategories:
-                if j  not in valid_category_ids:
-                     raise ValueError("Invalid country ")
+                if j not in valid_category_ids:
+                    raise ValueError("Invalid country ")
         else:
-            ipCategories=[]
+            ipCategories = []
 
         url = '/ipDestinationGroups'
         payload = {
