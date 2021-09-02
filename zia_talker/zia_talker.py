@@ -612,6 +612,19 @@ class ZiaTalker(object):
                                           error_handling=True)
         return response.json()
 
+    # DLP Policies
+
+    def list_dlpDictionaries(self):
+        """
+        Gets a list of all DLP Dictionaries. The search parameters find matching values within the "name" or
+        "description" attributes.
+        """
+
+        url = '/dlpDictionaries'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
     # Firewall Policies
 
     def list_networkServices(self):
