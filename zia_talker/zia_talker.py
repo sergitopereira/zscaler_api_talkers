@@ -1,5 +1,3 @@
-import pdb
-
 from helpers.http_calls import HttpCalls
 import time
 from getpass import getpass
@@ -590,7 +588,7 @@ class ZiaTalker(object):
 
     def add_security_blacklistUrls(self, urls):
         """
-        :param url: list of urls
+        :param urls: list of urls
         Adds a URL from the black list. To add a URL to the black list.
         """
         url = '/security/advanced/blacklistUrls?action=ADD_TO_LIST'
@@ -599,7 +597,7 @@ class ZiaTalker(object):
         }
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
-        return response.text
+        return response.json()
 
     def remove_security_blacklistUrls(self, urls):
         """
@@ -690,16 +688,16 @@ class ZiaTalker(object):
         if countries:
             for i in countries:
                 if i not in valid_countries:
-                     raise ValueError("Invalid country ")
+                    raise ValueError("Invalid country ")
         else:
-            countries=[]
+            countries = []
 
         if ipCategories:
             for j in ipCategories:
-                if j  not in valid_category_ids:
-                     raise ValueError("Invalid country ")
+                if j not in valid_category_ids:
+                    raise ValueError("Invalid country ")
         else:
-            ipCategories=[]
+            ipCategories = []
 
         url = '/ipDestinationGroups'
         payload = {
