@@ -637,6 +637,50 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
+    def list_firewallFilteringRules(self):
+        """
+        Gets all rules in the Firewall Filtering policy.
+        """
+        url = '/firewallFilteringRules'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def add_firewallFilteringRules(self, name, order, state, action, rank, description, defaultRule=False,
+                                   predefined=False):
+        """
+
+        :param name: type str,  Name of the Firewall Filtering policy rule ["String"]
+        :param order: type int, Rule order number of the Firewall Filtering policy rule
+        :param state: type str, Possible values : DISABLED or  ENABLED
+        :param action: type str, Possible values: ALLOW, BLOCK_DROP, BLOCK_RESET, BLOCK_ICMP, EVAL_NWAPP
+        :param rank: type int, Admin rank of the Firewall Filtering policy rule
+        :param description: type str, Additional information about the rule
+        :param defaultRule: Default is false.If set to true, the default rule is applied
+        :param predefined:
+        :return: Default is false.If set to true, a predefined rule is applied
+        """
+
+
+        url = '/firewallFilteringRules'
+        payload = {
+            "accessControl": "READ_WRITE",
+            "enableFullLogging": False,
+            "name": name,
+            "order": order,
+            "rank": rank,
+            "action": action,
+            "state": state,
+            "predefined": predefined,
+            "defaultRule": defaultRule,
+            "description": description
+
+        }
+        print(payload)
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
+
     def list_ipSourceGroups(self, ipGroupId=None):
         """
         Gets a list of all IP source groups. The search parameters find matching values within the "name" or
