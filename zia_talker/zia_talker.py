@@ -649,7 +649,6 @@ class ZiaTalker(object):
     def add_firewallFilteringRules(self, name, order, state, action, rank, description, defaultRule=False,
                                    predefined=False):
         """
-
         :param name: type str,  Name of the Firewall Filtering policy rule ["String"]
         :param order: type int, Rule order number of the Firewall Filtering policy rule
         :param state: type str, Possible values : DISABLED or  ENABLED
