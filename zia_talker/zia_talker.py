@@ -646,8 +646,9 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
-    def add_firewallFilteringRules(self, name, order, state, action, rank, description, defaultRule=False,
-                                   predefined=False):
+    def add_firewallFilteringRules(self, name, order, state, action, description, defaultRule=False,
+                                   predefined=False, srcIps=None, destAddresses=None, destIpGroups=None,
+                                   srcIpGroups=None, rank=0):
         """
         :param name: type str,  Name of the Firewall Filtering policy rule ["String"]
         :param order: type int, Rule order number of the Firewall Filtering policy rule
@@ -656,10 +657,13 @@ class ZiaTalker(object):
         :param rank: type int, Admin rank of the Firewall Filtering policy rule
         :param description: type str, Additional information about the rule
         :param defaultRule: Default is false.If set to true, the default rule is applied
-        :param predefined:
+        :param predefined: Boolean
+        :param srcIps: type list, List of source IP addresses
+        :param destAddresses: type list. List of destination addresses
+        :param destIpGroups: type list: List of user-definied destination IP address groups
+        :param srcIpGroups: type list: List of user defined source IP addres groups
         :return: Default is false.If set to true, a predefined rule is applied
         """
-
 
         url = '/firewallFilteringRules'
         payload = {
@@ -672,9 +676,18 @@ class ZiaTalker(object):
             "state": state,
             "predefined": predefined,
             "defaultRule": defaultRule,
-            "description": description
+            "description": description,
 
         }
+        if srcIps:
+            payload.update(srcIps=srcIps)
+        if srcIpGroups:
+            payload.update(srcIpGroups=srcIpGroups)
+        if destAddresses:
+            payload.update(destAddresses=destAddresses)
+        if destIpGroups:
+            payload.update(destIpGroups=destIpGroups)
+
         print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
