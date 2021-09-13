@@ -1,3 +1,5 @@
+import pdb
+
 from helpers.http_calls import HttpCalls
 import time
 from getpass import getpass
@@ -401,7 +403,7 @@ class ZiaTalker(object):
         :param locationId: Location id
         """
         if locationId:
-            url = f'/locations/{locationId}'
+            url = f'/locations/{locationId}/sublocations'
         else:
             url = f'/locations'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
@@ -637,6 +639,18 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
+    def add_networkServices(self, name, tag, description=None):
+        """
+        Adds a new network service group
+        :param name: type string. name of the service
+        :param services: type list. Each element is a dictionary
+
+        :param description: Type string. Description
+        :return: json
+        """
+
+        return
+
     def list_firewallFilteringRules(self):
         """
         Gets all rules in the Firewall Filtering policy.
@@ -646,7 +660,7 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
-    def add_firewallFilteringRules(self, name, order, state, action, description, defaultRule=False,
+    def add_firewallFilteringRules(self, name, order, state, action, description=None, defaultRule=False,
                                    predefined=False, srcIps=None, destAddresses=None, destIpGroups=None,
                                    srcIpGroups=None, rank=0):
         """
@@ -691,7 +705,20 @@ class ZiaTalker(object):
         print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
-        return response.json()
+        return response
+
+    def delete_firewallFIlteringRules(self, ruleId):
+
+        """
+        Deletes a Firewall Filtering policy rule for the specified ID.
+
+        :param ruleId: type integer: The unique identifier for the policy rule
+        :return: json
+        """
+        url = f'/firewallFilteringRules/{ruleId}'
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                        error_handling=False)
+        return response
 
     def list_ipSourceGroups(self, ipGroupId=None):
         """
