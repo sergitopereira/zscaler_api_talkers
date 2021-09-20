@@ -112,20 +112,21 @@ class ZiaTalker(object):
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid}, error_handling=True)
         return response.json()
 
-    def add_url_categories(self, name, superCategory, urls, catID, keywords=None, customCategory=False):
+    def add_url_categories(self, name, superCategory, type='URL_CATEGORY', urls=None, dbCategorizedUrls=None,
+                           keywordsRetainingParentCategory=None, customCategory=False):
         """
          Adds a new custom URL category.
-        :param name: Name of the custom category
+        :param name: type string. Name of the custom category
         :param superCategory: super category
         :param urls: list of urls
-        :param catID: Category id
-        :param keywords: list of key works
+        "param dbCategorizedUrls: type list. URL retaining parent category
+        :param keywordsRetainingParentCategory: list of key works
         :param customCategory: Default False. Set to Tye for custom category
-
+        :param type: type string. URL_CATEGORY, TLD_CATEGORY, ALL
         :return:  json
         """
-        if keywords is None:
-            keywords = [""]
+        if keywordsRetainingParentCategory is None:
+            keywordsRetainingParentCategory = []
 
         if superCategory not in super_categories:
             print(f'Error -> Invalid Super Category')
@@ -137,9 +138,10 @@ class ZiaTalker(object):
             "configuredName": name,
             "customCategory": customCategory,
             "superCategory": superCategory,
-            "keywords": keywords,
+            "keywordsRetainingParentCategory": keywordsRetainingParentCategory,
             "urls": urls,
-            "id": catID
+            "dbCategorizedUrls": dbCategorizedUrls,
+            "type": type
         }
         print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
@@ -201,10 +203,8 @@ class ZiaTalker(object):
         # Rate limit 1/sec  and 400 hr and 100 URLs per call
         list_of_lists = [url_list[i:i + 100] for i in range(0, len(url_list), 100)]
         for item in list_of_lists:
-            print(item)
             response = self.hp_http.post_call(url, payload=item, cookies={'JSESSIONID': self.jsessionid},
                                               error_handling=True)
-            print(response.json())
             result.append(response.json())
             time.sleep(10)
         final_result = []
@@ -224,28 +224,30 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
-    '''def add_url_filtering_rules(self, name, order, state, action, protocols, urlcategories,
-                                admin_rack=7):
+    def add_url_filtering_rules(self, name, order, protocols, state,
+                                action, urlcategories=[], requestMethods=None, description=None, groups=None,
+                                locations=None, departments=None, users=None, rank=7, locationGroups=None,
+                                enforceTimeValidity=False,
+                                validityEndTime=None, validityStartTime=None, validityTimeZoneId=None, cbiProfileId=0,
+                                blockOverride=False):
         """
          Adds a URL Filtering Policy rule.
          If you are using the Admin Rank feature, refer to About Admin Rank to determine which value to provide for rank
          when adding a policy rule. If you are not using Admin Rank, the rank value must be 7.
-        :param name:  Name of the rule
-        :param order: Rule order
-        :param state: enabled/disabled
-        :param action: Allow, Caution, Block
-        :param protocols: list [ SMRULEF_ZPA_BROKERS_RULE, ANY_RULE, TCP_RULE, UDP_RULE, DOHTTPS_RULE, TUNNELSSL_RULE,
-        HTTP_PROXY, FOHTTP_RULE, FTP_RULE, HTTPS_RULE, HTTP_RULE, SSL_RULE, TUNNEL_RULE ]
-        :param locations: Name-ID pairs of locations for which rule must be applied
-        :param groups: Name-ID pairs of groups for which rule must be applied
-        :param departments: Name-ID pairs of departments for which rule will be applied
-        :param users: Name-ID pairs of users for which rule must be applied
-        :param urlcategories: List of URL categories for which rule must be applied
+        :param name: type string.  Name of the rule
+        :param order: type integer. Rule order
+        :param protocols: type string. Possible values SMRULEF_ZPA_BROKERS_RULE, ANY_RULE, TCP_RULE, UDP_RULE, DOHTTPS_RULE, TUNNELSSL_RULE,
+        HTTP_PROXY, FOHTTP_RULE, FTP_RULE, HTTPS_RULE, HTTP_RULE, SSL_RULE, TUNNEL_RULE
+        :param locations: type list. Each element is a  dictionary: Name-ID pairs of locations for which rule must be applied
+        :param groups: type list. Name-ID pairs of groups for which rule must be applied
+        :param departments:type list. Name-ID pairs of departments for which rule will be applied
+        :param users: type list. Name-ID pairs of users for which rule must be applied
+        :param urlcategories: type list. List of URL categories for which rule must be applied
         :param admin_rack:Admin rank of the admin who creates this rule
-        :param timewindows: Name-ID pairs of time interval during which rule must be enforced.
-        :param requestmethods: Request method for which the rule must be applied. If not set, rule will be applied to all
+        :param timewindows: type list. Name-ID pairs of time interval during which rule must be enforced.
+        :param requestmethods: type list. Request method for which the rule must be applied. If not set, rule will be applied to all
          methods
-        :param eun: URL of end user notification page to be displayed when the rule is matched. Not applicable if either
+        :param endUserNotificationUrl: type string. URL of end user notification page to be displayed when the rule is matched. Not applicable if either
         'overrideUsers' or 'overrideGroups' is specified.
         :param overrideusers: Name-ID pairs of users for which this rule can be overridden. Applicable only if
          blockOverride is set to 'true', action is 'BLOCK' and overrideGroups is not set.If this overrideUsers is not
@@ -257,37 +259,46 @@ class ZiaTalker(object):
         If true and both overrideGroup and overrideUsers are not set, the BLOCK triggered by this rule could be
         overridden for any users. If blockOverride is not set, 'BLOCK' action cannot be overridden.
         :param description: Additional information about the URL Filtering rule
+        :param state: enabled/disabled
+        :param action: Allow, Caution, Block
         :return:
         """
-
+        url = '/urlFilteringRules'
         payload = {
-            "id": 0,
+            "blockOverride": blockOverride,
+            "cbiProfileId": cbiProfileId,
+            "description": description,
+            "enforceTimeValidity": enforceTimeValidity,
             "name": name,
             "order": order,
             "protocols": protocols,
-            "locations": location,
-            "groups": groups,
-            "departments": departments,
-            "users": users,
             "urlCategories": urlcategories,
             "state": state,
-            "timeWindows": timewindoes,
             "rank": rank,
-            "requestMethods": requestmethods,
-            "endUserNotificationUrl": eun,
-            "overrideUsers": overrideusers,
-            "overrideGroups": overridegroups,
-            "blockOverride": blockoverride,
-            "timeQuota": timequota,
-            "sizeQuota": sizequota,
-            "description": description,
-            "locationGroups": locationgroups,
-            "validityStartTime": 0,
-            "validityEndTime": 0,
-            "validityTimeZoneId": "string",
-            "lastModifiedTime": 0,
-            "lastModifiedBy": lastmodified
-            },'''
+            "action": action
+        }
+        if locations:
+            payload.update(locations=locations)
+        if locationGroups:
+            payload.update(locationGroups=locationGroups)
+        if groups:
+            payload.update(groups=groups)
+        if departments:
+            payload.update(departments=departments)
+        if users:
+            payload.update(users=users)
+        if requestMethods:
+            payload.update(requestMethods=requestMethods)
+        if enforceTimeValidity:
+            payload.update(validityStartTime=validityStartTime)
+            payload.update(validityEndTime=validityEndTime)
+            payload.update(validityTimeZoneId=validityTimeZoneId)
+
+        print(payload)
+
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
 
     # User Management
 
@@ -409,6 +420,18 @@ class ZiaTalker(object):
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
+
+    def list_locationsgroups (self,):
+        """
+        Gets information on location groups
+        :param locationgroupId: Location group id
+        """
+        url = f'/locations/groups'
+        print(url)
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
 
     def delete_bulk_locations(self, locationIds):
         """
@@ -717,7 +740,7 @@ class ZiaTalker(object):
         """
         url = f'/firewallFilteringRules/{ruleId}'
         response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
-                                        error_handling=False)
+                                            error_handling=False)
         return response
 
     def list_ipSourceGroups(self, ipGroupId=None):
