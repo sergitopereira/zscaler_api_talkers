@@ -19,7 +19,7 @@ class ZiaTalker(object):
         self.base_uri = f'https://{cloud_name}/api/v1'
         self.hp_http = HttpCalls(host=self.base_uri, verify=True)
         self.jsessionid = None
-        self.version = '1.1'
+        self.version = '1.2'
 
     def _obfuscateApiKey(self, seed):
         """
@@ -421,7 +421,7 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
-    def list_locationsgroups (self,):
+    def list_locationsgroups(self, ):
         """
         Gets information on location groups
         :param locationgroupId: Location group id
@@ -431,7 +431,6 @@ class ZiaTalker(object):
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
-
 
     def delete_bulk_locations(self, locationIds):
         """
@@ -639,15 +638,93 @@ class ZiaTalker(object):
 
     # DLP Policies
 
-    def list_dlpDictionaries(self):
+    def list_dlpDictionaries(self, dlpDicId=None):
         """
-        Gets a list of all DLP Dictionaries. The search parameters find matching values within the "name" or
-        "description" attributes.
+        Gets a list of all DLP Dictionaries.
+        :param dlpDicId: type int. dlp dictionary id ( optional parameter)
         """
-
-        url = '/dlpDictionaries'
+        if dlpDicId:
+            url = f'/dlpDictionaries/{dlpDicId}'
+        else:
+            url = '/dlpDictionaries'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
+        return response.json()
+
+    def list_dlpDictionaries_lite(self):
+        """
+        Gets a list of all DLP Dictionary names and ID's only. T
+        """
+
+        url = '/dlpDictionaries/lite'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def delete_dlp_dictionaries(self, dlpDicId):
+        """
+        Deletes the custom DLP category for the specified ID.
+        You cannot delete predefined DLP dictionaries.
+        You cannot delete a custom dictionary while it is being used by a DLP Engine or policy. Also, predefined
+        DLP dictionaries cannot be deleted.
+        :param dlpDicId: dlp dictionary ID
+        :return: json response
+        """
+        url = f'/dlpDictionaries/{dlpDicId}'
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                            error_handling=True)
+        return
+
+    def add_dlpDictionaries(self, dlpdicname, customPhraseMatchType, description=None, phrases=None, patterns=None):
+        """
+        Adds a new custom DLP dictionary that uses either Patterns and/or Phrases.
+        :param dlpdicname: type string.name
+        :param phrases: type list. list of phrases
+        :phrases valid example:[{
+        "action": "PHRASE_COUNT_TYPE_UNIQUE",
+        "phrase": "string"
+        }, {
+        "action": "PHRASE_COUNT_TYPE_UNIQUE",
+        "phrase": "string"
+        }]
+        :param patterns: type list. list of patterns
+        :patterns valid example:[{
+        "action": "PATTERN_COUNT_TYPE_UNIQUE",
+        "phrase": "string"
+        }, {
+        "action": "PATTERN_COUNT_TYPE_UNIQUE",
+        "phrase": "string"
+        }]
+        :param customPhraseMatchType: type string.customPhraseMatchType
+        :param description: description
+        """
+
+        if phrases != None:
+            for i in phrases:
+                if i['action'] not in ["PHRASE_COUNT_TYPE_UNIQUE", "PHRASE_COUNT_TYPE_ALL"]:
+                    raise ValueError("Invalid action")
+        if patterns != None:
+            for k in patterns:
+                if k['action'] not in ["PATTERN_COUNT_TYPE_UNIQUE", "PATTERN_COUNT_TYPE_ALL"]:
+                    raise ValueError("Invalid action")
+
+        if customPhraseMatchType not in ["MATCH_ALL_CUSTOM_PHRASE_PATTERN_DICTIONARY",
+                                         "MATCH_ANY_CUSTOM_PHRASE_PATTERN_DICTIONARY"]:
+            raise ValueError("Invalid customPhraseMatchType")
+
+        url = '/dlpDictionaries'
+        payload = {
+            "name": dlpdicname,
+            "description": description,
+            "confidenceThreshold": None,
+            "customPhraseMatchType": customPhraseMatchType,
+            "dictionaryType": "PATTERNS_AND_PHRASES",
+            "phrases": phrases,
+            "patterns": patterns
+        }
+        print(payload)
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
         return response.json()
 
     # Firewall Policies
@@ -755,23 +832,6 @@ class ZiaTalker(object):
             url = '/ipSourceGroups'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
-        return response.json()
-
-    def add_ipSourceGroups(self, name, ipAddresses, description=None):
-        """
-        :param name: mame
-        :param ipAddresses: list of IP addresses
-        :param description: description
-        """
-
-        url = '/ipSourceGroups'
-        payload = {
-            "name": name,
-            "ipAddresses": ipAddresses,
-            "description": description
-        }
-        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
-                                          error_handling=True)
         return response.json()
 
     def add_ipSourceGroups(self, name, ipAddresses, description=None):
