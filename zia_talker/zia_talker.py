@@ -725,6 +725,7 @@ class ZiaTalker(object):
         print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
+        print(response)
         return response.json()
 
     # Firewall Policies
@@ -739,17 +740,51 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
-    def add_networkServices(self, name, tag, description=None):
-        """
-        Adds a new network service group
-        :param name: type string. name of the service
-        :param services: type list. Each element is a dictionary
+    def add_networkServices(self, name, tag=None, srcTcpPorts=None, destTcpPorts=None, srcUdpPorts=None, destUdpPorts=None,
+                            type='CUSTOM', description=None, isNameL10nTag=False):
 
-        :param description: Type string. Description
+        """
+        Adds a new network service.
+        :param name: type string. Name
+        :param tag: type string
+        :param srcTcpPorts: type list. Each element is [{"start": int, "end": int}]
+        :param destTcpPorts: type list. Each element is [{"start": int, "end": int}]
+        :param srcUdpPorts: type list. Each element is [{"start": int, "end": int}]
+        :param destUdpPorts: type list. Each element is [{"start": int, "end": int}]
+        :param type: type string. STANDARD|PREDEFINE|CUSTOM
+        :param description: type string. Description
+        :param isNameL10nTag: type boolean.
+        :return: json response from API
+        """
+        url = '/networkServices'
+
+        payload = {
+            "id": 0,
+            "name": name,
+            "tag": tag,
+            "srcTcpPorts": srcTcpPorts,
+            "destTcpPorts": destTcpPorts,
+            "srcUdpPorts": srcUdpPorts,
+            "destUdpPorts": destUdpPorts,
+            "type": type,
+            "description": description,
+            "isNameL10nTag": isNameL10nTag
+        }
+        print(payload)
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response
+
+    def delete_networkServices(self, serviceid):
+        """
+
+        :param serviceid: type int. the unique identifier for the netwokr service
         :return: json
         """
-
-        return
+        url = f'/networkServices/{serviceid}'
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                            error_handling=False)
+        return response
 
     def list_firewallFilteringRules(self):
         """

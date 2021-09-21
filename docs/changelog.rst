@@ -1,3 +1,8 @@
+v1.3 ( To be released 2021)
+=========================
+1. Added the following ZIA methods (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+  - List, add, delete network services
+
 v1.2 ( September 2021)
 =========================
 1. Added the following ZIA methods (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
@@ -5,8 +10,8 @@ v1.2 ( September 2021)
 2. Updated instructions of zpa usage(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 3. Added the following ZIA methods (by `Hasan Faraz <mailto:hfaraz@zscaler.com>`_)
   - DLP Dictionaries
-  - List, add delete DLP Dictionaries
-4. Fixed bug for ZIA list sublocations (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+  - List, add, delete DLP Dictionaries
+4. Fixed bug for ZIA list sub locations (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v1.1 ( July 2021)
 =========================
