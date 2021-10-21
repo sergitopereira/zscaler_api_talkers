@@ -1,5 +1,3 @@
-import pdb
-
 from helpers.http_calls import HttpCalls
 import time
 from getpass import getpass
@@ -96,6 +94,72 @@ class ZiaTalker(object):
         url = '/status/activate'
         response = self.hp_http.post_call(url, payload={}, cookies={'JSESSIONID': self.jsessionid}, error_handling=True)
         return response.json()
+
+    # Admin Audit Logs
+
+    def list_auditlogEntryReport(self):
+        """
+        Gets the status of a request for an audit log report. After sending a POST request to /auditlogEntryReport to
+        generate a report, you can continue to call GET /auditlogEntryReport to check whether the report has finished
+        generating. Once the status is COMPLETE, you can send another GET request to /auditlogEntryReport/download to
+        download the report as a CSV file.
+        :return: json
+        """
+
+        url = "/auditlogEntryReport"
+
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def download_auditlogEntryReport(self):
+        """
+        Gets the status of a request for an audit log report. After sending a POST request to /auditlogEntryReport to
+        generate a report, you can continue to call GET /auditlogEntryReport to check whether the report has finished
+        generating. Once the status is COMPLETE, you can send another GET request to /auditlogEntryReport/download to
+        download the report as a CSV file.
+        :return: json
+        """
+
+        url = "/auditlogEntryReport/download"
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response
+
+    def add_auditlogEntryReport(self, startTime, endTime, actionTypes=None, category=None,
+                                subcategories=None, actionInterface=None, ):
+        """
+         Creates an audit log report for the specified time period and saves it as a CSV file. The report includes audit
+         information for every call made to the cloud service API during the specified time period.
+         Creating a new audit log report will overwrite a previously-generated report.
+        :param startTime: The timestamp, in epoch, of the admin's last login
+        :param endTime: The timestamp, in epoch, of the admin's last logout.
+        :param actionTypes: type list. The action performed by the admin in the ZIA Admin Portal or API
+        :param actionResult: The outcome (i.e., Failure or Success) of an actionType.
+        :param category: tyoe string. The location in the Zscaler Admin Portal (i.e., Admin UI) where the actionType was performed
+        :param subcategories: type list. The area within a category where the actionType was performed.
+        :param actionInterface: type string. The interface (i.e., Admin UI or API) where the actionType was performed.
+        :param clientIP: type string. The source IP address for the admin
+        :param adminName: type string.  The admin's login ID
+        :return: 204 Successfull Operation
+        """
+        url = "/auditlogEntryReport"
+        payload = {"startTime": startTime,
+                   "endTime": endTime,
+                   }
+        if category:
+            payload.update(category=category)
+        if subcategories:
+            payload.update(subcategories=subcategories)
+        if actionInterface:
+            payload.update(actionInterface=actionInterface)
+        if actionTypes:
+            payload.update(actionTypes=actionTypes)
+
+        print(payload)
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response
 
     # URL Categories
     def list_url_categories(self, custom=False):
@@ -740,7 +804,8 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
-    def add_networkServices(self, name, tag=None, srcTcpPorts=None, destTcpPorts=None, srcUdpPorts=None, destUdpPorts=None,
+    def add_networkServices(self, name, tag=None, srcTcpPorts=None, destTcpPorts=None, srcUdpPorts=None,
+                            destUdpPorts=None,
                             type='CUSTOM', description=None, isNameL10nTag=False):
 
         """
@@ -786,11 +851,14 @@ class ZiaTalker(object):
                                             error_handling=False)
         return response
 
-    def list_firewallFilteringRules(self):
+    def list_firewallFilteringRules(self, ruleId=None):
         """
         Gets all rules in the Firewall Filtering policy.
         """
-        url = '/firewallFilteringRules'
+        if ruleId:
+            url = f'/firewallFilteringRules/{ruleId}'
+        else:
+            url = '/firewallFilteringRules'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
@@ -869,6 +937,20 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
+    def list_ipDestinationGroups(self, ipGroupId=None):
+        """
+        Gets a list of all IP source groups. The search parameters find matching values within the "name" or
+        "description" attributes.
+        :param ipGroupId: Option ip group id
+        """
+        if ipGroupId:
+            url = f'/ipDestinationGroups/{ipGroupId}'
+        else:
+            url = '/ipDestinationGroups/'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
     def add_ipSourceGroups(self, name, ipAddresses, description=None):
         """
         :param name: mame
@@ -885,6 +967,28 @@ class ZiaTalker(object):
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
         return response.json()
+
+    def delete_ipSourceGroups(self, ipGroupId):
+        """
+        Deletes the IP source group for the specified ID
+        :param ipGroupId:  type int. The uniquye identifies for the IP source group
+        :return: json
+        """
+        url = f'/ipSourceGroups/{ipGroupId}'
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid}, error_handling=True,
+                                            payload={})
+        return response
+
+    def delete_ipDestinationGroups(self, ipGroupId):
+        """
+        Deletes the IP destination group for the specified ID
+        :param ipGroupId:  type int. The uniquye identifies for the IP source group
+        :return: json
+        """
+        url = f'/ipDestinationGroups/{ipGroupId}'
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid}, error_handling=True,
+                                            payload={})
+        return response
 
     def add_ipDestinationGroups(self, name, type, addresses, ipCategories=None, countries=None, description=None):
         """
