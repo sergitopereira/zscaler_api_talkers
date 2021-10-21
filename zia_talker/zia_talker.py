@@ -856,7 +856,7 @@ class ZiaTalker(object):
         Gets all rules in the Firewall Filtering policy.
         """
         if ruleId:
-           url= f'/firewallFilteringRules/{ruleId}'
+            url = f'/firewallFilteringRules/{ruleId}'
         else:
             url = '/firewallFilteringRules'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
