@@ -2,6 +2,9 @@ v1.3 ( To be released 2021)
 =========================
 1. Added the following ZIA methods (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
   - List, add, delete network services
+  - List, add, delete admin audit logs
+  - Added delete ipSourceGroups and ipDestinationGroups
+2. Updated install instructions
 
 v1.2 ( September 2021)
 =========================
