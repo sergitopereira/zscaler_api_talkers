@@ -951,6 +951,17 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
+    def list_ipDestinationGroups_lite(self):
+        """
+        Gets a name and ID dictionary of all IP destination groups
+        return json
+        """
+
+        url = '/ipDestinationGroups/lite'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
     def add_ipSourceGroups(self, name, ipAddresses, description=None):
         """
         :param name: mame
