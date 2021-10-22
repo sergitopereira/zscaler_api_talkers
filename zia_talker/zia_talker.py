@@ -1,3 +1,5 @@
+import pdb
+
 from helpers.http_calls import HttpCalls
 import time
 from getpass import getpass
@@ -176,6 +178,14 @@ class ZiaTalker(object):
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid}, error_handling=True)
         return response.json()
 
+    def list_url_categories_lite(self):
+        """
+        Gets a lightweight key-value list of all or custom URL categories.
+        """
+        url = '/urlCategories/lite'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid}, error_handling=True)
+        return response.json()
+
     def add_url_categories(self, name, superCategory, type='URL_CATEGORY', urls=None, dbCategorizedUrls=None,
                            keywordsRetainingParentCategory=None, customCategory=False):
         """
@@ -210,6 +220,59 @@ class ZiaTalker(object):
         print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
+        return response.json()
+
+    def update_url_categories(self, categoryId, action=None, configuredName=None, urls=None, dbCategorizedUrls=None,
+                              keywords=None, keywordsRetainingParentCategory=None, ):
+        """
+         Updates the URL category for the specified ID. If keywords are included within the request, then they
+         will replace existing ones for the specified URL category . If the keywords attribute is not included the
+         request, the existing keywords are retained.
+         You can perform a full update for the specified URL category. However, if attributes are omitted within the
+          update request, the values for those attributes are cleared.
+
+         You can also perform an incremental update, to add or remove URLs, for the specified URL category using the
+         action parameter
+         :param categoryId: type string. URL id
+        :param configuredName: type string. Name of the custom category
+        :param urls: list of urls
+        "param dbCategorizedUrls: type list. URL retaining parent category
+        :param keywordsRetainingParentCategory: list of key works
+        :return:  json
+        """
+        if categoryId not in valid_category_ids:
+            print(f'Error -> Invalid category id')
+            raise ValueError("Invalid category id")
+
+        if action == 'ADD_TO_LIST':
+            url = f'/urlCategories/{categoryId}?action=ADD_TO_LIST'
+        elif action == 'REMOVE_FROM_LIST':
+            url = f'/urlCategories/{categoryId}?action=REMOVE_FROM_LIST'
+        elif not action:
+            url = f'/urlCategories/{categoryId}'
+        else:
+            print(f'Error -> Invalid action')
+            print(f'{action}')
+            raise ValueError("Invalid action")
+
+        payload = {
+            "configuredName": configuredName,
+
+        }
+        if keywordsRetainingParentCategory:
+            payload.update(keywordsRetainingParentCategory=keywordsRetainingParentCategory)
+        if keywords:
+            payload.update(keywords=keywords)
+        if configuredName:
+            payload.update(configuredName=configuredName)
+        if urls:
+            payload.update(urls=urls)
+        if dbCategorizedUrls:
+            payload.update(dbCategorizedUrls=dbCategorizedUrls)
+
+        pdb.set_trace()
+        response = self.hp_http.put_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
         return response.json()
 
     def delete_url_categories(self, categoryid):
@@ -794,12 +857,15 @@ class ZiaTalker(object):
 
     # Firewall Policies
 
-    def list_networkServices(self):
+    def list_networkServices(self, serviceId):
         """
         Gets a list of all network service groups. The search parameters find matching values within the "name" or
         "description" attributes.
         """
-        url = '/networkServices'
+        if serviceId:
+            url = f'/networkServices/{serviceId}'
+        else:
+            url = '/networkServices'
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
