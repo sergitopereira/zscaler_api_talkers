@@ -9,8 +9,7 @@
   source .zs_api_talkers/bin/activate
 * Install requirements
   pip install -r requirements.txt
-* Create a bash alias and review PYTHONPATH 
-
+* Create a bash alias and review PYTHONPATH
 #ZIA Talker
 ZIA API talker is a python library to leverage ZIA public API Documentation: https://help.zscaler.com/zia/6.1/api
 
