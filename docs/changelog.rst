@@ -4,6 +4,7 @@ v1.3 ( To be released 2021)
   - List, add, delete network services
   - List, add, delete admin audit logs
   - Added delete ipSourceGroups and ipDestinationGroups
+  - list  ipSourceGroups lite method
 2. Updated install instructions
 
 v1.2 ( September 2021)

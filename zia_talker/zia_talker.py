@@ -1003,6 +1003,16 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
+    def list_ipSourceGroups_lite(self, ):
+        """
+        Gets a name and ID dictionary of all IP source groups
+        :return:
+        """
+        url = '/ipSourceGroups/lite'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
     def list_ipDestinationGroups(self, ipGroupId=None):
         """
         Gets a list of all IP source groups. The search parameters find matching values within the "name" or
