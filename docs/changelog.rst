@@ -4,7 +4,11 @@ v1.3 ( To be released 2021)
   - List, add, delete network services
   - List, add, delete admin audit logs
   - Added delete ipSourceGroups and ipDestinationGroups
+  - list  ipSourceGroups lite method
+  - added a generic update call
 2. Updated install instructions
+3. Added the following ZPA methods (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+  - list configured servers
 
 v1.2 ( September 2021)
 =========================
