@@ -43,15 +43,37 @@ class ZpaTalkerPublic(object):
         }
         return response.json()
 
+    # app-server-controller
+
+    def list_servers(self, query=False, serverId=None):
+        """
+        Method to obtain all the configured Servers.
+        :param serverId: type int. Unique server id number
+        url query: Example ?page=1&pagesize=20&search=consequat
+        :return:json
+        """
+        if serverId:
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/server/{serverId}'
+        else:
+            if not query:
+                query = '?pagesize=500'
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/server{query}'
+
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
     # application-controller
-    def list_application_segments(self, query=False):
+    def list_application_segments(self, query=False, applicationId=None):
         """
         Method to obtain application segments
         :param query: url query: Example ?page=1&pagesize=20&search=consequat
         """
-        if not query:
-            query = '?pagesize=500'
-        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/application{query}'
+        if applicationId:
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/application/{applicationId}'
+        else:
+            if not query:
+                query = '?pagesize=500'
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/application{query}'
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 

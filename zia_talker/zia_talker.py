@@ -222,6 +222,23 @@ class ZiaTalker(object):
                                           error_handling=True)
         return response.json()
 
+    def add_url_categories1(self, payload):
+        """
+         Adds a new custom URL category.
+        :param name: type string. Name of the custom category
+        :param superCategory: super category
+        :param urls: list of urls
+        "param dbCategorizedUrls: type list. URL retaining parent category
+        :param keywordsRetainingParentCategory: list of key works
+        :param customCategory: Default False. Set to Tye for custom category
+        :param type: type string. URL_CATEGORY, TLD_CATEGORY, ALL
+        :return:  json
+        """
+        url = '/urlCategories'
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
+
     def update_url_categories(self, categoryId, action=None, configuredName=None, urls=None, dbCategorizedUrls=None,
                               keywords=None, keywordsRetainingParentCategory=None, ):
         """
@@ -286,7 +303,7 @@ class ZiaTalker(object):
         url = f'/urlCategories/{categoryid}'
         response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
                                             error_handling=True)
-        return response.json()
+        return response
 
     def list_url_categories_urlquota(self):
         """
@@ -534,6 +551,51 @@ class ZiaTalker(object):
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
+
+    '''def add_locations(self, name, country, ipAddresses, ports, vpnCredentials, xffForwardEnabled=False,
+                      surrogateIP=False,
+                      idleTimeInMinutes=0, displayTimeUnit='HOUR', surrogateRefreshTimeInMinutes=0,
+                      surrogateRefreshTimeUnit="MIN",
+                      ofwEnabled=False, ipsControl=False, aupEnabled=False, cautionEnabled=False,
+                      aupBlockInternetUntilAccepted=False,
+                      aupForceSslInspection=False, aupTimeoutInDays=0, profile=None, authRequired=False, parentId=0,
+                      upBandwidth=0, dnBandwidth=0, description=None):
+
+        """
+        Adds new locations and sub-locations. When invoked with a partner API key, it automatically sets the managedBy
+        attribute to the partner associated with the key.
+        :param name: type string. Location Name
+        :param country: type string. Country
+        :param ipAddresses: type string. For locations: IP addresses of the egress points that are provisioned in the
+        Zscaler Cloud. Each entry is a single IP address (e.g., 238.10.33.9).
+         For sub-locations: Egress, internal, or GRE tunnel IP addresses.
+         Each entry is either a single IP address, CIDR (e.g., 10.10.33.0/24), or range (e.g., 10.10.33.1-10.10.33.10)).
+        :param ports:
+        :param vpnCredentials:
+        :param xffForwardEnabled:
+        :param surrogateIP:
+        :param idleTimeInMinutes:
+        :param displayTimeUnit:
+        :param surrogateRefreshTimeInMinutes:
+        :param surrogateRefreshTimeUnit:
+        :param ofwEnabled:
+        :param ipsControl:
+        :param aupEnabled:
+        :param cautionEnabled:
+        :param aupBlockInternetUntilAccepted:
+        :param aupForceSslInspection:
+        :param aupTimeoutInDays:
+        :param profile:
+        :param authRequired:
+        :param parentId:
+        :param upBandwidth:
+        :param dnBandwidth:
+        :param description:
+        :return:
+        """
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()'''
 
     def list_sublocations(self, locationId):
         """
@@ -970,8 +1032,6 @@ class ZiaTalker(object):
             payload.update(destAddresses=destAddresses)
         if destIpGroups:
             payload.update(destIpGroups=destIpGroups)
-
-        print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
         return response
@@ -1116,4 +1176,14 @@ class ZiaTalker(object):
         print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
+        return response.json()
+
+    def update_call(self, url, payload):
+        """
+        Generic PUT call. This call will overwrite all the configuration with the new payload
+        :param url: url of Zscaler API call
+        :param payload: type json. Payload
+        """
+        response = self.hp_http.put_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
         return response.json()
