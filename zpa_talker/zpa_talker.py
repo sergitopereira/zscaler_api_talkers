@@ -20,7 +20,7 @@ class ZpaTalkerPublic(object):
         # self.base_uri = f'https://config.zpabeta.net'
         self.hp_http = HttpCalls(host=self.base_uri, verify=True)
         self.jsessionid = None
-        self.version = '1.2'
+        self.version = '1.3'
         self.header = None
         self.customerId = customerID
 
@@ -58,7 +58,6 @@ class ZpaTalkerPublic(object):
             if not query:
                 query = '?pagesize=500'
             url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/server{query}'
-
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
@@ -119,7 +118,165 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.post_call(url=url, payload=payload, headers=self.header, error_handling=True)
         return response.json()
 
+    # segment-group-controller
+
+    def list_segment_group(self, segmentGroupId=None, query=False):
+        """
+        Get all the configured Segment Groups. If segmentGroupId obtains the segment sroup details
+        :param segmentGroupId: The unique identifier of the Segment Group.
+        :param query: url query: Example ?page=1&pagesize=20&search=consequat
+        return json
+        """
+        if segmentGroupId:
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{segmentGroupId}'
+        else:
+            if not query:
+                query = '?pagesize=500'
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{query}'
+
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
+    def add_segment_group(self, name, description, enabled=True):
+        """
+        Add a new segment group
+        :param name: type string. Name of segment Group
+        :param description: type string. Description
+        :param enabled: type boolean: True or False
+        :return: Json
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup'
+        payload = {
+            "name": name,
+            "description": description,
+            "enabled": enabled,
+        }
+        response = self.hp_http.post_call(url, headers=self.header, error_handling=True, payload=payload)
+        return response.json()
+
+    # connector-controller
+    def list_connector(self, connectorId=None, query=False):
+        """
+        Get all the configured Segment Groups. If segmentGroupId obtains the segment sroup details
+        :param connectorId: The unique identifier of the App Connector.
+        return json
+        """
+        if connectorId:
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/connector/{connectorId}'
+        else:
+            if not query:
+                query = '?pagesize=500'
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/connector{query}'
+
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
+    def delete_bulk_connector(self, ids):
+        """
+        Get all the configured Segment Groups. If segmentGroupId obtains the segment sroup details
+        :param ids: type list. list of resouces ids for bulk deleting the App Connectors..
+        return json
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/connector/bulkDelete'
+        payload = {"ids": ids
+                   }
+        response = self.hp_http.post_call(url=url, headers=self.header, error_handling=True, payload=payload)
+        return response.json()
+
+    # Connector-group-controller
+    def list_connector_group(self, appConnectorGroupId=None, query=False):
+        """
+        Gets all configured App Connector Groups for a ZPA tenant.
+        :param query: url query: Example ?page=1&pagesize=20&search=consequat
+        return json
+        """
+        if appConnectorGroupId:
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}'
+        else:
+            if not query:
+                query = '?pagesize=500'
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup{query}'
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
+    # ba - certificate - controller
+
+    def list_browser_access_cert(self, query=False):
+        """
+        Get all the issued certificates
+        :param query: url query: Example ?page=1&pagesize=20&search=consequat
+        return json
+        """
+        if not query:
+            query = '?pagesize=500'
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/visible/versionProfiles{query}'
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
+    # customer-version-profile-controller
+
+    def list_customer_version_profile(self, query=False):
+        """
+        Get Version Profiles visible to a customer
+        :param query: url query: Example ?page=1&pagesize=20&search=consequat
+        return json
+        """
+        if not query:
+            query = '?pagesize=500'
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/visible/versionProfiles{query}'
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
+    # cloud - connector - group - controller
+    def list_cloud_connector_group(self, id=None, query=False):
+        """
+        Get all configured Cloud Connector Groups. If id, Get the Cloud Connector Group details
+        :param query: url query: Example ?page=1&pagesize=20&search=consequat
+        return json
+        """
+        if id:
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/cloudConnectorGroup/{id}'
+        else:
+            if not query:
+                query = '?pagesize=500'
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/cloudConnectorGroup{query}'
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
+    # idp-controller-v-2
+    def list_idP(self, query=False):
+        """
+        Method to Get all the idP details for a ZPA tenant
+        :param query: HTTP query
+        :return: json
+        """
+        if not query:
+            query = '?pagesize=500'
+
+        url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/idp{query}'
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
+    # provisioningKey-controller
+
+    # policy-set-controller
+
+    # scim-attribute-header-controller
+
     def list_scim_attributes(self, idpId, query=False):
+        """
+
+        :param idpId: The unique identifies of the Idp
+        :param query: ?page=1&pagesize=20&search=consequat
+        """
+        if not query:
+            query = '?pagesize=500'
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/idp/{idpId}/scimattribute{query}'
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
+    # scim-group-controller
+    def list_scim_groups(self, idpId, query=False):
         """
         Method details for all SCIM groups
         :param idpId: The unique identifies of the Idp
@@ -131,19 +288,25 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
-    # saml-attr-controller
-    def list_saml_attributes(self, query=False):
+    # saml-attr-controller-v-2
+    def list_saml_attributes(self, idp=None, query=False):
         """
-        Method to det all SAML attributes
+        Method to get all SAML attributes. If idp, get the SAML attributes for a given idp
+        :param idp: type integer. The unique identifier of the IdP.
         :param query: ?page=1&pagesize=20&search=consequat
         """
         if not query:
             query = '?pagesize=500'
-        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/samlAttribute{query}'
+        if idp:
+            url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/samlAttribute/idp/{idp}{query}'
+        else:
+            url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/samlAttribute{query}'
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
+
     # global-policy-controller
+
     def list_global_policy_id(self, query=False):
         """
         Method to get the global policy
@@ -152,100 +315,6 @@ class ZpaTalkerPublic(object):
         if not query:
             query = '?pagesize=500'
         url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/global{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
-
-    # Connector-group-controller
-    def list_connector_group(self, query=False):
-        """
-        Gets all configured App Connector Groups for a ZPA tenant.
-        :param query: url query: Example ?page=1&pagesize=20&search=consequat
-        return json
-        """
-        if not query:
-            query = '?pagesize=500'
-        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
-
-    #  Segment Group Controller
-
-    def list_segment_group(self, query=False):
-        """
-        Method to list all segment group details
-        :return: list
-        """
-        if not query:
-            query = '?pagesize=500'
-
-        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
-
-    def add_segment_group(self, name, description, enabled=True):
-        """
-        Add a new segment group
-        :param name:
-        :param description:
-        :param enabled:
-        :return:
-        """
-        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup'
-        payload = {
-            "name": name,
-            "description": description,
-            "enabled": enabled,
-        }
-        response = self.hp_http.post_call(url, headers=self.header, error_handling=True, payload=payload)
-        return response.json()
-
-    # Server Group Controller
-
-    def list_server_groups(self, query=False):
-        """
-        Method to get all configured Server Groups
-        :param query: url query: Example ?page=1&pagesize=20&search=consequat
-        return json
-        """
-        if not query:
-            query = '?pagesize=500'
-
-        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/serverGroup{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
-
-    def add_server_groups(self, name, description, connector_group_id):
-        """
-        :param name: Server Group Name
-        :param description: Description
-        :param connector_group_id: list of dictionaries with key as "id" and value connector_group_id.
-            [{"id": connector_group_id}]
-        """
-        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/serverGroup'
-
-        payload = {
-            "enabled": True,
-            "dynamicDiscovery": True,
-            "name": name,
-            "description": description,
-            "servers": [
-            ],
-            "appConnectorGroups": connector_group_id
-        }
-        response = self.hp_http.post_call(url=url, headers=self.header, error_handling=True, payload=payload)
-        return response.json()
-
-    # idP - controller
-    def list_idP(self, query=False):
-        """
-        Method to Get all the idP details for a ZPA tenant
-        :param query: HTTP query
-        :return: json
-        """
-        if not query:
-            query = '?pagesize=500'
-
-        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/idp{query}'
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
@@ -292,5 +361,44 @@ class ZpaTalkerPublic(object):
             "customMsg": MsgString
         }
         print(payload)
+        response = self.hp_http.post_call(url=url, headers=self.header, error_handling=True, payload=payload)
+        return response.json()
+
+    # Server Group Controller
+
+    def list_server_groups(self, groupId=None, query=False):
+        """
+        Method to get all configured Server Groups. If groupI, get the Server Group details
+        :param groupId: type integer. The unique identifier of the Server Group.
+        :param query: url query: Example ?page=1&pagesize=20&search=consequat
+        return json
+        """
+        if groupId:
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/serverGroup/{groupId}'
+        else:
+            if not query:
+                query = '?pagesize=500'
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/serverGroup{query}'
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
+    def add_server_groups(self, name, description, connector_group_id):
+        """
+        :param name: Server Group Name
+        :param description: Description
+        :param connector_group_id: list of dictionaries with key as "id" and value connector_group_id.
+            [{"id": connector_group_id}]
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/serverGroup'
+
+        payload = {
+            "enabled": True,
+            "dynamicDiscovery": True,
+            "name": name,
+            "description": description,
+            "servers": [
+            ],
+            "appConnectorGroups": connector_group_id
+        }
         response = self.hp_http.post_call(url=url, headers=self.header, error_handling=True, payload=payload)
         return response.json()

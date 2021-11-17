@@ -1,14 +1,24 @@
-v1.3 ( To be released 2021)
+v1.3 ( November 2021)
 =========================
 1. Added the following ZIA methods (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
   - List, add, delete network services
   - List, add, delete admin audit logs
   - Added delete ipSourceGroups and ipDestinationGroups
+  - Added delete static IP Method
   - list  ipSourceGroups lite method
   - added a generic update call
 2. Updated install instructions
 3. Added the following ZPA methods (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
   - list configured servers
+  - list_segment_group
+  - list_connector
+  - delete_bulk_connector
+  - list_connector_group
+  - list_browser_access_cert
+  - list_customer_version_profile
+  - list_cloud_connector_group
+4. Updated list_idP method url to v2. (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+5. Updated list_saml_attributes method url to v2 (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v1.2 ( September 2021)
 =========================
