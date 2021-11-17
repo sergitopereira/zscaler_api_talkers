@@ -721,6 +721,18 @@ class ZiaTalker(object):
                                           error_handling=True)
         return response.json()
 
+    def delete_staticIP(self, Id):
+        """
+        Deletes the static IP address for the specified ID.
+        :param Id: type integer. The unique identifier for the provisioned static IP address.
+        :return: json
+        """
+        url = f'/staticIP/{Id}'
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                            error_handling=True)
+
+        return response
+
     # User Authentication Settings
     def list_exemptedUrls(self):
         """
