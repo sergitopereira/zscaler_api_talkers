@@ -942,7 +942,7 @@ class ZiaTalker(object):
         url = f'/dlpDictionaries/{dlpDicId}'
         response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
                                             error_handling=True)
-        return
+        return response
 
     def add_dlpDictionaries(self, dlpdicname, customPhraseMatchType, description=None, phrases=None, patterns=None):
         """
