@@ -663,6 +663,73 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
+    def add_greTunnels(self, sourceIp, primaryDestVip, secondaryDestVip, internalIpRange,
+                       withinCountry, comment, ipUnnumbered):
+        """
+        Adds a GRE tunnel configuration.
+        :param sourceIp: type string. The source IP address of the GRE tunnel. This is typically a static IP address in
+         the organization or SD-WAN. This IP address must be provisioned within the Zscaler service using the /staticIP
+         endpoint.
+        :param primaryDestVip: type dictionary. {id:value} where value is integer: Unique identifier of the GRE primary
+         VIP
+        :param secondaryDestVip: type dictionary. {id:value} where value is integer: Unique identifier of the GRE
+        secondary VIP
+        :param internalIpRange: type string. The start of the internal IP address in /29 CIDR range
+        :param withinCountry: type boolean. Restrict the data center virtual IP addresses (VIPs) only to those within
+        the same country as the source IP address
+        :param comment: type string. Additional information about this GRE tunnel
+        :param ipUnnumbered:This is required to support the automated SD-WAN provisioning of GRE tunnels, when set to
+        true gre_tun_ip and gre_tun_id are set to null
+        :return:
+        """
+        url = f'/greTunnels'
+        payload = {
+            "sourceIp": sourceIp,
+            "primaryDestVip": primaryDestVip,
+            "secondaryDestVip": secondaryDestVip,
+            "internalIpRange": internalIpRange,
+            "withinCountry": withinCountry,
+            "comment": comment,
+            "ipUnnumbered": ipUnnumbered
+        }
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
+
+    def list_gre_validateAndGetAvailableInternalIpRanges(self):
+        """
+        Gets the next available GRE tunnel internal IP address ranges
+        :return: list of available IP addresses
+        """
+        url = f'/greTunnels/availableInternalIpRanges'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_gre_recommended_vips(self, query):
+        """
+        Gets a list of recommended GRE tunnel virtual IP addresses (VIPs),
+        based on source IP address or latitude/longitude coordinates.
+        :param query: type string. URL query. Example:
+        :return: list of available IP addresses
+        """
+        url = f'/vips/recommendedList?{query}'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_gre_validate_ip(self, ip):
+        """
+        Gets the static IP address and location mapping information for the specified GRE tunnel
+        IP address
+        :param ip: type string. IP address of the GRE tunnel.
+        :return:
+        """
+        url = f'/greTunnels/validateIP/{ip}'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
     def list_vpnCredentials(self, vpnId=None):
         """
         Gets VPN credentials that can be associated to locations.
@@ -766,6 +833,7 @@ class ZiaTalker(object):
         return response.json()
 
     # Security Policy Settings
+
     def list_security_whitelisted_urls(self):
         """
         Gets a list of white-listed URLs
