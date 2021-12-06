@@ -163,6 +163,39 @@ class ZiaTalker(object):
                                           error_handling=True)
         return response
 
+    # Admin & Role Management
+    def list_adminUsers(self, userId=None, query=None):
+        """
+        Gets a list of admin users. By default, auditor user information is not included.
+        :param userId: user ID
+        :param query: HTTP query
+        :return:json()
+        """
+        if userId:
+            url = f'/adminUsers/{userId}'
+        else:
+            if query:
+                url = f"/users?{query}"
+            else:
+                url = "/users"
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_adminRoles(self, query=None):
+        """
+        Gets a name and ID dictionary of al admin roles
+        :param query: HTTP query
+        :return: json
+        """
+        if query:
+            url = f"/adminRoles/lite?{query}"
+        else:
+            url = "/adminRoles/lite"
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+    
     # URL Categories
     def list_url_categories(self, custom=False):
         """
@@ -479,9 +512,10 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
-    def list_users(self, user_id=None):
+    def list_users(self, user_id=None, query=None):
         """
-        Gets a list of users
+        Gets a list of all users and allows user filtering by name, department, or group.
+        The name search parameter performs a partial match. The dept and group parameters perform a 'starts with' match.
         if ID, gets user information for the specified ID
         :param user_id: user ID
         :return:json()
@@ -489,7 +523,10 @@ class ZiaTalker(object):
         if user_id:
             url = f'/users/{user_id}'
         else:
-            url = "/users"
+            if query:
+                url = f"/users?{query}"
+            else:
+                url = "/users"
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
