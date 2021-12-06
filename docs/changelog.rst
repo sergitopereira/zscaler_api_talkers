@@ -1,3 +1,8 @@
+v1.4 ( December 2021)
+=========================
+1. Added the following ZIA methods (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+  - List admin users and roles
+
 v1.3 ( November 2021)
 =========================
 1. Added the following ZIA methods (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)

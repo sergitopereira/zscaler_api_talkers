@@ -195,7 +195,7 @@ class ZiaTalker(object):
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
-    
+
     # URL Categories
     def list_url_categories(self, custom=False):
         """
