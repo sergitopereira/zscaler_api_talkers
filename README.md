@@ -3,14 +3,18 @@
 ## Option1: Run within a Docker Container
 ```bash
 # Download Dockerfile
-curl -O https://bitbucket.corp.zscaler.com/scm/zat/zscaler_api_talkers.git/master/Dockerfile
+curl -O curl -O https://bitbucket.corp.zscaler.com/projects/ZAT/repos/zscaler_api_talkers/raw/Dockerfile
 
 # Build Image and Run Container
 docker build -t zscaler_api_talkers .  
 docker run -it zscaler_api_talkers bash
 
-# Usage (program is in /app/)
-python zscaler_api_talkers -h
+# Usage (program is in /zscaler_api_talkers/)
+cd zscaler_api_talkers
+
+# Run iPython to start using the modules
+ipython
+
 ```
 
 ## Option2: Run in a Python Virtual Environment
