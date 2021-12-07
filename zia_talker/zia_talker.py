@@ -1036,7 +1036,7 @@ class ZiaTalker(object):
 
     # Firewall Policies
 
-    def list_networkServices(self, serviceId):
+    def list_networkServices(self, serviceId=None):
         """
         Gets a list of all network service groups. The search parameters find matching values within the "name" or
         "description" attributes.

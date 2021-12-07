@@ -1,6 +1,19 @@
 # Zscaler API talkers
 
-##Installation
+## Option1: Run within a Docker Container
+```bash
+# Download Dockerfile
+curl -O https://bitbucket.corp.zscaler.com/scm/zat/zscaler_api_talkers.git/master/Dockerfile
+
+# Build Image and Run Container
+docker build -t zscaler_api_talkers .  
+docker run -it zscaler_api_talkers bash
+
+# Usage (program is in /app/)
+python zscaler_api_talkers -h
+```
+
+## Option2: Run in a Python Virtual Environment
 
 * Git clone repository from BitBucket
 * Create a virtual Environment:
@@ -10,6 +23,9 @@
 * Install requirements
   pip install -r requirements.txt
 * Create a bash alias and review PYTHONPATH
+
+
+
 #ZIA Talker
 ZIA API talker is a python library to leverage ZIA public API Documentation: https://help.zscaler.com/zia/6.1/api
 
