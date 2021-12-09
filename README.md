@@ -3,7 +3,10 @@
 ## Option1: Run within a Docker Container
 ```bash
 # Download Dockerfile
-curl -O curl -O https://bitbucket.corp.zscaler.com/projects/ZAT/repos/zscaler_api_talkers/raw/Dockerfile
+Linux:
+curl -O https://bitbucket.corp.zscaler.com/projects/ZAT/repos/zscaler_api_talkers/raw/Dockerfile
+Windows:
+wget -O Dockerfile https://bitbucket.corp.zscaler.com/projects/ZAT/repos/zscaler_api_talkers/raw/Dockerfile 
 
 # Build Image and Run Container
 docker build -t zscaler_api_talkers .  
@@ -19,6 +22,7 @@ ipython
 
 ## Option2: Run in a Python Virtual Environment
 
+```bash
 * Git clone repository from BitBucket
 * Create a virtual Environment:
   python3 -m venv .zs_api_talkers
@@ -27,7 +31,7 @@ ipython
 * Install requirements
   pip install -r requirements.txt
 * Create a bash alias and review PYTHONPATH
-
+```
 
 
 #ZIA Talker
