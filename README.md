@@ -24,6 +24,7 @@ ipython
 
 ```bash
 * Git clone repository from BitBucket
+  git clone https://bitbucket.corp.zscaler.com/scm/zat/zscaler_api_talkers.git
 * Create a virtual Environment:
   python3 -m venv .zs_api_talkers
 * Activate virtual environment
@@ -39,9 +40,9 @@ ZIA API talker is a python library to leverage ZIA public API Documentation: htt
 
 ##Usage zia_talker
 ```
-from zscaler_api_talkers.zia_talker import ZiaTalker
-a=ZiaTalker('admin.<Zscaler Cloud Name>')
-a.authenticate('APIKEY,'admin@<Zscaler Cloud Name>')
+from zia_talker.zia_talker import ZiaTalker
+a=ZiaTalker('zsapi.<Zscaler Cloud Name>')
+a.authenticate('APIKEY,'admin@<Zscaler Cloud Name>', 'password')
 a.url_categories()
 a.list_users()
 # To view all methods available
