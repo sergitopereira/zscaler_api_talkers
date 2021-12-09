@@ -28,9 +28,16 @@ ipython
 * Create a virtual Environment:
   python3 -m venv .zs_api_talkers
 * Activate virtual environment
+  # Linux
   source .zs_api_talkers/bin/activate
+  # Wiindows
+  .\.zs_api_talkers\Scripts\activate
+  
 * Install requirements
-  pip install -r requirements.txt
+  # Linux
+  pip install -r requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org
+  # Windoes
+  pip install -r .\zscaler_api_talkers\requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org
 * Create a bash alias and review PYTHONPATH
 ```
 
