@@ -175,9 +175,9 @@ class ZiaTalker(object):
             url = f'/adminUsers/{userId}'
         else:
             if query:
-                url = f"/users?{query}"
+                url = f"/adminUsers?{query}"
             else:
-                url = "/users"
+                url = "/adminUsers"
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
@@ -228,7 +228,7 @@ class ZiaTalker(object):
         :param urls: list of urls
         "param dbCategorizedUrls: type list. URL retaining parent category
         :param keywordsRetainingParentCategory: list of key works
-        :param customCategory: Default False. Set to Tye for custom category
+        :param customCategory: Default False. Set to Type for custom category
         :param type: type string. URL_CATEGORY, TLD_CATEGORY, ALL
         :return:  json
         """
