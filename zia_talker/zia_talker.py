@@ -860,7 +860,7 @@ class ZiaTalker(object):
 
     def delete_exemptedUrls(self, urls):
         """
-        Adds URLs to the cookie authentication exempt list to the list
+        Removed URLs to the cookie authentication exempt list to the list
         :param urls: List of urls. Example ['url1','url2']
         """
         url = '/authSettings/exemptedUrls?action=REMOVE_FROM_LIST'
