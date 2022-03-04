@@ -24,6 +24,23 @@ class ZpaTalkerPublic(object):
         self.header = None
         self.customerId = customerID
 
+    def _obtain_all_results(self, url):
+        """
+        API response can have multiple pages. This method return the whole response in a list
+        :param url: url
+        :return: list
+        """
+        result = []
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        if int(response.json()['totalPages']) > 1:
+            i = 1
+            while i <= int(response.json()['totalPages']):
+                result = result + self.hp_http.get_call(url, headers=self.header, error_handling=True).json()['list']
+                i += 1
+        else:
+            result = response.json()['list']
+        return result
+
     def authenticate(self, client_id, client_secret):
         """
         Method to obtain the Bearer Token
@@ -199,7 +216,33 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
-    # ba - certificate - controller
+    # ba-certificate-controller-v-2
+
+    def list_browser_access_certificates(self, query=False):
+        """
+        Get all Browser issued certificates
+        :param query: url query: Example ?page=1&pagesize=20&search=consequat
+        return json
+        """
+        if not query:
+            query = '?pagesize=500'
+        url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/clientlessCertificate/issued{query}'
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
+
+    # enrollment-cert-controller
+
+    def list_enrollment_certificates(self, query=False):
+        """
+        Get all the Enrollment certificates
+        :param query: url query: Example ?page=1&pagesize=20&search=consequat
+        return json
+        """
+        if not query:
+            query = '?pagesize=500'
+        url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/enrollmentCert'
+        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        return response.json()
 
     def list_browser_access_cert(self, query=False):
         """
@@ -303,7 +346,6 @@ class ZpaTalkerPublic(object):
             url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/samlAttribute{query}'
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
-
 
     # global-policy-controller
 

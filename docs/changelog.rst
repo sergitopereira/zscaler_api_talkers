@@ -1,6 +1,11 @@
-v1.% ( January 2022)
+v1.% ( March 2022)
 =========================
 1. Fixed typos in doc strings (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+2. Added Several zia_methods  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+    list devices
+    list device groups
+    Generic update and add calls
+3. Added method to iterate all pages of ZPA responses (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v1.4 ( December 2021)
 =========================

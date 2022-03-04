@@ -79,6 +79,26 @@ class ZiaTalker(object):
                                             payload={})
         return response.json()
 
+    def _obtain_all(self, url):
+        """
+        Internal method that queries all pages
+        :param url:  URL
+        :return:
+        """
+        page = 1
+        result = []
+        print(url)
+        while True:
+            response = self.hp_http.get_call(f'{url}&page={page}', cookies={'JSESSIONID': self.jsessionid},
+                                             error_handling=True)
+            if response.json():
+                result += response.json()
+                page += 1
+                time.sleep(1)
+            else:
+                break
+        return result
+
     def get_status(self):
         """
         Method to obtain the activation status for a configuration change
@@ -173,14 +193,14 @@ class ZiaTalker(object):
         """
         if userId:
             url = f'/adminUsers/{userId}'
+            return self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True).json()
         else:
             if query:
-                url = f"/adminUsers?{query}"
+                url = f"/adminUsers?{query}?pageSize=1000"
             else:
-                url = "/adminUsers"
-        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
-                                         error_handling=True)
-        return response.json()
+                url = "/adminUsers?pageSize=1000"
+        return self._obtain_all(url)
 
     def list_adminRoles(self, query=None):
         """
@@ -522,14 +542,14 @@ class ZiaTalker(object):
         """
         if user_id:
             url = f'/users/{user_id}'
+            return self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
         else:
             if query:
-                url = f"/users?{query}"
+                url = f"/users?{query}&pageSize=1000"
             else:
-                url = "/users"
-        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
-                                         error_handling=True)
-        return response.json()
+                url = "/users?pageSize=1000"
+        return self._obtain_all(url)
 
     def add_users(self, name, email, groups, department, comments, password, adminuser=False, ):
         """
@@ -1295,6 +1315,40 @@ class ZiaTalker(object):
                                           error_handling=True)
         return response.json()
 
+    # Device Groups
+
+    def list_devices_groups(self, query=None):
+        """
+        Gets a list of device groups
+        :param query:
+        :return: List
+        """
+        if query:
+            url = f"/deviceGroups?{query}"
+        else:
+            url = "/deviceGroups"
+
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_devices(self, query=None):
+        """
+        Gets a list of devices. Any given search parameters will be applied during device search. Search parameters are
+         based on device name, model, owner, OS type, and OS version. The devices listed can also be restricted to return
+         information only for ones belonging to specific users.
+        :param query:
+        :return: List
+        """
+        if query:
+            url = f"/deviceGroups/devices?{query}"
+        else:
+            url = "/deviceGroups/devices"
+
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
     def update_call(self, url, payload):
         """
         Generic PUT call. This call will overwrite all the configuration with the new payload
@@ -1303,4 +1357,14 @@ class ZiaTalker(object):
         """
         response = self.hp_http.put_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
+        return response.json()
+
+    def add_call(self, url, payload):
+        """
+        Generic POST call. This call will add all the configuration with the new payload
+        :param url: url of Zscaler API call
+        :param payload: type json. Payload
+        """
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
         return response.json()
