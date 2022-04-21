@@ -1,4 +1,4 @@
-v1.% ( March 2022)
+v1.5 ( March 2022)
 =========================
 1. Fixed typos in doc strings (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 2. Added Several zia_methods  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
