@@ -70,5 +70,8 @@ print(dir(a))
 
 
 
-https://user-images.githubusercontent.com/43428944/164543976-c3903497-2df0-47e3-98cd-271b0b576f15.mov
+
+
+
+https://user-images.githubusercontent.com/43428944/164544149-4431fcbe-100e-4ab8-8c33-a96e72bc7383.mov
 
