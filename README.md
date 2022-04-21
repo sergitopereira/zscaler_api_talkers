@@ -4,9 +4,9 @@
 ```bash
 # Download Dockerfile
 Linux:
-curl -O https://bitbucket.corp.zscaler.com/projects/ZAT/repos/zscaler_api_talkers/raw/Dockerfile
+curl -O https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/Dockerfile
 Windows:
-wget -O Dockerfile https://bitbucket.corp.zscaler.com/projects/ZAT/repos/zscaler_api_talkers/raw/Dockerfile 
+wget -O Dockerfile https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/Dockerfile 
 
 # Build Image and Run Container
 docker build -t zscaler_api_talkers .  
@@ -24,7 +24,7 @@ ipython
 
 ```bash
 * Git clone repository from BitBucket
-  git clone https://bitbucket.corp.zscaler.com/scm/zat/zscaler_api_talkers.git
+  git clone https://github.com/sergitopereira/zscaler_api_talkers.git
 * Create a virtual Environment:
   python3 -m venv .zs_api_talkers
 * Activate virtual environment
@@ -36,7 +36,7 @@ ipython
 * Install requirements
   # Linux
   pip install -r requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org
-  # Windoes
+  # Windows
   pip install -r .\zscaler_api_talkers\requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org
 * Create a bash alias and review PYTHONPATH
 ```
@@ -46,7 +46,7 @@ ipython
 ZIA API talker is a python library to leverage ZIA public API Documentation: https://help.zscaler.com/zia/6.1/api
 
 ##Usage zia_talker
-```
+```python
 from zia_talker.zia_talker import ZiaTalker
 a=ZiaTalker('zsapi.<Zscaler Cloud Name>')
 a.authenticate('APIKEY,'admin@<Zscaler Cloud Name>', 'password')
@@ -60,7 +60,7 @@ print(dir(a))
 ZPA API talker is a python library to leverage ZPA public API Documentation: https://help.zscaler.com/zpa/api-reference
 
 ##Usage zpa_talker
-```
+``` python
 from zpa_talker.zpa_talker import ZpaTalkerPublic as ZpaTalker
 a=ZpaTalker('customerID')
 a.authenticate('clientID','clientSecret')

@@ -87,14 +87,13 @@ class ZiaTalker(object):
         """
         page = 1
         result = []
-        print(url)
         while True:
             response = self.hp_http.get_call(f'{url}&page={page}', cookies={'JSESSIONID': self.jsessionid},
                                              error_handling=True)
             if response.json():
                 result += response.json()
                 page += 1
-                time.sleep(1)
+                time.sleep(0.5)
             else:
                 break
         return result
@@ -178,7 +177,6 @@ class ZiaTalker(object):
         if actionTypes:
             payload.update(actionTypes=actionTypes)
 
-        print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
         return response
@@ -278,13 +276,7 @@ class ZiaTalker(object):
     def add_url_categories1(self, payload):
         """
          Adds a new custom URL category.
-        :param name: type string. Name of the custom category
-        :param superCategory: super category
-        :param urls: list of urls
-        "param dbCategorizedUrls: type list. URL retaining parent category
-        :param keywordsRetainingParentCategory: list of key works
-        :param customCategory: Default False. Set to Tye for custom category
-        :param type: type string. URL_CATEGORY, TLD_CATEGORY, ALL
+        :param payload
         :return:  json
         """
         url = '/urlCategories'
@@ -308,11 +300,12 @@ class ZiaTalker(object):
         :param urls: list of urls
         "param dbCategorizedUrls: type list. URL retaining parent category
         :param keywordsRetainingParentCategory: list of key works
+        :param action: Optional parameter. ADD_TO_LIST or REMOVE_FROM_LIST
         :return:  json
         """
-        if categoryId not in valid_category_ids:
+        '''if categoryId not in valid_category_ids:
             print(f'Error -> Invalid category id')
-            raise ValueError("Invalid category id")
+            raise ValueError("Invalid category id")'''
 
         if action == 'ADD_TO_LIST':
             url = f'/urlCategories/{categoryId}?action=ADD_TO_LIST'
@@ -354,6 +347,19 @@ class ZiaTalker(object):
         :return: json response
         """
         url = f'/urlCategories/{categoryid}'
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                            error_handling=True)
+        return response
+
+    def delete_urlFilteringRules(self, ruleId):
+        """
+        Deletes the custom URL category for the specified ID.
+        You cannot delete a custom category while it is being used by a URL policy or NSS feed. Also, predefined
+        categories cannot be deleted.
+        :param ruleId:  type int. Rule Id
+        :return: json response
+        """
+        url = f'/urlFilteringRules/{ruleId}'
         response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
                                             error_handling=True)
         return response
@@ -517,20 +523,22 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
-    def list_groups(self, group_id=""):
+    def list_groups(self, group_id=None):
         """
         Gets a list of groups
         if ID, gets the group for the specified ID
         :param group_id: group ID
         :return:json()
         """
-        if group_id:
-            url = "/groups"
+        if not group_id:
+            url = "/groups?pageSize=10000"
+            response = self._obtain_all(url)
         else:
             url = f'/groups/{group_id}'
-        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
-                                         error_handling=True)
-        return response.json()
+            response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                             error_handling=True)
+
+        return response
 
     def list_users(self, user_id=None, query=None):
         """
@@ -1130,7 +1138,7 @@ class ZiaTalker(object):
 
     def add_firewallFilteringRules(self, name, order, state, action, description=None, defaultRule=False,
                                    predefined=False, srcIps=None, destAddresses=None, destIpGroups=None,
-                                   srcIpGroups=None, rank=0):
+                                   srcIpGroups=None, labels=None, rank=0):
         """
         :param name: type str,  Name of the Firewall Filtering policy rule ["String"]
         :param order: type int, Rule order number of the Firewall Filtering policy rule
@@ -1169,6 +1177,8 @@ class ZiaTalker(object):
             payload.update(destAddresses=destAddresses)
         if destIpGroups:
             payload.update(destIpGroups=destIpGroups)
+        if labels:
+            payload.update(labels=labels)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
         return response
@@ -1349,6 +1359,24 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
+    # Rule Labels
+    def list_rule_labels(self, ruleLabelId=None):
+        """
+        Gets rule label information for the specified ID
+        :param ruleLabelId:
+        :return: List
+        """
+        if ruleLabelId:
+            url = f"/ruleLabels/{ruleLabelId}"
+
+        else:
+            url = "/ruleLabels?pageSize=1000"
+
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+
     def update_call(self, url, payload):
         """
         Generic PUT call. This call will overwrite all the configuration with the new payload
@@ -1368,3 +1396,4 @@ class ZiaTalker(object):
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
         return response.json()
+
