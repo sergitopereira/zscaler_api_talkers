@@ -1,5 +1,11 @@
 # Zscaler API talkers
 
+ZIA API Talker
+
+ZPA API Talker
+
+Zscaler Client Connector Portal Talker
+
 ## Option1: Run within a Docker Container
 ```bash
 # Download Dockerfile
@@ -64,6 +70,16 @@ ZPA API talker is a python library to leverage ZPA public API Documentation: htt
 from zpa_talker.zpa_talker import ZpaTalkerPublic as ZpaTalker
 a=ZpaTalker('customerID')
 a.authenticate('clientID','clientSecret')
+# To view all methods available
+print(dir(a))
+```
+# ZCCP talker
+Zscaler Client Connector Portal API talker
+``` python
+from zccp_talker.zccp_talker import ZccpTalker
+a.authenticate('clientID','clientSecret')
+a.list_devices('companyID')
+a.list_OTP('companyID','device id')
 # To view all methods available
 print(dir(a))
 ```

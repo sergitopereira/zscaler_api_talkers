@@ -1,3 +1,6 @@
+v1.6 ( April 2022)
+=========================
+1. Added Zscaler Client Connector API talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 v1.5 ( March 2022)
 =========================
 1. Fixed typos in doc strings (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)

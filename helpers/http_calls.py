@@ -30,22 +30,22 @@ class HttpCalls(object):
         Method to perform a GET HTTP  call
         :param url: url
         :param cookies: cookies
+        :param headers: Additional HTTP headers
         :param params: Key,Value parameters in the URL after a question mark
         :param error_handling: Boolean, when TRUE will use Zscaler HTTP codes
         :return: response
         """
         full_url = f'{self.host}{url}'
-        if not headers:
-            headers = self.headers
+        if headers:
+            self.headers.update(headers)
         try:
-            response = requests.get(url=full_url, headers=headers, cookies=cookies, params=params,
+            response = requests.get(url=full_url, headers=self.headers, cookies=cookies, params=params,
                                     verify=self.verify)
-            # print(response.url)
             if error_handling:
                 self._zia_http_codes(response)
             else:
                 if response.status_code not in [200, 201, 204]:
-                    raise ValueError(response.status_code)
+                    raise ValueError(f'{response.status_code} -> {response.content}')
             return response
         except requests.HTTPError as e:
             raise ValueError(e)
@@ -66,8 +66,8 @@ class HttpCalls(object):
                                          verify=self.verify)
             else:
                 if headers:
-                    headers.update(self.headers)
-                response = requests.post(url=full_url, headers=headers, cookies=cookies, json=payload,
+                    self.headers.update(headers)
+                response = requests.post(url=full_url, headers=self.headers, cookies=cookies, json=payload,
                                          verify=self.verify)
                 print(response.status_code)
                 print(response)

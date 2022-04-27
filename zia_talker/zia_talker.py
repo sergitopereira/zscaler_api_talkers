@@ -1,5 +1,3 @@
-import pdb
-
 from helpers.http_calls import HttpCalls
 import time
 from getpass import getpass
@@ -333,7 +331,6 @@ class ZiaTalker(object):
         if dbCategorizedUrls:
             payload.update(dbCategorizedUrls=dbCategorizedUrls)
 
-        pdb.set_trace()
         response = self.hp_http.put_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
