@@ -4,7 +4,7 @@ import time
 from helpers.http_calls import HttpCalls
 
 
-class ZccpTalker(object):
+class ZccTalker(object):
     """
     Client Connector API talker
     Documentation: under development
