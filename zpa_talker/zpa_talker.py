@@ -6,8 +6,8 @@ from helpers.http_calls import HttpCalls
 
 class ZpaTalkerPublic(object):
     """
-    ZIA API talker
-    Documentation: https://help.zscaler.com/zia/api
+    ZPA API talker
+    Documentation: https://help.zscaler.com/zpa/api
     https://help.zscaler.com/zpa
     """
 
