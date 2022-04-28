@@ -1,13 +1,19 @@
-# Zscaler API talkers
+# Unofficial Zscaler API talkers
 
-ZIA API Talker
+### ZIA API Talker
+Python client to leverage  [Zscaler Internet Access API](https://help.zscaler.com/zia/api)
 
-ZPA API Talker
+### ZPA API Talker
+Python client to leverage [Zscaler Private Access API](https://help.zscaler.com/zpa/api-reference)
 
-Zscaler Client Connector Portal Talker
+### ZCC API Talker
+
+Python client to leverage Zscaler Client Connector API. ( Currently in Beta status)
+
+# Installation
 
 ## Option1: Run within a Docker Container
-```bash
+``` bash
 # Download Dockerfile
 Linux:
 curl -O https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/Dockerfile
@@ -20,15 +26,11 @@ docker run -it zscaler_api_talkers bash
 
 # Usage (program is in /zscaler_api_talkers/)
 cd zscaler_api_talkers
-
-# Run iPython to start using the modules
-ipython
-
 ```
 
 ## Option2: Run in a Python Virtual Environment
 
-```bash
+``` bash
 * Git clone repository from BitBucket
   git clone https://github.com/sergitopereira/zscaler_api_talkers.git
 * Create a virtual Environment:
@@ -47,12 +49,10 @@ ipython
 * Create a bash alias and review PYTHONPATH
 ```
 
-
 #ZIA Talker
-ZIA API talker is a python library to leverage ZIA public API Documentation: https://help.zscaler.com/zia/6.1/api
 
 ##Usage zia_talker
-```python
+``` python
 from zia_talker.zia_talker import ZiaTalker
 a=ZiaTalker('zsapi.<Zscaler Cloud Name>')
 a.authenticate('APIKEY,'admin@<Zscaler Cloud Name>', 'password')
@@ -63,7 +63,6 @@ print(dir(a))
 ```
 
 #ZPA Talker
-ZPA API talker is a python library to leverage ZPA public API Documentation: https://help.zscaler.com/zpa/api-reference
 
 ##Usage zpa_talker
 ``` python
@@ -73,8 +72,9 @@ a.authenticate('clientID','clientSecret')
 # To view all methods available
 print(dir(a))
 ```
-# ZCCP talker
-Zscaler Client Connector Portal API talker
+# ZCC talker
+
+## Usage zcc_talker
 ``` python
 from zccp_talker.zccp_talker import ZccpTalker
 a.authenticate('clientID','clientSecret')
@@ -84,10 +84,12 @@ a.list_OTP('companyID','device id')
 print(dir(a))
 ```
 
-
-
-
-
+# Usage example
 
 https://user-images.githubusercontent.com/43428944/164544149-4431fcbe-100e-4ab8-8c33-a96e72bc7383.mov
+
+# Author
+
+Sergio Pereira
+
 
