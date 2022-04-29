@@ -31,22 +31,15 @@ cd zscaler_api_talkers
 ## Option2: Run in a Python Virtual Environment
 
 ``` bash
-* Git clone repository from BitBucket
-  git clone https://github.com/sergitopereira/zscaler_api_talkers.git
 * Create a virtual Environment:
   python3 -m venv .zs_api_talkers
 * Activate virtual environment
   # Linux
   source .zs_api_talkers/bin/activate
-  # Wiindows
-  .\.zs_api_talkers\Scripts\activate
-  
-* Install requirements
-  # Linux
-  pip install -r requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org
   # Windows
-  pip install -r .\zscaler_api_talkers\requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org
-* Create a bash alias and review PYTHONPATH
+  .\.zs_api_talkers\Scripts\activate
+* Install Zscales API talkers
+   pip install Zscaler-API-Talkers  
 ```
 
 #ZIA Talker
@@ -79,7 +72,7 @@ print(dir(a))
 from zccp_talker.zccp_talker import ZccpTalker
 a.authenticate('clientID','clientSecret')
 a.list_devices('companyID')
-a.list_OTP('companyID','device id')
+a.list_OTP('companyID','user device id')
 # To view all methods available
 print(dir(a))
 ```
@@ -88,8 +81,14 @@ print(dir(a))
 
 https://user-images.githubusercontent.com/43428944/164544149-4431fcbe-100e-4ab8-8c33-a96e72bc7383.mov
 
+# Bugs and enhancements
+
+Feel free to open an issues using [Gihub Issues](https://github.com/sergitopereira/zscaler_api_talkers/issues)
+
+
 # Author
 
-Sergio Pereira
+Sergio Augusto Pereira Alarcon
+
 
 

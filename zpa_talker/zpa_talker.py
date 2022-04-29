@@ -1,6 +1,3 @@
-import json
-import pdb
-
 from helpers.http_calls import HttpCalls
 
 
@@ -13,8 +10,8 @@ class ZpaTalkerPublic(object):
 
     def __init__(self, customerID, cloud='https://config.private.zscaler.com'):
         """
-        :param cloud: example https://config.zpabeta.net
-        :param customerID: The unique identifier of the ZPA tenant
+        :param cloud: type string. Example https://config.zpabeta.net
+        :param customerID: type int. The unique identifier of the ZPA tenant
         """
         self.base_uri = f'{cloud}'
         # self.base_uri = f'https://config.zpabeta.net'
@@ -27,8 +24,8 @@ class ZpaTalkerPublic(object):
     def _obtain_all_results(self, url):
         """
         API response can have multiple pages. This method return the whole response in a list
-        :param url: url
-        :return: list
+        :param url: type string. url
+        :return: type list
         """
         result = []
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)

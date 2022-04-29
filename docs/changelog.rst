@@ -1,4 +1,8 @@
-v1.6 ( April 2022)
+v2.2 ( April 2022)
+=========================
+1. Updated zzc_talker README instructions and doc string (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
+v2.0 ( April 2022)
 =========================
 1. Added Zscaler Client Connector API talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
@@ -60,7 +64,6 @@ v1.1 ( July 2021)
 2. Updated zpa_talker for SAML method (by `Rohit Luthra <mailto:rluthra@zscaler.com>`_)
     - Added method for SAML Attribute pull from the customer portal
     - Added method for fetching the global policy Global policy ID
-
 
 v1.0 ( June 2021)
 =========================
