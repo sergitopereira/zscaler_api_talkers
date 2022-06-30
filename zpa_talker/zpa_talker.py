@@ -90,31 +90,31 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
-    def add_application_segment(self, APPname, healthReporting, domainNames, applicationGroupId, serverGroups,
-                                tcpPortRanges, udpPortRanges=[], description='', enabled=True, ipAnchored=False,
+    def add_application_segment(self, name, healthReporting, domainNames, segmentGroupId, serverGroups,
+                                tcpPortRanges=[], udpPortRanges=[], description='', enabled=True, ipAnchored=False,
                                 doubleEncrypt=False, bypassType='NEVER', isCnameEnabled=True, cnameConfig='NOFLATTEN'):
         """
         Adds a new Application Segment for a ZPA tenant.
-        :param APPname: string. App Name
-        :param description: string. Description
-        :param enabled: Boolean (True|False)
-        :param healthReporting: string. possible values: NONE, ON_ACCESS, CONTINUOUS
-        :param ipAnchored: Boolean (True|False)
-        :param doubleEncrypt: Boolean (True|False)
-        :param bypassType: string. possible values ALWAYS, NEVER, ON_NET
-        :param isCnameEnabled: Boolean (True|False)
-        :param tcpPortRanges: list ["from", "to"]
-        :param udpPortRanges: list ["from", "to"]
-        :param domainNames: list of domains or IP addresses
-        :param applicationGroupId: Application Group id
-        :param serverGroups=list of dictionaries, where key is id and value is serverGroupId [{
+        :param name: type string. App Name
+        :param description: type string. Description
+        :param enabled: type boolean (True|False)
+        :param healthReporting: type string. possible values: NONE, ON_ACCESS, CONTINUOUS
+        :param ipAnchored: type boolean (True|False)
+        :param doubleEncrypt: type boolean (True|False)
+        :param bypassType: type string. possible values ALWAYS, NEVER, ON_NET
+        :param isCnameEnabled: type boolean (True|False)
+        :param tcpPortRanges: type list.  ["from", "to"]
+        :param udpPortRanges: type list.  ["from", "to"]
+        :param domainNames: type list. List of domains or IP addresses
+        :param segmentGroupId: type string. Application Segment Group id
+        :param serverGroups=type list. list of dictionaries, where key is id and value is serverGroupId [{
                 "id": "<serverGroupId>"}]
-        :return:
+        :return: type dict. HTTP response
         """
 
         url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/application"
         payload = {
-            "name": APPname,
+            "name": name,
             "description": description,
             "enabled": enabled,
             "healthReporting": healthReporting,
@@ -125,7 +125,7 @@ class ZpaTalkerPublic(object):
             "tcpPortRanges": tcpPortRanges,
             "udpPortRanges": udpPortRanges,
             "domainNames": domainNames,
-            "applicationGroupId": applicationGroupId,
+            "segmentGroupId": segmentGroupId,
             "serverGroups": serverGroups,
             "cnameConfig": cnameConfig
         }

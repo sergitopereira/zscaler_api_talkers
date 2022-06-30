@@ -1,3 +1,11 @@
+v2.4 ( May 2022)
+=========================
+1. Updated zpa_talker method add_application_segment string docs (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
+v2.3 ( April 2022)
+=========================
+1. Updated zia_talker url_lookup method (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
 v2.2 ( April 2022)
 =========================
 1. Updated zzc_talker README instructions and doc string (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)

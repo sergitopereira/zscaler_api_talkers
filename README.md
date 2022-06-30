@@ -39,7 +39,7 @@ cd zscaler_api_talkers
   # Windows
   .\.zs_api_talkers\Scripts\activate
 * Install Zscales API talkers
-   pip install Zscaler-API-Talkers  
+   pip install zscaler-api-talkers  
 ```
 
 #ZIA Talker
@@ -69,7 +69,7 @@ print(dir(a))
 
 ## Usage zcc_talker
 ``` python
-from zccp_talker.zccp_talker import ZccpTalker
+from zcc_talker.zcc_talker import ZccTalker
 a.authenticate('clientID','clientSecret')
 a.list_devices('companyID')
 a.list_OTP('companyID','user device id')

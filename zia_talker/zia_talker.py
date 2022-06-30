@@ -409,9 +409,10 @@ class ZiaTalker(object):
         list_of_lists = [url_list[i:i + 100] for i in range(0, len(url_list), 100)]
         for item in list_of_lists:
             response = self.hp_http.post_call(url, payload=item, cookies={'JSESSIONID': self.jsessionid},
+                                              headers={'Connection': 'close'},
                                               error_handling=True)
             result.append(response.json())
-            time.sleep(10)
+            time.sleep(1)
         final_result = []
         for i in result:
             for j in i:

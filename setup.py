@@ -1,8 +1,8 @@
 from setuptools import setup
 
 setup(
-    name='Zscaler-API-Talkers',
-    version='2.2',
+    name='zscaler-api-talkers',
+    version='2.3',
     author='Sergio Pereira',
     author_email='sergitopereira@hotmail.com',
     packages=['/Users/spereira/github/zscaler_api_talkers'],
