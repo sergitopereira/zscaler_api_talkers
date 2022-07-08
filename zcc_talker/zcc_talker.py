@@ -74,7 +74,18 @@ class ZccTalker(object):
         """
         Method to fetch the One Time Password for a specific device. These passwords are unique and tied to a device UDID
         :param companyID: type int. ORG ID
-        :param udid: device UDID
+        :param udid: type int. User device ID
+        :return: type list
+        """
+        url = f'/public/v1/getOtp?udid={udid}'
+        response = self.hp_http.get_call(url=url, params=companyID, headers=self.header)
+        return response.json()
+
+    def list_passwords(self, companyID, udid):
+        """
+        Method to fetch the One Time Password for a specific device. These passwords are unique and tied to a device UDID
+        :param companyID: type int. ORG ID
+        :param udid: type int. User device ID
         :return: type list
         """
         url = f'/public/v1/getOtp?udid={udid}'

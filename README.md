@@ -31,27 +31,20 @@ cd zscaler_api_talkers
 ## Option2: Run in a Python Virtual Environment
 
 ``` bash
-* Git clone repository from BitBucket
-  git clone https://github.com/sergitopereira/zscaler_api_talkers.git
 * Create a virtual Environment:
   python3 -m venv .zs_api_talkers
 * Activate virtual environment
   # Linux
   source .zs_api_talkers/bin/activate
-  # Wiindows
-  .\.zs_api_talkers\Scripts\activate
-  
-* Install requirements
-  # Linux
-  pip install -r requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org
   # Windows
-  pip install -r .\zscaler_api_talkers\requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org
-* Create a bash alias and review PYTHONPATH
+  .\.zs_api_talkers\Scripts\activate
+* Install Zscales API talkers
+   pip install zscaler-api-talkers  
 ```
 
-#ZIA Talker
+# ZIA Talker
 
-##Usage zia_talker
+## Usage zia_talker
 ``` python
 from zia_talker.zia_talker import ZiaTalker
 a=ZiaTalker('zsapi.<Zscaler Cloud Name>')
@@ -62,9 +55,9 @@ a.list_users()
 print(dir(a))
 ```
 
-#ZPA Talker
+# ZPA Talker
 
-##Usage zpa_talker
+## Usage zpa_talker
 ``` python
 from zpa_talker.zpa_talker import ZpaTalkerPublic as ZpaTalker
 a=ZpaTalker('customerID')
@@ -76,10 +69,10 @@ print(dir(a))
 
 ## Usage zcc_talker
 ``` python
-from zccp_talker.zccp_talker import ZccpTalker
+from zcc_talker.zcc_talker import ZccTalker
 a.authenticate('clientID','clientSecret')
 a.list_devices('companyID')
-a.list_OTP('companyID','device id')
+a.list_OTP('companyID','user device id')
 # To view all methods available
 print(dir(a))
 ```
@@ -88,8 +81,15 @@ print(dir(a))
 
 https://user-images.githubusercontent.com/43428944/164544149-4431fcbe-100e-4ab8-8c33-a96e72bc7383.mov
 
+# Bugs and enhancements
+
+Feel free to open an issues using [Gihub Issues](https://github.com/sergitopereira/zscaler_api_talkers/issues)
+
+
 # Author
 
-Sergio Pereira
+Sergio Augusto Pereira Alarcon
+Zscaler Professional Services 
+
 
 
