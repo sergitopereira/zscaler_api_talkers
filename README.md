@@ -42,9 +42,9 @@ cd zscaler_api_talkers
    pip install zscaler-api-talkers  
 ```
 
-#ZIA Talker
+# ZIA Talker
 
-##Usage zia_talker
+## Usage zia_talker
 ``` python
 from zia_talker.zia_talker import ZiaTalker
 a=ZiaTalker('zsapi.<Zscaler Cloud Name>')
@@ -55,9 +55,9 @@ a.list_users()
 print(dir(a))
 ```
 
-#ZPA Talker
+# ZPA Talker
 
-##Usage zpa_talker
+## Usage zpa_talker
 ``` python
 from zpa_talker.zpa_talker import ZpaTalkerPublic as ZpaTalker
 a=ZpaTalker('customerID')
@@ -89,6 +89,7 @@ Feel free to open an issues using [Gihub Issues](https://github.com/sergitoperei
 # Author
 
 Sergio Augusto Pereira Alarcon
+Zscaler Professional Services 
 
 
 
