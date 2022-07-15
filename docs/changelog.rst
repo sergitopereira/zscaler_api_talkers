@@ -1,3 +1,9 @@
+v3.2 ( July 2022)
+=========================
+Updated ZCC talker. The following methods were added:(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+remove_devices: Marks the device for removal ( Device removal pending)
+force_remove_devices" Marks the device for removal  and also signals the cloud to invalidate the user's session
+
 v3.1 ( July 2022)
 =========================
 Updated setup.conf for pypi installation using pip install zscaler-api-talkers

@@ -91,3 +91,32 @@ class ZccTalker(object):
         url = f'/public/v1/getOtp?udid={udid}'
         response = self.hp_http.get_call(url=url, params=companyID, headers=self.header)
         return response.json()
+
+    def remove_devices(self, companyID, udids):
+        """
+        Method to  mark the device for removal (Device Removal Pending).
+        :param companyID: type int. ORG ID
+        :param udids: type list. List of user devices ids
+        :return: type list
+        """
+        url = f'/public/v1/removeDevices'
+        payload = {"companyId": companyID,
+                   "udids": udids
+                   }
+        response = self.hp_http.post_call(url=url, headers=self.header, payload=payload)
+        return response.json()
+
+    def force_remove_devices(self, companyID, udids):
+        """
+        Force Remove, has the same effect as Remove, though it additionally moves the device straight to Removed and also
+        signals the cloud to invalidate the user’s session.
+        :param companyID: type int. ORG ID
+        :param udids: type list. List of user devices ids
+        :return: type list
+        """
+        url = f'/public/v1/forceRemoveDevices'
+        payload = {"companyId": companyID,
+                   "udids": udids
+                   }
+        response = self.hp_http.post_call(url=url, headers=self.header, payload=payload)
+        return response.json()

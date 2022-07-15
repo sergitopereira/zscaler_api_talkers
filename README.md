@@ -79,7 +79,7 @@ print(dir(a))
 
 # Usage example
 
-https://user-images.githubusercontent.com/43428944/164544149-4431fcbe-100e-4ab8-8c33-a96e72bc7383.mov
+https://github.com/sergitopereira/zscaler_api_talkers#usage-example
 
 # Bugs and enhancements
 
