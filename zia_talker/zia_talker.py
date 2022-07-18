@@ -1014,10 +1014,110 @@ class ZiaTalker(object):
             "phrases": phrases,
             "patterns": patterns
         }
-        print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
-        print(response)
+        return response.json()
+
+    def list_dlpEngines(self, dlpEngineId=None):
+        """
+         Get a list of DLP engines.
+        :param dlpEngineId: type integer. Optinal value. The unique identifier for the DLP engine
+        :return: json
+        """
+        if dlpEngineId:
+            url = f'/dlpEngines/{dlpEngineId}'
+        else:
+            url = '/dlpEngines'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_dlpExactDataMatchSchemas(self):
+        """
+        Exact Data Match (EDM) templates (or EDM schemas) allow the Zscaler service to identify a record from a structured
+        data source that matches predefined criteria. Using the Index Tool, you can create an EDM template that allows
+        you to define this criteria (i.e., define the tokens) for your data records by importing a CSV file.
+        After the data is defined and submitted within the tool, you can then apply the EDM template to a custom DLP
+        dictionary or engine. This endpoint gets the EDM templates for all Index Tools used by the organization
+
+        :return: json
+        """
+        url = '/dlpExactDataMatchSchemas'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_dlpNotificationTemplates(self, templateId=None):
+        """
+        Gets a list of DLP notification templates
+        :param templateId: type integer. Optional value. The unique identifier  for a DLP notification template
+        :return: json
+        """
+        if templateId:
+            url = f'/dlpNotificationTemplates/{templateId}'
+        else:
+
+            url = '/dlpNotificationTemplates'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_icapServer(self, icapServerId=None):
+        """
+        Gets a list of DLP notification templates
+        :param icapServerId: type integer. Optional value. The unique identifier for the DLP server using ICAP
+        :return: json
+        """
+        if icapServerId:
+            url = f'/icapServers/{icapServerId}'
+        else:
+
+            url = '/icapServers'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_idmprofile(self, profileId=None):
+        """
+        List all the IDM templates for all Index Tools used by the organization. If profileId, it lists the
+        IDM template information for the specified ID.
+        :param profileId: type integer. Optional value. The unique identifier for the IDM template (or profile)
+        :return: json
+        """
+        if profileId:
+            url = f'/idmprofile/{profileId}'
+        else:
+
+            url = '/idmprofile'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def list_webDlpRules(self, ruleId=None):
+        """
+        list DLP policy rules, excluding SaaS Security API DLP policy rules. If ruleId, list DLP policy rule
+        information for the specified ID
+        :param ruleId: type integer. Optional value. The unique identifier for theDLP rule
+        :return: json
+        """
+        if ruleId:
+            url = f'/webDlpRules/{ruleId}'
+        else:
+
+            url = '/webDlpRules'
+        response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                         error_handling=True)
+        return response.json()
+
+    def delete_webDlpRules(self, ruleId):
+        """
+        Deletes a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
+        :param ruleId: type integer. The unique identifier for the DLP policy rule.
+        :return: json
+        """
+        url = f'/webDlpRules/{ruleId}'
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                            error_handling=True)
         return response.json()
 
     # Firewall Policies

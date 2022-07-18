@@ -1,3 +1,14 @@
+v3.3 ( Augusto 2022)
+=========================
+Updated ZIA talker. The following methods were added:(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+ list_dlpEngines
+ list_dlpExactDataMatchSchemas
+ list_dlpNotificationTemplates
+ list_icapServer
+ list_idmprofile
+ list_webDlpRules
+ delete_webDlpRules
+
 v3.2 ( July 2022)
 =========================
 Updated ZCC talker. The following methods were added:(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
