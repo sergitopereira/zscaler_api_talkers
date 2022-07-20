@@ -1,4 +1,4 @@
-v3.3 ( Augusto 2022)
+v3.3 ( August 2022)
 =========================
 Updated ZIA talker. The following methods were added:(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
  list_dlpEngines
