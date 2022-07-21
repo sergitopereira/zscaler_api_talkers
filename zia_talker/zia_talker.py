@@ -1,3 +1,5 @@
+import pdb
+
 from helpers.http_calls import HttpCalls
 import time
 from getpass import getpass
@@ -96,7 +98,7 @@ class ZiaTalker(object):
             if response.json():
                 result += response.json()
                 page += 1
-                time.sleep(0.5)
+                time.sleep(1)
             else:
                 break
         return result
@@ -535,13 +537,13 @@ class ZiaTalker(object):
         """
         if not group_id:
             url = "/groups?pageSize=10000"
-            response = self._obtain_all(url)
+            return self._obtain_all(url)
         else:
             url = f'/groups/{group_id}'
             response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                              error_handling=True)
 
-        return response
+        return response.json()
 
     def list_users(self, user_id=None, query=None):
         """
@@ -554,10 +556,12 @@ class ZiaTalker(object):
         if user_id:
             url = f'/users/{user_id}'
             return self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
-                                         error_handling=True)
+                                         error_handling=True).json()
         else:
             if query:
                 url = f"/users?{query}&pageSize=1000"
+                return self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                             error_handling=True).json()
             else:
                 url = "/users?pageSize=1000"
         return self._obtain_all(url)
