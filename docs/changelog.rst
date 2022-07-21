@@ -1,4 +1,11 @@
-v3.3 ( Augusto 2022)
+v3.5 ( TO BE RELEASE)
+=========================
+
+v3.4 ( July 2022)
+=========================
+Fixed API rate limit for ZIA (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
+v3.3 ( July 2022)
 =========================
 Updated ZIA talker. The following methods were added:(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
  list_dlpEngines
