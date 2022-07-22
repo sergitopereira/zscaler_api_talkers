@@ -4,8 +4,7 @@ from helpers.http_calls import HttpCalls
 class ZpaTalkerPublic(object):
     """
     ZPA API talker
-    Documentation: https://help.zscaler.com/zpa/api
-    https://help.zscaler.com/zpa
+    Documentation: https://help.zscaler.com/zpa/zpa-api/api-developer-reference-guide
     """
 
     def __init__(self, customerID, cloud='https://config.private.zscaler.com'):
@@ -29,10 +28,14 @@ class ZpaTalkerPublic(object):
         """
         result = []
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+        if 'list' not in response.json().keys():
+            return []
         if int(response.json()['totalPages']) > 1:
-            i = 1
+            i = 0
             while i <= int(response.json()['totalPages']):
-                result = result + self.hp_http.get_call(url, headers=self.header, error_handling=True).json()['list']
+                result = result + \
+                         self.hp_http.get_call(f'{url}&page={i}', headers=self.header, error_handling=True).json()[
+                             'list']
                 i += 1
         else:
             result = response.json()['list']
@@ -345,6 +348,15 @@ class ZpaTalkerPublic(object):
         return response.json()
 
     # global-policy-controller
+
+    def list_policies(self, policyType='ACCESS_POLICY'):
+        """list policie(s)  by policy type,
+         :param policyType: Type string. Supportef values Possible values=ACCESS_POLICY,GLOBAL_POLICY, TIMEOUT_POLICY,REAUTH_POLICY,
+         SIEM_POLICY, CLIENT_FORWARDING_POLICY,BYPASS_POLICY
+         """
+        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/rules/policyType/{policyType}"
+        response = self._obtain_all_results(url)
+        return response
 
     def list_global_policy_id(self, query=False):
         """
