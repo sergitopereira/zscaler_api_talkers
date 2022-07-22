@@ -69,14 +69,10 @@ class HttpCalls(object):
                     self.headers.update(headers)
                 response = requests.post(url=full_url, headers=self.headers, cookies=cookies, json=payload,
                                          verify=self.verify)
-                print(response.status_code)
-                print(response)
-                print(response.text)
             if error_handling:
                 self._zia_http_codes(response)
             else:
                 if response.status_code not in [200, 201, 204]:
-                    print(response.json())
                     raise ValueError(response.status_code)
             return response
         except requests.HTTPError as e:

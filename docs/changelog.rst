@@ -1,5 +1,7 @@
 v3.5 ( TO BE RELEASE)
 =========================
+Added  list_policies to ZPA_talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Updated doc strings with new zia and zpa API Developer & Reference guide
 
 v3.4 ( July 2022)
 =========================

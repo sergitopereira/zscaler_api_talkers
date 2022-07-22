@@ -11,8 +11,7 @@ from models.models import valid_countries
 class ZiaTalker(object):
     """
     ZIA API talker
-    Documentation: https://help.zscaler.com/zia/api
-    https://help.zscaler.com/zia/6.1/api
+    Documentation: https://help.zscaler.com/zia/zia-api/api-developer-reference-guide
     """
 
     def __init__(self, cloud_name):
