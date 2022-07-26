@@ -27,6 +27,8 @@ class ZpaTalkerPublic(object):
         :return: type list
         """
         result = []
+        if '?pagesize' not in url:
+            url = url + '?pagesize=500'
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         if 'list' not in response.json().keys():
             return []
@@ -66,7 +68,7 @@ class ZpaTalkerPublic(object):
         """
         Method to obtain all the configured Servers.
         :param serverId: type int. Unique server id number
-        url query: Example ?page=1&pagesize=20&search=consequat
+        :param query: type string. Example ?page=1&pagesize=20&search=consequat
         :return:json
         """
         if serverId:
@@ -83,6 +85,7 @@ class ZpaTalkerPublic(object):
         """
         Method to obtain application segments
         :param query: url query: Example ?page=1&pagesize=20&search=consequat
+        :param applicationId type int. Application unique identified id
         """
         if applicationId:
             url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/application/{applicationId}'
@@ -172,21 +175,19 @@ class ZpaTalkerPublic(object):
         return response.json()
 
     # connector-controller
-    def list_connector(self, connectorId=None, query=False):
+    def list_connector(self, connectorId=None, ):
         """
-        Get all the configured Segment Groups. If segmentGroupId obtains the segment sroup details
+        Get all the configured Segment Groups. If segmentGroupId obtains the segment group details
         :param connectorId: The unique identifier of the App Connector.
         return json
         """
         if connectorId:
             url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/connector/{connectorId}'
+            return self.hp_http.get_call(url, headers=self.header, error_handling=True).json()
         else:
-            if not query:
-                query = '?pagesize=500'
-            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/connector{query}'
-
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/connector'
+        response = self._obtain_all_results(url)
+        return response
 
     def delete_bulk_connector(self, ids):
         """
@@ -201,20 +202,19 @@ class ZpaTalkerPublic(object):
         return response.json()
 
     # Connector-group-controller
-    def list_connector_group(self, appConnectorGroupId=None, query=False):
+    def list_connector_group(self, appConnectorGroupId=None):
         """
         Gets all configured App Connector Groups for a ZPA tenant.
-        :param query: url query: Example ?page=1&pagesize=20&search=consequat
+        :param appConnectorGroupId: type int: The unique identifier of the Connector Group.
         return json
         """
         if appConnectorGroupId:
             url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}'
+            return self.hp_http.get_call(url, headers=self.header, error_handling=True).json()
         else:
-            if not query:
-                query = '?pagesize=500'
-            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup'
+            response = self._obtain_all_results(url)
+        return response
 
     # ba-certificate-controller-v-2
 
@@ -232,29 +232,23 @@ class ZpaTalkerPublic(object):
 
     # enrollment-cert-controller
 
-    def list_enrollment_certificates(self, query=False):
+    def list_enrollment_certificates(self, ):
         """
         Get all the Enrollment certificates
-        :param query: url query: Example ?page=1&pagesize=20&search=consequat
-        return json
+        return list
         """
-        if not query:
-            query = '?pagesize=500'
         url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/enrollmentCert'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
+        response = self._obtain_all_results(url)
+        return response
 
-    def list_browser_access_cert(self, query=False):
+    def list_browser_access_certificates(self):
         """
         Get all the issued certificates
-        :param query: url query: Example ?page=1&pagesize=20&search=consequat
-        return json
+        return list
         """
-        if not query:
-            query = '?pagesize=500'
-        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/visible/versionProfiles{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/visible/versionProfiles'
+        response = self._obtain_all_results(url)
+        return response
 
     # customer-version-profile-controller
 
@@ -297,8 +291,8 @@ class ZpaTalkerPublic(object):
             query = '?pagesize=500'
 
         url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/idp{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
+        response = self._obtain_all_results(url)
+        return response
 
     # provisioningKey-controller
 
@@ -328,24 +322,17 @@ class ZpaTalkerPublic(object):
         if not query:
             query = '?pagesize=500'
         url = f'/userconfig/v1/customers/{self.customerId}/scimgroup/idpId/{idpId}{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
+        response = self._obtain_all_results(url)
+        return response
 
     # saml-attr-controller-v-2
-    def list_saml_attributes(self, idp=None, query=False):
+    def list_saml_attributes(self):
         """
-        Method to get all SAML attributes. If idp, get the SAML attributes for a given idp
-        :param idp: type integer. The unique identifier of the IdP.
-        :param query: ?page=1&pagesize=20&search=consequat
+        Method to get all SAML attributes
         """
-        if not query:
-            query = '?pagesize=500'
-        if idp:
-            url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/samlAttribute/idp/{idp}{query}'
-        else:
-            url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/samlAttribute{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
+        url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/samlAttribute'
+        response = self._obtain_all_results(url)
+        return response
 
     # global-policy-controller
 
@@ -417,21 +404,19 @@ class ZpaTalkerPublic(object):
 
     # Server Group Controller
 
-    def list_server_groups(self, groupId=None, query=False):
+    def list_server_groups(self, groupId=None):
         """
         Method to get all configured Server Groups. If groupI, get the Server Group details
         :param groupId: type integer. The unique identifier of the Server Group.
-        :param query: url query: Example ?page=1&pagesize=20&search=consequat
         return json
         """
         if groupId:
             url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/serverGroup/{groupId}'
+            response = self.hp_http.get_call(url, headers=self.header, error_handling=True).json()
         else:
-            if not query:
-                query = '?pagesize=500'
-            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/serverGroup{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/serverGroup'
+            response = self._obtain_all_results(url)
+        return response
 
     def add_server_groups(self, name, description, connector_group_id):
         """
@@ -453,3 +438,16 @@ class ZpaTalkerPublic(object):
         }
         response = self.hp_http.post_call(url=url, headers=self.header, error_handling=True, payload=payload)
         return response.json()
+
+    def list_posture_profiles(self, query=False):
+        """
+        Method to Get all the idP details for a ZPA tenant
+        :param query: HTTP query
+        :return: json
+        """
+        if not query:
+            query = '?pagesize=500'
+
+        url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/posture{query}'
+        response = self._obtain_all_results(url)
+        return response
