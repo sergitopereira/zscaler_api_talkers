@@ -218,17 +218,14 @@ class ZpaTalkerPublic(object):
 
     # ba-certificate-controller-v-2
 
-    def list_browser_access_certificates(self, query=False):
+    def list_browser_access_certificates(self):
         """
         Get all Browser issued certificates
-        :param query: url query: Example ?page=1&pagesize=20&search=consequat
         return json
         """
-        if not query:
-            query = '?pagesize=500'
-        url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/clientlessCertificate/issued{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
+        url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/clientlessCertificate/issued'
+        response = self._obtain_all_results(url)
+        return response
 
     # enrollment-cert-controller
 
