@@ -165,4 +165,5 @@ class HttpCalls(object):
         elif response.status_code == 503:
             raise ValueError('Service is temporarily unavailable')
         else:
+            print(response.content)
             raise ValueError(f'Unexpected HTTP response code: {response.status_code}')

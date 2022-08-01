@@ -1,7 +1,12 @@
-v3.5 ( TO BE RELEASE)
+v3.5 ( TO BE RELEASED)
 =========================
 Added  list_policies to ZPA_talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Updated doc strings with new zia and zpa API Developer & Reference guide
+Updated zpa methods to iterate through all pages in order to return all objects and not only objects from page 1
+Added to zia_talker
+validateDlpPattern
+add|delete dlpNotificationTemplates
+
 
 v3.4 ( July 2022)
 =========================
