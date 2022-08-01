@@ -956,6 +956,19 @@ class ZiaTalker(object):
                                          error_handling=True)
         return response.json()
 
+    def validateDlpPattern(self, pattern):
+        """
+        Validates the pattern used by a Pattern and Phrases DLP dictionary type, and provides error information if the
+        pattern is invalid.
+        :param pattern: Regex pattern
+        :return: json
+        """
+        payload = pattern
+        url = '/dlpDictionaries/validateDlpPattern'
+        response = self.hp_http.post_call(url, cookies={'JSESSIONID': self.jsessionid}, payload=payload,
+                                          error_handling=True)
+        return response.json()
+
     def delete_dlp_dictionaries(self, dlpDicId):
         """
         Deletes the custom DLP category for the specified ID.
@@ -970,7 +983,8 @@ class ZiaTalker(object):
                                             error_handling=True)
         return response
 
-    def add_dlpDictionaries(self, dlpdicname, customPhraseMatchType, description=None, phrases=None, patterns=None):
+    def add_dlpDictionaries(self, dlpdicname, customPhraseMatchType="MATCH_ANY_CUSTOM_PHRASE_PATTERN_DICTIONARY",
+                            description=None, phrases=None, patterns=None):
         """
         Adds a new custom DLP dictionary that uses either Patterns and/or Phrases.
         :param dlpdicname: type string.name
@@ -1023,7 +1037,7 @@ class ZiaTalker(object):
 
     def list_dlpEngines(self, dlpEngineId=None):
         """
-         Get a list of DLP engines.
+        Get a list of DLP engines.
         :param dlpEngineId: type integer. Optinal value. The unique identifier for the DLP engine
         :return: json
         """
@@ -1064,6 +1078,45 @@ class ZiaTalker(object):
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
+
+    def add_dlpNotificationTemplates(self, name, subject, plainTextMessage, htmlMessage, attachContent=True,
+                                     tlsEnabled=True):
+        """
+
+        :param name: type string. The DLP notification template name
+        :param subject: type string. The Subject line that is displayed within the DLP notification template
+        :param plainTextMessage: type string. The temaplte for the plain text UTF-8 message body that must be displayed
+        in the DLP notification email.
+        :param htmlMessage: type string. The template for the HTML message body that myst tbe displayed in the DLP
+        notification email
+        :param attachContent: type boolean. if set to True, the content that is violation is attached to the DLP
+        notification email
+        :patam tlsEnabled: type boolean. If set to True tls will be used to send email.
+        :return:
+        """
+        url = '/dlpNotificationTemplates'
+        payload = {
+            "name": name,
+            "subject": subject,
+            "tlsEnabled": tlsEnabled,
+            "attachContent": attachContent,
+            "plainTextMessage": plainTextMessage,
+            "htmlMessage": htmlMessage
+        }
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
+
+    def delete_dlpNotificationTemplates(self, templateId):
+        """
+        Deletes a DLP notification template
+        :param templateId: type int. the unique identifies for the DLP notification template
+        :return: json
+        """
+        url = f"/dlpNotificationTemplates/{templateId}"
+        response = self.hp_http.delete_call(url=url, cookies={'JSESSIONID': self.jsessionid},
+                                            error_handling=True)
+        return response
 
     def list_icapServer(self, icapServerId=None):
         """

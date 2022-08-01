@@ -70,6 +70,7 @@ print(dir(a))
 ## Usage zcc_talker
 ``` python
 from zcc_talker.zcc_talker import ZccTalker
+a=ZccTalker('cloud')    
 a.authenticate('clientID','clientSecret')
 a.list_devices('companyID')
 a.list_OTP('companyID','user device id')

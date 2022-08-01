@@ -292,6 +292,15 @@ class ZpaTalkerPublic(object):
         return response
 
     # provisioningKey-controller
+    def list_provisioningKey(self, associationType='CONNECTOR_GRP'):
+        """
+        Gets details of all the configured provisioning keys.
+        :param associationType: type string. The supported values are CONNECTOR_GRP and SERVICE_EDGE_GRP.
+        :return: list
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/associationType/{associationType}/provisioningKey'
+        response = self._obtain_all_results(url)
+        return response
 
     # policy-set-controller
 
