@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='zscaler_api_talkers',
-    version='3.5',
+    version='3.6',
     author='Sergio Pereira',
     author_email='sergitopereira@hotmail.com',
     packages=find_packages(),
