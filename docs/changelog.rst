@@ -1,3 +1,7 @@
+v3.6 ( TO BE RELEASE)
+=========================
+
+
 v3.5 ( AUGUST 2022)
 =========================
 Added  list_policies to ZPA_talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
