@@ -457,3 +457,28 @@ class ZpaTalkerPublic(object):
         url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/posture{query}'
         response = self._obtain_all_results(url)
         return response
+
+    def list_privileged_consoles(self, query=False):
+        """
+        Method to Get all the privleged_remote_consoles for a ZPA tenant
+        :param query: HTTP query
+        :return: json
+        """
+        if not query:
+            query = '?pagesize=500'
+
+        url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/privilegedConsoles{query}'
+        response = self._obtain_all_results(url)
+        return response
+
+    def list_sra_consoles(self):
+        """
+        Method to obtain list of sra consoles from all application segments
+        """
+        sralist = []
+        appsegments = self.list_application_segments()
+        for apps in appsegments:
+            srap = apps.get("sraApps")
+            if srap is not None:
+                sralist.extend(srap)
+        return sralist
