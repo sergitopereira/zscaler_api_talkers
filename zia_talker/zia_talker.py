@@ -661,7 +661,7 @@ class ZiaTalker(object):
                                               error_handling=True)
             return response.json()
         else:
-            raise ValueError("Maximum 100 users per request")
+            raise ValueError("Maximum 100 locations per request")
 
     def delete_locations(self, locationId):
         """
@@ -672,7 +672,7 @@ class ZiaTalker(object):
 
         response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
                                             error_handling=True)
-        return response.json()
+        return response
 
     #   Traffic Forwarding
 
@@ -768,6 +768,39 @@ class ZiaTalker(object):
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid},
                                          error_handling=True)
         return response.json()
+
+    def add_vpnCredentials(self, fqdn, preSharedKey, type='UFQDN', comments=None, ):
+        """
+        Adds VPN credentials that can be associated to locations.
+        :param fqdn: type string. Example abc@domain.com
+        :param preSharedKey: type string. Pre-shared key. This is a required field for UFQDN and IP auth type
+        :param type: type string VPN authentication type. valid options CN, IP, UFQDN,XAUTH
+        :param comments: type string. Additional information about this VPN credential.
+        :return:
+        """
+        url = f'/vpnCredentials'
+        payload = {
+            "type": type,
+            "fqdn": fqdn,
+            "preSharedKey": preSharedKey
+        }
+        if comments:
+            payload.update(comments=comments)
+        response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
+                                          error_handling=True)
+        return response.json()
+
+    def delete_vpnCredentials(self, vpnId):
+        """
+        Deletes the VPN credentials for the specified ID.
+        :param vpnId: type integer. The unique identifier for the VPN credential.
+        :return:
+        """
+        url = f'/vpnCredentials/{vpnId}'
+
+        response = self.hp_http.delete_call(url, cookies={'JSESSIONID': self.jsessionid},
+                                            error_handling=True)
+        return response
 
     def list_staticIP(self, IPId=None):
         """
