@@ -1,6 +1,8 @@
 v3.6 ( TO BE RELEASE)
 =========================
-Updated ZPA talker. The following methods were added:(by `Kevin Gilmor <mailto:kgilmor@zscaler.com>`_)
+Added zia_portal_talker library:(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
+Updated ZPA talker. The following methods were added: (by `Kevin Gilmor <mailto:kgilmor@zscaler.com>`_)
 list_privileged_consoles
 list_sra_consoles
 

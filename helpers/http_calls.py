@@ -95,7 +95,7 @@ class HttpCalls(object):
         except requests.HTTPError as e:
             raise ValueError(e)
 
-    def put_call(self, url, payload, cookies=None, error_handling=False):
+    def put_call(self, url, payload, headers=None, cookies=None, error_handling=False):
         """
         Method to perform an HTTP PUT call
         :param url: url
@@ -104,6 +104,8 @@ class HttpCalls(object):
         :return: response
         """
         full_url = f'{self.host}{url}'
+        if headers:
+            self.headers.update(headers)
         try:
             response = requests.put(url=full_url, headers=self.headers, cookies=cookies, json=payload,
                                     verify=self.verify)
@@ -111,7 +113,10 @@ class HttpCalls(object):
                 self._zia_http_codes(response)
             else:
                 if response.status_code not in [200, 201, 204]:
-                    raise ValueError(response.status_code)
+                    try:
+                        raise ValueError(f'HTTPS Response code {response.status_code} : {response.json()}')
+                    except ValueError:
+                        raise ValueError(response.status_code)
             return response
         except requests.HTTPError as e:
             raise ValueError(e)
