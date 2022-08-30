@@ -81,20 +81,18 @@ class ZpaTalkerPublic(object):
         return response.json()
 
     # application-controller
-    def list_application_segments(self, query=False, applicationId=None):
+    def list_application_segments(self, applicationId=None):
         """
         Method to obtain application segments
-        :param query: url query: Example ?page=1&pagesize=20&search=consequat
         :param applicationId type int. Application unique identified id
         """
         if applicationId:
             url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/application/{applicationId}'
-        else:
-            if not query:
-                query = '?pagesize=500'
-            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/application{query}'
-        response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
-        return response.json()
+            response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
+            return response.json()
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/application'
+        response = self._obtain_all_results(url)
+        return response
 
     def add_application_segment(self, name, healthReporting, domainNames, segmentGroupId, serverGroups,
                                 tcpPortRanges=[], udpPortRanges=[], description='', enabled=True, ipAnchored=False,
