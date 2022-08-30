@@ -1,9 +1,12 @@
 v3.6 ( TO BE RELEASE)
 =========================
+Updated ZPA talker. The following methods were added:(by `Kevin Gilmor <mailto:kgilmor@zscaler.com>`_)
+list_privileged_consoles
+list_sra_consoles
 
 v3.5 ( AUGUST 2022)
 =========================
-Added  list_policies to zpa_talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Added  list_policies to ZPA_talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Updated doc strings with new zia and zpa API Developer & Reference guide
 Updated zpa methods to iterate through all pages in order to return all objects and not only objects from page 1
 Added to zia_talker
