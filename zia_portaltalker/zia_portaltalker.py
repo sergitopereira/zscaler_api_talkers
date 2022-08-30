@@ -1,5 +1,3 @@
-import pdb
-
 from helpers.http_calls import HttpCalls
 import time
 from getpass import getpass
@@ -82,7 +80,6 @@ class ZiaPortalTalker(object):
         :return: 
         '''
         url = '/dlpEngines'
-        pdb.set_trace()
         if payload:
             payload = payload
         else:
@@ -102,7 +99,7 @@ class ZiaPortalTalker(object):
                                                    'ZS_SESSION_CODE': self.zs_session_code,
                                                    })
         return response
-        
+
     def update_dlpEngine(self, payload, id):
         '''
         Method to update a DLP engine
@@ -111,7 +108,7 @@ class ZiaPortalTalker(object):
         '''
         url = f'/dlpEngines/{id}'
         response = self.hp_http.put_call(url=url, payload=payload, headers=self.headers,
-                                          cookies={'JSESSIONID': self.jsessionid,
-                                                   'ZS_SESSION_CODE': self.zs_session_code,
-                                                   })
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
         return response
