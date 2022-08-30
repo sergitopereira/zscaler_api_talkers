@@ -1,6 +1,8 @@
 v3.6 ( TO BE RELEASE)
 =========================
-
+Updated ZPA talker. The following methods were added:(by `Kevin Gilmor <mailto:kgilmor@zscaler.com>`_)
+list_privileged_consoles
+list_sra_consoles
 
 v3.5 ( AUGUST 2022)
 =========================
