@@ -242,16 +242,19 @@ class ZiaTalker(object):
         return response.json()
 
     def add_url_categories(self, name, superCategory, type='URL_CATEGORY', urls=None, dbCategorizedUrls=None,
-                           keywordsRetainingParentCategory=None, customCategory=False):
+                           keywordsRetainingParentCategory=None, customCategory=False, ipRanges=None,
+                           ipRangesRetainingParentCategory=None):
         """
          Adds a new custom URL category.
-        :param name: type string. Name of the custom category
-        :param superCategory: super category
-        :param urls: list of urls
-        "param dbCategorizedUrls: type list. URL retaining parent category
-        :param keywordsRetainingParentCategory: list of key works
-        :param customCategory: Default False. Set to Type for custom category
-        :param type: type string. URL_CATEGORY, TLD_CATEGORY, ALL
+        :param name: type string. Name of the custom category. Possible values URL_CATEGORY, TLD_CATEGORY, ALL
+        :param superCategory: type string. super category
+        :param urls: type list. List of urls
+        :param dbCategorizedUrls: type list. URL retaining parent category
+        :param keywordsRetainingParentCategory: type list. List of key works
+        :param customCategory: type boolean. Default False. Set to True for custom category
+        :param IpRanges: type list. Custom IP address ranges associated to a URL category
+        :param ipRangesRetainingParentCategory: The retaining parent custom IP address ranges associated to a URL category
+
         :return:  json
         """
         if keywordsRetainingParentCategory is None:
@@ -270,9 +273,10 @@ class ZiaTalker(object):
             "keywordsRetainingParentCategory": keywordsRetainingParentCategory,
             "urls": urls,
             "dbCategorizedUrls": dbCategorizedUrls,
+            "ipRanges": ipRanges,
+            "ipRangesRetainingParentCategory": ipRangesRetainingParentCategory,
             "type": type
         }
-        print(payload)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
         return response.json()
