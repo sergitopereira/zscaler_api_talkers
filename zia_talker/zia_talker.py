@@ -242,18 +242,19 @@ class ZiaTalker(object):
         return response.json()
 
     def add_url_categories(self, name, superCategory, type='URL_CATEGORY', urls=None, dbCategorizedUrls=None,
-                           keywordsRetainingParentCategory=None, customCategory=False, ipRanges=None,
-                           ipRangesRetainingParentCategory=None):
+                           keywordsRetainingParentCategory=[], keywords=[], customCategory=False, ipRanges=[],
+                           ipRangesRetainingParentCategory=[]):
         """
          Adds a new custom URL category.
         :param name: type string. Name of the custom category. Possible values URL_CATEGORY, TLD_CATEGORY, ALL
         :param superCategory: type string. super category
         :param urls: type list. List of urls
         :param dbCategorizedUrls: type list. URL retaining parent category
-        :param keywordsRetainingParentCategory: type list. List of key works
+        :param keywordsRetainingParentCategory: type list. Retained custom keywords from the parent URL category that is associated to a URL category.
+        :param keywords: type list. Custom keywords associated to a URL category.
         :param customCategory: type boolean. Default False. Set to True for custom category
-        :param IpRanges: type list. Custom IP address ranges associated to a URL category
-        :param ipRangesRetainingParentCategory: The retaining parent custom IP address ranges associated to a URL category
+        :param ipRanges: type list. Custom IP address ranges associated to a URL category
+        :param ipRangesRetainingParentCategory: The retaining parent custom IP address ranges associated to a URL category.
 
         :return:  json
         """
@@ -271,6 +272,7 @@ class ZiaTalker(object):
             "customCategory": customCategory,
             "superCategory": superCategory,
             "keywordsRetainingParentCategory": keywordsRetainingParentCategory,
+            "keywords": keywords,
             "urls": urls,
             "dbCategorizedUrls": dbCategorizedUrls,
             "ipRanges": ipRanges,
