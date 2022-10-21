@@ -68,12 +68,12 @@ class HttpCalls(object):
                 if headers:
                     self.headers.update(headers)
                 response = requests.post(url=full_url, headers=self.headers, cookies=cookies, json=payload,
-                                         verify=self.verify)
+                                         verify=self.verify)          
             if error_handling:
                 self._zia_http_codes(response)
             else:
                 if response.status_code not in [200, 201, 204]:
-                    raise ValueError(response.status_code)
+                    raise ValueError(f'{response.status_code} -> {response.content}')
             return response
         except requests.HTTPError as e:
             raise ValueError(e)
@@ -151,7 +151,7 @@ class HttpCalls(object):
         :return: None
         """
         if response.status_code in [200, 201, 202, 204]:
-            return
+            return    
         elif response.status_code == 401:
             raise ValueError(f'{response.status_code} :Session is not authenticated or timed out')
         elif response.status_code == 403:

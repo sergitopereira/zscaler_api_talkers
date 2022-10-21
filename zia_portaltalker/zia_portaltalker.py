@@ -70,7 +70,7 @@ class ZiaPortalTalker(object):
 
     def create_dlpEngine(self, payload=None, EngineExpression=None, Name=None, CustomDlpEngine=True,
                          PredefinedEngineName=None, Description=None):
-        '''
+        """
         Method to create a DLP engine
         :param Name: type string. Name of the DLP ENGINE
         :param EngineExpression: type string. Engine Expression
@@ -78,7 +78,7 @@ class ZiaPortalTalker(object):
         :param PredefinedEngineName: type boolean.
         :param Description: type string. Description
         :return: 
-        '''
+        """
         url = '/dlpEngines'
         if payload:
             payload = payload
@@ -101,14 +101,53 @@ class ZiaPortalTalker(object):
         return response
 
     def update_dlpEngine(self, payload, id):
-        '''
+        """
         Method to update a DLP engine
-        :param paylod: type json. payload
+        :param payload: type json. payload
         :return: 
-        '''
+        """
         url = f'/dlpEngines/{id}'
         response = self.hp_http.put_call(url=url, payload=payload, headers=self.headers,
                                          cookies={'JSESSIONID': self.jsessionid,
                                                   'ZS_SESSION_CODE': self.zs_session_code,
                                                   })
         return response
+
+    def list_PacFiles(self):
+        """
+        Method to list PAC files
+        :return: json
+        """
+        url = f'/pacFiles'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def add_PacFile(self, name, description, domain, PacContent, editable=True, pacUrlObfuscated=True):
+        """
+        Method to Add a PAC file
+        :param name: type string. Name of the PAC
+        :param description: type string. Description
+        :param domain: type string. Domain
+        :param PacContent: Type string: PAC content
+        :param editable: Type boolean. Default True
+        :param pacUrlObfuscated: Type boolean. Default True
+        :return:
+        """
+        payload = {
+            'name': name,
+            'editable': editable,
+            'pacContent': PacContent,
+            'pacUrlObfuscated': pacUrlObfuscated,
+            'domain': domain,
+            'description': description,
+            'pacVerificationStatus': 'VERIFY_NOERR'
+        }
+        url = f'/pacFiles'
+        response = self.hp_http.post_call(url=url, headers=self.headers, payload=payload,
+                                          cookies={'JSESSIONID': self.jsessionid,
+                                                   'ZS_SESSION_CODE': self.zs_session_code,
+                                                   })
+        return response.json()

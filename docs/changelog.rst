@@ -1,6 +1,8 @@
-v3.7 ( TO BE RELEASED)
+v3.7 ( OCTOBER)
 =========================
 Updated add_url_categories method to support Custom IP Ranges  and IP Ranges Retaining Parent Category (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Updated method add_ipDestinationGroups to support domain option due to 6.2 release
+Added method to add PAC files
 
 v3.6 ( AUGUST 2022)
 =========================
