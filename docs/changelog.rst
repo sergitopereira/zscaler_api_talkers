@@ -1,3 +1,6 @@
+v3.8 ( TO BE RELEASE)
+=========================
+
 v3.7 ( OCTOBER)
 =========================
 Updated add_url_categories method to support Custom IP Ranges  and IP Ranges Retaining Parent Category (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
