@@ -230,6 +230,7 @@ class ZiaTalker(object):
             url = '/urlCategories?customOnly=true'
         else:
             url = '/urlCategories'
+        #return self._obtain_all(url)
         response = self.hp_http.get_call(url, cookies={'JSESSIONID': self.jsessionid}, error_handling=True)
         return response.json()
 
@@ -1291,7 +1292,7 @@ class ZiaTalker(object):
 
     def add_firewallFilteringRules(self, name, order, state, action, description=None, defaultRule=False,
                                    predefined=False, srcIps=None, destAddresses=None, destIpGroups=None,
-                                   srcIpGroups=None, labels=None, rank=0):
+                                   srcIpGroups=None, destIpCategories=None, labels=None,nwServices=None, rank=0):
         """
         :param name: type str,  Name of the Firewall Filtering policy rule ["String"]
         :param order: type int, Rule order number of the Firewall Filtering policy rule
@@ -1304,7 +1305,9 @@ class ZiaTalker(object):
         :param srcIps: type list, List of source IP addresses
         :param destAddresses: type list. List of destination addresses
         :param destIpGroups: type list: List of user-definied destination IP address groups
-        :param srcIpGroups: type list: List of user defined source IP addres groups
+        :param srcIpGroups: type list: List of user defined source IP address groups
+        :param destIpCategories: type list: list of destination IP categories
+        :param nwServices: type list. List of user-defined network services on whih the rule is applied
         :return: Default is false.If set to true, a predefined rule is applied
         """
 
@@ -1332,6 +1335,10 @@ class ZiaTalker(object):
             payload.update(destIpGroups=destIpGroups)
         if labels:
             payload.update(labels=labels)
+        if destIpCategories:
+            payload.update(destIpCategories=destIpCategories)
+        if nwServices:
+            payload.update(nwServices=nwServices)
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
         return response
@@ -1440,7 +1447,7 @@ class ZiaTalker(object):
     def add_ipDestinationGroups(self, name, type, addresses, ipCategories=None, countries=None, description=None):
         """
         :param name: mame
-        :param type: Destination IP group type. Either DSTN_IP or DSTN_FQDN
+        :param type: Destination IP group type. Either DSTN_IP or  DSTN_FQDN or DSTN_DOMAIN
         :param addresses: List of Destination IP addresses within the group.
         :param description: description
         :param ipCategories: List of Destination IP address URL categories. You can identify destination based
@@ -1448,7 +1455,7 @@ class ZiaTalker(object):
         :param countries: list of destination IP address countries. You can identify destinations based on the location
         of a server.Default value ANY
         """
-        if type not in ["DSTN_IP", "DSTN_FQDN"]:
+        if type not in ["DSTN_IP", "DSTN_FQDN", "DSTN_DOMAIN"]:
             raise ValueError("Invalid destination type ")
         if countries:
             for i in countries:
