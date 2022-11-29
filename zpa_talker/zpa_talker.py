@@ -319,7 +319,7 @@ class ZpaTalkerPublic(object):
     # scim-group-controller
     def list_scim_groups(self, idpId, query=False):
         """
-        Method details for all SCIM groups
+        Method to list all SCIM groups
         :param idpId: The unique identifies of the Idp
         :param query: ?page=1&pagesize=20&search=consequat
         """

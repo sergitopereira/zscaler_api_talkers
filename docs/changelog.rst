@@ -1,3 +1,11 @@
+v3.9 (TO BE RELEASE)
+=========================
+
+v3.8 ( NOVEMBER)
+=========================
+Fixed bug for return response of ZIA method add_security_blacklistUrls (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
+
 v3.7 ( OCTOBER)
 =========================
 Updated add_url_categories method to support Custom IP Ranges  and IP Ranges Retaining Parent Category (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
