@@ -1,5 +1,10 @@
-v3.8 ( TO BE RELEASE)
+v3.9 (TO BE RELEASE)
 =========================
+
+v3.8 ( NOVEMBER)
+=========================
+Fixed bug for return response of ZIA method add_security_blacklistUrls (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
 
 v3.7 ( OCTOBER)
 =========================

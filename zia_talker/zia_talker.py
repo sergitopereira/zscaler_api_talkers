@@ -956,7 +956,7 @@ class ZiaTalker(object):
         }
         response = self.hp_http.post_call(url, payload=payload, cookies={'JSESSIONID': self.jsessionid},
                                           error_handling=True)
-        return response.json()
+        return response
 
     def remove_security_blacklistUrls(self, urls):
         """
