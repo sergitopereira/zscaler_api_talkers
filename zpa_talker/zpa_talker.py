@@ -1,3 +1,5 @@
+import pdb
+
 from helpers.http_calls import HttpCalls
 
 
@@ -150,8 +152,7 @@ class ZpaTalkerPublic(object):
         else:
             if not query:
                 query = '?pagesize=500'
-            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{query}'
-
+            url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup{query}'
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
