@@ -1,3 +1,6 @@
+v3.10 (TO BE RELEASE)
+=========================
+
 v3.9 (December)
 =========================
 Fixed bug for ZPA list segment_group method.
