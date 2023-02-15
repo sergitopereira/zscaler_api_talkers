@@ -1,5 +1,7 @@
-v3.10 (TO BE RELEASE)
+v3.10 (February)
 =========================
+Added zpa_portaltalker library:(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Added zpa methods update_application_segment, delete_application_segment and list_issued_certificates
 
 v3.9 (December)
 =========================
@@ -9,7 +11,6 @@ v3.8 ( NOVEMBER)
 =========================
 Fixed bug for return response of ZIA method add_security_blacklistUrls (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
-
 v3.7 ( OCTOBER)
 =========================
 Updated add_url_categories method to support Custom IP Ranges  and IP Ranges Retaining Parent Category (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
@@ -18,7 +19,7 @@ Added method to add PAC files
 
 v3.6 ( AUGUST 2022)
 =========================
-Added zia_portal_talker library:(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Added zia_portaltalker library:(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 Updated ZPA talker. The following methods were added: (by `Kevin Gilmor <mailto:kgilmor@zscaler.com>`_)
 list_privileged_consoles

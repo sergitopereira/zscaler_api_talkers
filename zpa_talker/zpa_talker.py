@@ -1,5 +1,3 @@
-import pdb
-
 from helpers.http_calls import HttpCalls
 
 
@@ -138,6 +136,22 @@ class ZpaTalkerPublic(object):
         response = self.hp_http.post_call(url=url, payload=payload, headers=self.header, error_handling=True)
         return response.json()
 
+    def update_application_segment(self,applicationId,payload):
+        """
+        Updates the Application Segment details for the specified ID
+        :param applicationId: type int. Application ID
+        """
+        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/application/{applicationId}"
+        response = self.hp_http.put_call(url=url, payload=payload, headers=self.header, error_handling=True)
+        return response
+    def delete_application_segment(self,applicationId,):
+        """
+        Updates the Application Segment details for the specified ID
+        :param applicationId: type int. Application ID
+        """
+        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/application/{applicationId}"
+        response = self.hp_http.delete_call(url=url, error_handling=True)
+        return response
     # segment-group-controller
 
     def list_segment_group(self, segmentGroupId=None, query=False):
@@ -481,3 +495,15 @@ class ZpaTalkerPublic(object):
             if srap is not None:
                 sralist.extend(srap)
         return sralist
+
+    # Certificate Controller v2
+    def list_issued_certificates(self, query=None):
+        """
+        Method to get all issued certificates
+        """
+        if not query:
+            query = '?pagesize=500'
+
+        url = f'/mgmtconfig/v2/admin/customers/{self.customerId}/certificate/issued'
+        response = self._obtain_all_results(url)
+        return response
