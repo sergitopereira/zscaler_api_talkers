@@ -1,17 +1,17 @@
-v3.10 (February)
+v3.10 (FEBRUARY 2023)
 =========================
 Added zpa_portaltalker library:(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Added zpa methods update_application_segment, delete_application_segment and list_issued_certificates
 
-v3.9 (December)
+v3.9 (DECEMBER 2022)
 =========================
 Fixed bug for ZPA list segment_group method.
 
-v3.8 ( NOVEMBER)
+v3.8 ( NOVEMBER 2022)
 =========================
 Fixed bug for return response of ZIA method add_security_blacklistUrls (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
-v3.7 ( OCTOBER)
+v3.7 ( OCTOBER 2022)
 =========================
 Updated add_url_categories method to support Custom IP Ranges  and IP Ranges Retaining Parent Category (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Updated method add_ipDestinationGroups to support domain option due to 6.2 release
