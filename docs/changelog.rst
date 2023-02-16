@@ -1,3 +1,6 @@
+v3.11 ( TO BE RELEASED)
+=========================
+
 v3.10 ( February 2023)
 =========================
 Added zpa_portaltalker library:(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
