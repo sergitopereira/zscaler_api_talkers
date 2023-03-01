@@ -1,5 +1,6 @@
 v3.11 ( TO BE RELEASED)
 =========================
+ZCC talker method remove devices added osType (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v3.10 ( February 2023)
 =========================

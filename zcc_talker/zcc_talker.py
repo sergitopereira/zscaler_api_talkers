@@ -106,17 +106,19 @@ class ZccTalker(object):
         response = self.hp_http.post_call(url=url, headers=self.header, payload=payload)
         return response.json()
 
-    def force_remove_devices(self, companyID, udids):
+    def force_remove_devices(self, companyID, udids=[], osType=0):
         """
         Force Remove, has the same effect as Remove, though it additionally moves the device straight to Removed and also
         signals the cloud to invalidate the user’s session.
         :param companyID: type int. ORG ID
         :param udids: type list. List of user devices ids
+        :param osType: 0 ALL OS types, 1 IOS, 2 Android, 3 Windows, 4 macOS, 5 Linux
         :return: type list
         """
         url = f'/public/v1/forceRemoveDevices'
         payload = {"companyId": companyID,
-                   "udids": udids
+                   "udids": udids,
+                   "osType": osType
                    }
         response = self.hp_http.post_call(url=url, headers=self.header, payload=payload)
         return response.json()
