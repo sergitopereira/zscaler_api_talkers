@@ -92,16 +92,18 @@ class ZccTalker(object):
         response = self.hp_http.get_call(url=url, params=companyID, headers=self.header)
         return response.json()
 
-    def remove_devices(self, companyID, udids):
+    def remove_devices(self, companyID, udids, osType=0):
         """
         Method to  mark the device for removal (Device Removal Pending).
         :param companyID: type int. ORG ID
         :param udids: type list. List of user devices ids
+        :param osType: 0 ALL OS types, 1 IOS, 2 Android, 3 Windows, 4 macOS, 5 Linux
         :return: type list
         """
         url = f'/public/v1/removeDevices'
         payload = {"companyId": companyID,
-                   "udids": udids
+                   "udids": udids,
+                   "osType": osType
                    }
         response = self.hp_http.post_call(url=url, headers=self.header, payload=payload)
         return response.json()
