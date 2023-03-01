@@ -95,6 +95,7 @@ class ZccTalker(object):
     def remove_devices(self, companyID, udids, osType=0):
         """
         Method to  mark the device for removal (Device Removal Pending).
+        API currently can remove up to 30 devices per call
         :param companyID: type int. ORG ID
         :param udids: type list. List of user devices ids
         :param osType: 0 ALL OS types, 1 IOS, 2 Android, 3 Windows, 4 macOS, 5 Linux
@@ -112,6 +113,7 @@ class ZccTalker(object):
         """
         Force Remove, has the same effect as Remove, though it additionally moves the device straight to Removed and also
         signals the cloud to invalidate the user’s session.
+        API currently can remove up to 30 devices per call
         :param companyID: type int. ORG ID
         :param udids: type list. List of user devices ids
         :param osType: 0 ALL OS types, 1 IOS, 2 Android, 3 Windows, 4 macOS, 5 Linux
