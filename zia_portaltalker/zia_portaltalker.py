@@ -151,3 +151,64 @@ class ZiaPortalTalker(object):
                                                    'ZS_SESSION_CODE': self.zs_session_code,
                                                    })
         return response.json()
+
+
+    def list_malwarePolicy(self):
+        """
+        Method to list Malware Policy.  Policy > Malware Protection > Malware Policy
+        :return: json
+        """
+        url = f'/malwarePolicy'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_virusSpywareSettings(self):
+        """
+        Method to list virus, malware, adware and spyware settings.  Policy > Malware Protection > Malware Policy
+        :return: json
+        """
+        url = f'/virusSpywareSettings'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_advancedUrlFilteringSettings(self):
+        """
+        Method to list Advanced Policy settings.  Policy > URL & Cloud App Control > Advanced  Policy Settings
+        :return: json
+        """
+        url = f'/advancedUrlFilterAndCloudAppSettings'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_subscriptions(self):
+        """
+        Method to list tenant subscriptions.  Administration > Company Profile > Subscriptions
+        :return: json
+        """
+        url = f'/subscriptions'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_cyberRiskScore(self):
+        """
+        Method to list tenant subscriptions.  Administration > Company Profile > Subscriptions
+        :return: json
+        """
+        url = f'/cyberRiskScore'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
