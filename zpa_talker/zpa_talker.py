@@ -45,7 +45,9 @@ class ZpaTalkerPublic(object):
 
     def authenticate(self, client_id, client_secret):
         """
-        Method to obtain the Bearer Token
+        Method to obtain the Bearer Token. Refer to https://help.zscaler.com/zpa/adding-api-keys
+        :param client_id: type string. client id
+        :param client_secret. type string. client secret
         return token
         """
         url = f'/signin'
