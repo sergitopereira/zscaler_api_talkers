@@ -48,8 +48,8 @@ cd zscaler_api_talkers
 ``` python
 from zia_talker.zia_talker import ZiaTalker
 a=ZiaTalker('zsapi.<Zscaler Cloud Name>')
-a.authenticate('APIKEY,'admin@<Zscaler Cloud Name>', 'password')
-a.url_categories()
+a.authenticate(apikey='API_KEY', username='USERNAME', password='PASSWORD')
+a.list_url_categorie.url_categories()
 a.list_users()
 # To view all methods available
 print(dir(a))
@@ -61,7 +61,7 @@ print(dir(a))
 ``` python
 from zpa_talker.zpa_talker import ZpaTalkerPublic as ZpaTalker
 a=ZpaTalker('customerID')
-a.authenticate('clientID','clientSecret')
+a.authenticate(client_id='clientID',client_secret='clientSecret')
 # To view all methods available
 print(dir(a))
 ```
@@ -71,7 +71,7 @@ print(dir(a))
 ``` python
 from zcc_talker.zcc_talker import ZccTalker
 a=ZccTalker('cloud')    
-a.authenticate('clientID','clientSecret')
+a.authenticate(clientid='clientID',secretkey='clientSecret')
 a.list_devices('companyID')
 a.list_OTP('companyID','user device id')
 # To view all methods available
@@ -84,7 +84,7 @@ https://github.com/sergitopereira/zscaler_api_talkers#usage-example
 
 # Bugs and enhancements
 
-Feel free to open an issues using [Gihub Issues](https://github.com/sergitopereira/zscaler_api_talkers/issues)
+Feel free to open an issues using [Gihub Issues](https://github.com/sergitopereira/zscaler_api_talkers)
 
 
 # Author
