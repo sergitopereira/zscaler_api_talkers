@@ -68,7 +68,7 @@ class ZiaPortalTalker(object):
         else:
             raise ValueError("Invalid API key")
 
-    def create_dlpEngine(self, payload=None, EngineExpression=None, Name=None, CustomDlpEngine=True,
+    def add_dlpEngine(self, payload=None, EngineExpression=None, Name=None, CustomDlpEngine=True,
                          PredefinedEngineName=None, Description=None):
         """
         Method to create a DLP engine
@@ -211,4 +211,19 @@ class ZiaPortalTalker(object):
                                          cookies={'JSESSIONID': self.jsessionid,
                                                   'ZS_SESSION_CODE': self.zs_session_code,
                                                   })
+        return response.json()
+
+
+    def add_user_groups(self, group_name):
+        """
+        Creates user groups
+        :return:
+        :rtype:
+        """
+        url = '/groups'
+        payload = {'name': group_name}
+        response = self.hp_http.post_call(url=url, headers=self.headers, payload=payload,
+                                          cookies={'JSESSIONID': self.jsessionid,
+                                                   'ZS_SESSION_CODE': self.zs_session_code,
+                                                   })
         return response.json()
