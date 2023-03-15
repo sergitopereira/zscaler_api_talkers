@@ -227,3 +227,39 @@ class ZiaPortalTalker(object):
                                                    'ZS_SESSION_CODE': self.zs_session_code,
                                                    })
         return response.json()
+
+    def list_samlSettings(self):
+        """
+        Method to list SAML settings.  Administration > Authentication Settings
+        """
+        url = f'/samlSettings'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_advancedSettings(self):
+        """
+        Method to list ZIA advanced settings.  Administration > Advanced Settings
+        :return: json
+        """
+        url = f'/advancedSettings'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_idpConfig(self):
+        """
+        Method to list ZIA idp configuration.  Administration > Authentication Settings > identity Providers
+        :return: json
+        """
+        url = f'/idpConfig'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
