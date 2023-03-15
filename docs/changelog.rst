@@ -1,9 +1,11 @@
-v3.11 ( TO BE RELEASED)
+v4.0( TO BE RELEASED)
 =========================
 ZCC talker method remove devices added osType attribute (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Added the following methods to ZIA Portal Talker:
   list_malwarePolicy, list_virusSpywareSettings, list_advancedUrlFilteringSettings, list_subscriptions, list_cyberRiskScore
 Updated  README.md and zpa auth docstring
+zia_portaltalker moved under zia_talker
+zpa_portaltalker moced under zpa_talker
 
 v3.10 ( February 2023)
 =========================
