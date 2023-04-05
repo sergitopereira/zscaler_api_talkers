@@ -1,7 +1,7 @@
 import pdb
 import time
 
-from helpers.http_calls import HttpCalls
+from zscaler_helpers.http_calls import HttpCalls
 
 
 class ZccTalker(object):

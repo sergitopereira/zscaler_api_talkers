@@ -2,7 +2,7 @@ import pdb
 
 import requests
 
-from helpers.http_calls import HttpCalls
+from zscaler_helpers.http_calls import HttpCalls
 
 
 class ZpaPortalTalker(object):

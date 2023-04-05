@@ -1,4 +1,4 @@
-from helpers.http_calls import HttpCalls
+from zscaler_helpers.http_calls import HttpCalls
 import time
 from getpass import getpass
 

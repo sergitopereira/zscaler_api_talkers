@@ -1,11 +1,12 @@
-v4.0( TO BE RELEASED)
+v4.0 ( APRIL 2023 )
 =========================
+Zia_talker updated to support OAuth 2.0 Authentication (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 ZCC talker method remove devices added osType attribute (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Added the following methods to ZIA Portal Talker:
   list_malwarePolicy, list_virusSpywareSettings, list_advancedUrlFilteringSettings, list_subscriptions, list_cyberRiskScore
-Updated  README.md and zpa auth docstring
-zia_portaltalker moved under zia_talker
-zpa_portaltalker moced under zpa_talker
+zpa_portaltalker moved under zpa_talker
+ZpaTalkerPublic library renamed to ZpaTalker
+Updated  README.md
 
 v3.10 ( February 2023)
 =========================
