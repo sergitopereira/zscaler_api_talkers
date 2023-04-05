@@ -1,4 +1,4 @@
-from helpers.http_calls import HttpCalls
+from zscaler_helpers.http_calls import HttpCalls
 import time
 from getpass import getpass
 
@@ -69,7 +69,7 @@ class ZiaPortalTalker(object):
             raise ValueError("Invalid API key")
 
     def add_dlpEngine(self, payload=None, EngineExpression=None, Name=None, CustomDlpEngine=True,
-                         PredefinedEngineName=None, Description=None):
+                      PredefinedEngineName=None, Description=None):
         """
         Method to create a DLP engine
         :param Name: type string. Name of the DLP ENGINE
@@ -152,7 +152,6 @@ class ZiaPortalTalker(object):
                                                    })
         return response.json()
 
-
     def list_malwarePolicy(self):
         """
         Method to list Malware Policy.  Policy > Malware Protection > Malware Policy
@@ -213,7 +212,6 @@ class ZiaPortalTalker(object):
                                                   })
         return response.json()
 
-
     def add_user_groups(self, group_name):
         """
         Creates user groups
@@ -226,4 +224,111 @@ class ZiaPortalTalker(object):
                                           cookies={'JSESSIONID': self.jsessionid,
                                                    'ZS_SESSION_CODE': self.zs_session_code,
                                                    })
+        return response.json()
+
+    def list_samlSettings(self):
+        """
+        Method to list SAML settings.  Administration > Authentication Settings
+        """
+        url = f'/samlSettings'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_advancedSettings(self):
+        """
+        Method to list ZIA advanced settings.  Administration > Advanced Settings
+        :return: json
+        """
+        url = f'/advancedSettings'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_idpConfig(self):
+        """
+        Method to list ZIA idp configuration.  Administration > Authentication Settings > identity Providers
+        :return: json
+        """
+        url = f'/idpConfig'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_icapServers(self):
+        """
+        Method to list ZIA icap servers.  Administration > DLP iincident Receiver > ICAP Settings
+        :return: json
+        """
+        url = f'/icapServers'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_authSettings(self):
+        """
+        Method to list ZIA auth settings.  Administration > Authentication Settings
+        :return: json
+        """
+        url = f'/authSettings'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_samlAdminSettings(self):
+        """
+        Method to list ZIA auth settings.  Administration > Authentication Settings
+        :return: json
+        """
+        url = f'/samlAdminSettings'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_eun(self):
+        """
+        Method to list ZIA End User Notification settings.  Administration > End User Notifications
+        :return: json
+        """
+        url = f'/eun'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_admin_password_mgt(self):
+        """
+        Method to list ZIA Administrator Management password.  Administration > Administration Management
+        :return: json
+        """
+        url = f'/passwordExpiry/settings'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response.json()
+
+    def list_apiKeys(self):
+        """
+        Method to list ZIA Administrator Management password.  Administration > Administration Management
+        :return: json
+        """
+        url = f'/apiKeys'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
         return response.json()

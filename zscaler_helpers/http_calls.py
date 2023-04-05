@@ -121,7 +121,7 @@ class HttpCalls(object):
         except requests.HTTPError as e:
             raise ValueError(e)
 
-    def delete_call(self, url, payload=None, cookies=None, error_handling=False):
+    def delete_call(self, url, payload=None, headers=None, cookies=None, error_handling=False):
         """
         Method to perform an HTTP DELETE call
         :param url: url
@@ -131,6 +131,8 @@ class HttpCalls(object):
         :return: response
         """
         full_url = f'{self.host}{url}'
+        if headers:
+            self.headers.update(headers)
         try:
             response = requests.delete(url=full_url, headers=self.headers, cookies=cookies, json=payload,
                                        verify=self.verify)

@@ -1,7 +1,7 @@
-from helpers.http_calls import HttpCalls
+from zscaler_helpers.http_calls import HttpCalls
 
 
-class ZpaTalkerPublic(object):
+class ZpaTalker(object):
     """
     ZPA API talker
     Documentation: https://help.zscaler.com/zpa/zpa-api/api-developer-reference-guide

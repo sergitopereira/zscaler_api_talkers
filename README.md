@@ -47,7 +47,7 @@ cd zscaler_api_talkers
 ## Usage zia_talker
 ``` python
 from zia_talker.zia_talker import ZiaTalker
-a=ZiaTalker('zsapi.<Zscaler Cloud Name>')
+a=ZiaTalker('<Zscaler Cloud Name>')
 a.authenticate(apikey='API_KEY', username='USERNAME', password='PASSWORD')
 a.list_url_categorie.url_categories()
 a.list_users()
@@ -55,11 +55,22 @@ a.list_users()
 print(dir(a))
 ```
 
+## Usage zia_talker with OAUTH2.0
+``` python
+from zia_talker.zia_talker import ZiaTalker
+a=ZiaTalker('<Zscaler Cloud Name>', <Bear oauth2.0 token))
+a.list_url_categorie.url_categories()
+a.list_users()
+# To view all methods available
+print(dir(a))
+```
+
+
 # ZPA Talker
 
 ## Usage zpa_talker
 ``` python
-from zpa_talker.zpa_talker import ZpaTalkerPublic as ZpaTalker
+from zpa_talker.zpa_talker import ZpaTalker
 a=ZpaTalker('customerID')
 a.authenticate(client_id='clientID',client_secret='clientSecret')
 # To view all methods available
@@ -70,7 +81,7 @@ print(dir(a))
 ## Usage zcc_talker
 ``` python
 from zcc_talker.zcc_talker import ZccTalker
-a=ZccTalker('cloud')    
+a=ZccTalker('<Zscaler Cloud Name>')    
 a.authenticate(clientid='clientID',secretkey='clientSecret')
 a.list_devices('companyID')
 a.list_OTP('companyID','user device id')
