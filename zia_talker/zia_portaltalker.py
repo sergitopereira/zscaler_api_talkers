@@ -332,3 +332,16 @@ class ZiaPortalTalker(object):
                                                   'ZS_SESSION_CODE': self.zs_session_code,
                                                   })
         return response.json()
+
+    def delete_group(self, groupid):
+        """
+        Method to delete a group given group id
+        :param groupid: type int. Group id
+        :return: HTTP response
+        """
+        url = f'/groups/{groupid}'
+        response = self.hp_http.delete_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response
