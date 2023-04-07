@@ -1,3 +1,7 @@
+v4.0.1 ( TO BE RELEASED )
+=========================
+Added method to ZiaPortalTalker to remove user groups (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
 v4.0 ( APRIL 2023 )
 =========================
 Zia_talker updated to support OAuth 2.0 Authentication (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)

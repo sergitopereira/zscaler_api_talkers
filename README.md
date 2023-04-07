@@ -47,9 +47,9 @@ cd zscaler_api_talkers
 ## Usage zia_talker
 ``` python
 from zia_talker.zia_talker import ZiaTalker
-a=ZiaTalker('<Zscaler Cloud Name>')
-a.authenticate(apikey='API_KEY', username='USERNAME', password='PASSWORD')
-a.list_url_categorie.url_categories()
+zia=ZiaTalker('<Zscaler Cloud Name>')
+zia.authenticate(apikey='API_KEY', username='USERNAME', password='PASSWORD')
+zia.list_urlcategories()
 a.list_users()
 # To view all methods available
 print(dir(a))
