@@ -42,7 +42,7 @@ cd zscaler_api_talkers
    pip install zscaler-api-talkers  
 ```
 
-# ZIA Talker
+# Zscaler Secure Internet and SaaS Access SDK (zia_talker)
 
 ## Usage zia_talker
 ``` python
@@ -66,7 +66,7 @@ print(dir(a))
 ```
 
 
-# ZPA Talker
+# Zscaler Secure Private Access SDK (zpa_talker)
 
 ## Usage zpa_talker
 ``` python
@@ -76,7 +76,7 @@ a.authenticate(client_id='clientID',client_secret='clientSecret')
 # To view all methods available
 print(dir(a))
 ```
-# ZCC talker
+# Zscaler Client Connector SDK  (zcc_talker)
 
 ## Usage zcc_talker
 ``` python
@@ -100,7 +100,7 @@ Feel free to open an issues using [Gihub Issues](https://github.com/sergitoperei
 
 # Author
 
-Sergio Augusto Pereira Alarcon
+Sergio Pereira 
 
 Zscaler Professional Services 
 

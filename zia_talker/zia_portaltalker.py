@@ -345,3 +345,16 @@ class ZiaPortalTalker(object):
                                                   'ZS_SESSION_CODE': self.zs_session_code,
                                                   })
         return response
+
+    def delete_department(self, departmentid):
+        """
+        Method to delete a group given department
+        :param departmentid: type int. Departmentid id
+        :return: HTTP response
+        """
+        url = f'/departments/{departmentid}'
+        response = self.hp_http.delete_call(url=url, headers=self.headers,
+                                         cookies={'JSESSIONID': self.jsessionid,
+                                                  'ZS_SESSION_CODE': self.zs_session_code,
+                                                  })
+        return response
