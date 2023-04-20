@@ -1,3 +1,7 @@
+v4.0.1 ( TO BE RELEASED )
+=========================
+
+
 v4.0.1 ( APRIL 2023 )
 =========================
 Added method to ZiaPortalTalker to delete user groups (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
