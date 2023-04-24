@@ -359,21 +359,19 @@ class ZpaTalker(object):
 
     def list_policies(self, policyType='ACCESS_POLICY'):
         """list policie(s)  by policy type,
-         :param policyType: Type string. Supportef values Possible values=ACCESS_POLICY,GLOBAL_POLICY, TIMEOUT_POLICY,REAUTH_POLICY,
+         :param policyType: Type string. Supported values Possible values=ACCESS_POLICY,GLOBAL_POLICY, TIMEOUT_POLICY,REAUTH_POLICY,
          SIEM_POLICY, CLIENT_FORWARDING_POLICY,BYPASS_POLICY
          """
         url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/rules/policyType/{policyType}"
         response = self._obtain_all_results(url)
         return response
 
-    def list_global_policy_id(self, query=False):
+    def list_policySet(self, policyType='ACCESS_POLICY'):
+        """ Gets the policy set for the specified policy type
+        :param policyType: Type string. Supported values are ACCESS_POLICY,GLOBAL_POLICY, TIMEOUT_POLICY,REAUTH_POLICY,
+        SIEM_POLICY, CLIENT_FORWARDING_POLICY,BYPASS_POLICY
         """
-        Method to get the global policy
-        :param query: ?page=1&pagesize=20&search=consequat
-        """
-        if not query:
-            query = '?pagesize=500'
-        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/global{query}'
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/policyType/{policyType}'
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
