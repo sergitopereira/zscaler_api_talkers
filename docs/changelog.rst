@@ -1,6 +1,6 @@
-v4.0.1 ( TO BE RELEASED )
+v4.0.1 ( APRIL 2023 )
 =========================
-
+Replaced deprecated ZPA method list_global_policy_id method with list_policySet (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v4.0.1 ( APRIL 2023 )
 =========================
