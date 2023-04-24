@@ -97,22 +97,35 @@ class ZpaTalker(object):
         return response
 
     def add_application_segment(self, name, healthReporting, domainNames, segmentGroupId, serverGroups,
-                                tcpPortRanges=[], udpPortRanges=[], description='', enabled=True, ipAnchored=False,
-                                doubleEncrypt=False, bypassType='NEVER', isCnameEnabled=True, cnameConfig='NOFLATTEN'):
+                                commonAppsDto={}, segmentGroupName='', healthCheckType='DEFAULT', clientlessApps=[],
+                                inspectionApps=[], sraApps=[], tcpPortRange=[], tcpPortRanges=[], udpPortRanges=[],
+                                udpPortRange=[], description='', enabled=True, icmpAccessType='NONE', ipAnchored=False,
+                                doubleEncrypt=False, bypassType='NEVER', isCnameEnabled=True,
+                                selectConnectorCloseToApp=False, passiveHealthEnabled=True):
         """
         Adds a new Application Segment for a ZPA tenant.
         :param name: type string. App Name
         :param description: type string. Description
         :param enabled: type boolean (True|False)
         :param healthReporting: type string. possible values: NONE, ON_ACCESS, CONTINUOUS
+        :param icmpAccessType: type string. possible values: PING_TRACEROUTING, PING, NONE
         :param ipAnchored: type boolean (True|False)
         :param doubleEncrypt: type boolean (True|False)
         :param bypassType: type string. possible values ALWAYS, NEVER, ON_NET
+        :param clientlessApps: type list. List of application domains in Application Segment with Browser access enabled
+        :param inspectionApps: type list. List of application domains in Application Segment with Inspection enabled
+        :param sraApps: type list. List of application domains in Application Segment with Privileged Remote Access enabled
+        :param commonAppsDto: type list. list of dictionaries, where appsConfig will list the apps with Browser Access or Inspection
         :param isCnameEnabled: type boolean (True|False)
-        :param tcpPortRanges: type list.  ["from", "to"]
-        :param udpPortRanges: type list.  ["from", "to"]
+        :param selectConnectorCloseToApp: type boolean (True|False)
+        :param passiveHealthEnabled: type boolean (True|False)
+        :param tcpPortRange: type dict.  [{"from":int, "to":int}]
+        :param udpPortRange: type dict.  [{"from":int, "to":int}]
+        :param tcpPortRanges: type list.  ["from", "to"]. This will be deprecated in future.
+        :param udpPortRanges: type list.  ["from", "to"]. This will be deprecated in future.
         :param domainNames: type list. List of domains or IP addresses
         :param segmentGroupId: type string. Application Segment Group id
+        :param segmentGroupName: type string. Application Segment Group Name
         :param serverGroups=type list. list of dictionaries, where key is id and value is serverGroupId [{
                 "id": "<serverGroupId>"}]
         :return: type dict. HTTP response
@@ -123,17 +136,27 @@ class ZpaTalker(object):
             "name": name,
             "description": description,
             "enabled": enabled,
+            "healthCheckType": healthCheckType,
             "healthReporting": healthReporting,
+            "icmpAccessType": icmpAccessType,
             "ipAnchored": ipAnchored,
             "doubleEncrypt": doubleEncrypt,
             "bypassType": bypassType,
             "isCnameEnabled": isCnameEnabled,
+            "clientlessApps": clientlessApps,
+            "inspectionApps": inspectionApps,
+            "sraApps": sraApps,
+            "commonAppsDto": commonAppsDto,
+            "selectConnectorCloseToApp": selectConnectorCloseToApp,
+            "passiveHealthEnabled": passiveHealthEnabled,
             "tcpPortRanges": tcpPortRanges,
+            "tcpPortRange": tcpPortRange,
+            "udpPortRange": udpPortRange,
             "udpPortRanges": udpPortRanges,
             "domainNames": domainNames,
             "segmentGroupId": segmentGroupId,
+            "segmentGroupName": segmentGroupName,
             "serverGroups": serverGroups,
-            "cnameConfig": cnameConfig
         }
         response = self.hp_http.post_call(url=url, payload=payload, headers=self.header, error_handling=True)
         return response.json()
