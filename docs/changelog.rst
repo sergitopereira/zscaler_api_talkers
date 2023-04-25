@@ -2,6 +2,7 @@ v4.0.1 ( APRIL 2023 )
 =========================
 Replaced deprecated ZPA method list_global_policy_id method with list_policySet (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Added new parameters to add_application_segment method (by `Brijesh Shingadia <mailto:bshingadia@zscaler.com>`_)
+
 v4.0.1 ( APRIL 2023 )
 =========================
 Added method to ZiaPortalTalker to delete user groups (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
