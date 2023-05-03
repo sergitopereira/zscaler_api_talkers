@@ -50,9 +50,9 @@ from zia_talker.zia_talker import ZiaTalker
 zia=ZiaTalker('<Zscaler Cloud Name>')
 zia.authenticate(apikey='API_KEY', username='USERNAME', password='PASSWORD')
 zia.list_urlcategories()
-a.list_users()
+zia.list_users()
 # To view all methods available
-print(dir(a))
+print(dir(zia))
 ```
 
 ## Usage zia_talker with OAUTH2.0
