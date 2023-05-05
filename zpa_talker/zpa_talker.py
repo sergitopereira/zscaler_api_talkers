@@ -165,6 +165,7 @@ class ZpaTalker(object):
         """
         Updates the Application Segment details for the specified ID
         :param applicationId: type int. Application ID
+        :param payload: type dict. Application Segment details to be updated.
         """
         url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/application/{applicationId}"
         response = self.hp_http.put_call(url=url, payload=payload, headers=self.header, error_handling=True)
@@ -195,12 +196,13 @@ class ZpaTalker(object):
         response = self.hp_http.get_call(url, headers=self.header, error_handling=True)
         return response.json()
 
-    def add_segment_group(self, name, description, enabled=True):
+    def add_segment_group(self, name, description, enabled=True, applications=[]):
         """
         Add a new segment group
         :param name: type string. Name of segment Group
         :param description: type string. Description
         :param enabled: type boolean: True or False
+        :param applications: type list. Application Segment IDs to be added to Segment Group
         :return: Json
         """
         url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup'
@@ -208,6 +210,7 @@ class ZpaTalker(object):
             "name": name,
             "description": description,
             "enabled": enabled,
+            "applications": applications
         }
         response = self.hp_http.post_call(url, headers=self.header, error_handling=True, payload=payload)
         return response.json()
