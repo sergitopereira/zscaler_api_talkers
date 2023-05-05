@@ -1,6 +1,8 @@
 v4.0.3 ( TO BE RELEASED )
 =========================
 Updated readme.md for consistency in examples (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
+Added typehinting to ZIA Talker methods
+Refactored API Key Obfuscation for increased performance on repeated runs
 
 v4.0.2 ( APRIL 2023 )
 =========================

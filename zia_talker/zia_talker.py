@@ -29,23 +29,25 @@ class ZiaTalker(object):
         else:
             self.headers = None
 
-    def _obfuscateApiKey(self, seed):
+    def _obfuscateApiKey(self, seed: str):
         """
         Internal method to Obfuscate the API key
         :param seed: API key
         :return: timestamp,obfuscated key
         """
+        seed = seed
         now = int(time.time() * 1000)
         n = str(now)[-6:]
         r = str(int(n) >> 1).zfill(6)
         key = ""
-        for i in range(0, len(str(n)), 1):
-            key += seed[int(str(n)[i])]
-        for j in range(0, len(str(r)), 1):
-            key += seed[int(str(r)[j]) + 2]
+        for digit in n:
+            key += seed[int(digit)]
+        for digit in r:
+            key += seed[int(digit) + 2]
         return now, key
 
-    def authenticate(self, apikey, username, password=None, ):
+    def authenticate(self, apikey: str, username: str,
+                     password: str = None, ) -> None:
         """
         Method to authenticate.
         :param apikey: API key
@@ -73,7 +75,8 @@ class ZiaTalker(object):
         :return: json
         """
         url = '/authenticatedSession'
-        response = self.hp_http.get_call(url, cookies=self.cookies, error_handling=True, )
+        response = self.hp_http.get_call(url, cookies=self.cookies,
+                                         error_handling=True, )
         return response.json()
 
     def end_session(self):
@@ -82,11 +85,12 @@ class ZiaTalker(object):
         :return: None
         """
         url = '/authenticatedSession'
-        response = self.hp_http.delete_call(url, cookies=self.cookies, error_handling=True,
+        response = self.hp_http.delete_call(url, cookies=self.cookies,
+                                            error_handling=True,
                                             payload={})
         return response.json()
 
-    def _obtain_all(self, url):
+    def _obtain_all(self, url: str):
         """
         Internal method that queries all pages
         :param url:  URL
@@ -95,8 +99,10 @@ class ZiaTalker(object):
         page = 1
         result = []
         while True:
-            response = self.hp_http.get_call(f'{url}&page={page}', cookies=self.cookies,
-                                             error_handling=True, headers=self.headers, )
+            response = self.hp_http.get_call(f'{url}&page={page}',
+                                             cookies=self.cookies,
+                                             error_handling=True,
+                                             headers=self.headers, )
             if response.json():
                 result += response.json()
                 page += 1
@@ -111,7 +117,8 @@ class ZiaTalker(object):
         :return: json object with the status
         """
         url = '/status'
-        response = self.hp_http.get_call(url, cookies=self.cookies, error_handling=True)
+        response = self.hp_http.get_call(url, cookies=self.cookies,
+                                         error_handling=True)
         return response.json()
 
     def activate_status(self):
@@ -125,7 +132,7 @@ class ZiaTalker(object):
 
     # Admin Audit Logs
 
-    def list_auditlogEntryReport(self):
+    def list_auditlogEntryReport(self) -> dict:
         """
         Gets the status of a request for an audit log report. After sending a POST request to /auditlogEntryReport to
         generate a report, you can continue to call GET /auditlogEntryReport to check whether the report has finished
@@ -136,7 +143,8 @@ class ZiaTalker(object):
 
         url = "/auditlogEntryReport"
 
-        response = self.hp_http.get_call(url, cookies=self.cookies, headers=self.headers,
+        response = self.hp_http.get_call(url, cookies=self.cookies,
+                                         headers=self.headers,
                                          error_handling=True)
         return response.json()
 
@@ -150,12 +158,15 @@ class ZiaTalker(object):
         """
 
         url = "/auditlogEntryReport/download"
-        response = self.hp_http.get_call(url, cookies=self.cookies, headers=self.headers,
+        response = self.hp_http.get_call(url, cookies=self.cookies,
+                                         headers=self.headers,
                                          error_handling=True)
         return response
 
-    def add_auditlogEntryReport(self, startTime, endTime, actionTypes=None, category=None,
-                                subcategories=None, actionInterface=None, ):
+    def add_auditlogEntryReport(self, startTime: int, endTime: int,
+                                actionTypes: list = None, category: str = None,
+                                subcategories: list = None,
+                                actionInterface: str = None):
         """
          Creates an audit log report for the specified time period and saves it as a CSV file. The report includes audit
          information for every call made to the cloud service API during the specified time period.
@@ -184,8 +195,10 @@ class ZiaTalker(object):
         if actionTypes:
             payload.update(actionTypes=actionTypes)
 
-        response = self.hp_http.post_call(url, payload=payload, cookies=self.cookies,
-                                          error_handling=True, headers=self.headers)
+        response = self.hp_http.post_call(url, payload=payload,
+                                          cookies=self.cookies,
+                                          error_handling=True,
+                                          headers=self.headers)
         return response
 
     # Admin & Role Management
