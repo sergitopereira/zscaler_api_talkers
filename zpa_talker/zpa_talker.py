@@ -261,6 +261,26 @@ class ZpaTalker(object):
                    }
         response = self.hp_http.post_call(url=url, headers=self.header, error_handling=True, payload=payload)
         return response.json()
+    def update_connector(self,connectorId, payload):
+        """
+            Update specified App Connector.
+            :param connectorId: type int. The unique identifier of the App Connector.
+            :param payload: type dict. Connector details to update.
+            return response
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/connector/{connectorId}'
+        response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
+        return response
+
+    def delete_connector(self, connectorId):
+        """
+            Delete specified App Connector.
+            :param connectorId: type int. The unique identifier of the App Connector.
+            return response
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/connector/{connectorId}'
+        response = self.hp_http.delete_call(url, error_handling=True)
+        return response
 
     # Connector-group-controller
     def list_connector_group(self, appConnectorGroupId=None):
