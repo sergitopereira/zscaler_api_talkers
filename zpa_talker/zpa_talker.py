@@ -217,6 +217,26 @@ class ZpaTalker(object):
         response = self.hp_http.post_call(url, headers=self.header, error_handling=True, payload=payload)
         return response.json()
 
+    def delete_segment_group(self, segmentGroupId):
+        """
+        Deletes specified Segment Group.
+        :param segmentGroupId: The unique identifier of the Segment Group.
+        return: response
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{segmentGroupId}'
+        response = self.hp_http.delete_call(url=url, error_handling=True)
+        return response
+
+    def update_segment_group(self, segmentGroupId, payload):
+        """
+        Update Segment Group
+        :param segmentGroupId: type int. The unique identifier of the Segment Group.
+        :param payload: type dict. Segment Group details to be updated.
+        :return: Json
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{segmentGroupId}'
+        response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
+        return response
     # connector-controller
     def list_connector(self, connectorId=None, ):
         """
