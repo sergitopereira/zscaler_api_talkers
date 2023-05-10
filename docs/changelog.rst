@@ -1,6 +1,7 @@
 v4.0.3 ( TO BE RELEASED )
 =========================
-Updated readme.md for consistency in examples (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
+Updated readme.md for in examples (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
+Added new methods update, delete and add for Segment Group, App Connector and App Connector Group controllers.(by `Brijesh Shingadia <mailto:bshingadia@zscaler.com>`_)
 
 v4.0.2 ( APRIL 2023 )
 =========================
