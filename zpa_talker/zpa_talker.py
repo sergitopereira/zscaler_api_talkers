@@ -299,6 +299,71 @@ class ZpaTalker(object):
             response = self._obtain_all_results(url)
         return response
 
+    def update_connector_group(self, appConnectorGroupId, payload):
+        """
+        Update configured App Connector Groups for a ZPA tenant.
+        :param appConnectorGroupId: type int. The unique identifier of the Connector Group
+        :param payload: type dict. Details of App Connector group to be updated
+        return response
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}'
+        response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
+        return response
+
+    def delete_connector_group(self,appConnectorGroupId):
+        """
+            Delete specified App Connector Group
+            :param appConnectorGroupId: type int. The unique identifier of the Connector Group
+            return response
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}'
+        response = self.hp_http.delete_call(url, error_handling=True)
+        return response
+    def add_connector_group(self,name, description, latitude, longitude, location, upgradeDay='SUNDAY',enabled=True, dnsQueryType='IPV4_IPV6', upgradeTimeInSecs=66600,
+                            overrideVersionProfile=False, versionProfileId=None, tcpQuickAckApp=False, tcpQuickAckAssistant=False, tcpQuickAckReadAssistant=False, cityCountry="",
+                            countryCode="", connectors=[],serverGroups=[], lssAppConnectorGroup=False):
+        """
+        :param name: type string. Name of App Connector Group
+        :param description: type string. Description
+        :param latitude: type string. Latitude of App Connector Group
+        :param longitude: type string. Longitude of App Connector Group
+        :param location: type string. Location of the App Connector Group
+        :param upgradeDay: type string. App Connectors in this group attempt to update to a newer version of the software during this specified day
+        :param upgradeTimeInSecs: type int. App Connectors in this group attempt to update to a newer version of the software during this specified time
+        :param overrideVersionProfile: type boolean. Whether the default version profile of the App Connector Group is applied or overridden
+        :param versionProfileId: type int. ID of the version profile
+        :param tcpQuickAckApp: type boolean. Whether TCP Quick Acknowledgement is enabled or disabled for the application. The tcpQuickAckApp, tcpQuickAckAssistant, and tcpQuickAckReadAssistant fields must all share the same value.
+        :param tcpQuickAckAssistant: type boolean. Whether TCP Quick Acknowledgement is enabled or disabled for the application
+        :param tcpQuickAckReadAssistant: type boolean. Whether TCP Quick Acknowledgement is enabled or disabled for the application
+        :param connectors: type dict. App Connector Id's part of the App Connector Group.
+        :param serverGroups: type dict. Server Groups part of App Connector Group
+        :param lssAppConnectorGroup: type boolean. Is App Connector Group reserved for LSS
+        """
+        url = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup'
+        payload={
+            "name": name,
+            "description": description,
+            "latitude": latitude,
+            "longitude": longitude,
+            "location": location,
+            "upgradeDay": upgradeDay,
+            "enabled": enabled,
+            "dnsQueryType": dnsQueryType,
+            "upgradeTimeInSecs": upgradeTimeInSecs,
+            "overrideVersionProfile": overrideVersionProfile,
+            "versionProfileId": versionProfileId,
+            "tcpQuickAckApp": tcpQuickAckApp,
+            "tcpQuickAckAssistant": tcpQuickAckAssistant,
+            "tcpQuickAckReadAssistant": tcpQuickAckReadAssistant,
+            "cityCountry": cityCountry,
+            "countryCode": countryCode,
+            "connectors": connectors,
+            "serverGroups": serverGroups,
+            "lssAppConnectorGroup": lssAppConnectorGroup
+        }
+        response = self.hp_http.post_call(url, headers=self.header, error_handling=True, payload=payload)
+        return response.json()
+
     # ba-certificate-controller-v-2
 
     def list_browser_access_certificates(self):
