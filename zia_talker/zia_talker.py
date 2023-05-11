@@ -1551,6 +1551,19 @@ class ZiaTalker(object):
         response = self.hp_http.get_call(url, cookies=self.cookies,
                                          error_handling=True, headers=self.headers)
         return response.json()
+    
+
+    def add_rule_label(self, payload):
+        """
+        Adds new rule labels with the given name
+        :param name: name
+        :param description: description
+        """
+        url = f"/ruleLabels"
+        response = self.hp_http.post_call(url, cookies=self.cookies,
+                                            error_handling=True, headers=self.headers,
+                                            payload=payload)
+        return response.json()
 
     def update_call(self, url, payload):
         """
