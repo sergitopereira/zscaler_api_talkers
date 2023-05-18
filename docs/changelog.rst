@@ -1,6 +1,10 @@
 v4.0.3 ( TO BE RELEASED )
 =========================
 Updated readme.md for consistency in examples (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
+Began adding typehinting to ZIA Talker methods (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
+PEP8 Linting for zia_talker.py (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
+Refactored API Key Obfuscation for increased performance on repeated runs (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
+Added add_rule_label method to zia_talker (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 
 v4.0.2 ( APRIL 2023 )
 =========================
