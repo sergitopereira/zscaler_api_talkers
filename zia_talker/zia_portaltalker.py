@@ -48,7 +48,7 @@ class ZiaPortalTalker(object):
         """
         if not password:
             password = getpass(" Introduce password: ")
-        timestamp, key = self._obfuscateApiKey('jj7tg80fEGao')
+        timestamp, key = self._obfuscateApiKey(apikey)
 
         payload = {
             "apiKey": key,
