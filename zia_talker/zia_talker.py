@@ -1693,6 +1693,7 @@ class ZiaTalker(object):
         labels=None,
         nwServices=None,
         rank=0,
+        **kwargs
     ):
         """
         :param name: type str,  Name of the Firewall
