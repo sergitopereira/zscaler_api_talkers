@@ -126,3 +126,12 @@ class ZccTalker(object):
                    }
         response = self.hp_http.post_call(url=url, headers=self.header, payload=payload)
         return response.json()
+
+    def downloadServiceStatus(self, companyID):
+        """
+        Method to download Service Status
+        """
+        url = '/public/v1/downloadServiceStatus'
+        response = self.hp_http.get_call(url=url, params=companyID, headers=self.header)
+        pdb.set_trace()
+        return response.content
