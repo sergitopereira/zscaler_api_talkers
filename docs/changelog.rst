@@ -1,4 +1,4 @@
-v4.0.3 ( TO BE RELEASED )
+v4.1.0 ( TO BE RELEASED )
 =========================
 Updated readme.md for consistency in examples (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Began adding typehinting to ZIA Talker methods (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
@@ -6,6 +6,7 @@ PEP8 Linting for zia_talker.py (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Refactored API Key Obfuscation for increased performance on repeated runs (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Added add_rule_label method to zia_talker (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Fix: ZPA list_segment_group paging  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Added Method to zcc_talker to download downloadServiceStatus (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v4.0.2 ( APRIL 2023 )
 =========================
