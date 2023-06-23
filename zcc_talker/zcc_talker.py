@@ -133,5 +133,4 @@ class ZccTalker(object):
         """
         url = '/public/v1/downloadServiceStatus'
         response = self.hp_http.get_call(url=url, params=companyID, headers=self.header)
-        pdb.set_trace()
         return response.content
