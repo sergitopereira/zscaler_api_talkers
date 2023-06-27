@@ -1,5 +1,12 @@
 v4.1.0 ( TO BE RELEASED )
 =========================
+Added ZDX Portal Talker (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+Added my logger and helper methods (goes along with ZDX Portal Talker) (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+Worked on init to advertise methods/classes that should be publicly accessible. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+Created pip_version.Dockefile to provide method to use pip version in Docker. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+Moved working python code into sub-dir to isolate from other repo uses. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+Built working Poetry build structure (renamed previous files to *.old). (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+
 Updated readme.md for consistency in examples (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Began adding typehinting to ZIA Talker methods (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 PEP8 Linting for zia_talker.py (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
