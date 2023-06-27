@@ -8,6 +8,7 @@ Added add_rule_label method to zia_talker (by `Ryan Ulrick <mailto:rulrick@zscal
 Fix: ZPA list_segment_group paging  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Fix: Added **kwargs to ziatalker add_FirewallFilteringRules method to prevent erroring when replicating configuration. (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Added Method to zcc_talker to download downloadServiceStatus (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Added Method to zia_portaltalker to list Cloud App policies (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v4.0.2 ( APRIL 2023 )
 =========================
