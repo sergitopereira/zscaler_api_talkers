@@ -1,10 +1,9 @@
-import pdb # noqa
-from zscaler_helpers.http_calls import HttpCalls
+import pdb  # noqa
 import time
 from getpass import getpass
-from models.models import valid_category_ids
-from models.models import super_categories
-from models.models import valid_countries
+
+from models.models import super_categories, valid_category_ids, valid_countries
+from zscaler_helpers import HttpCalls
 
 
 class ZiaTalker(object):
@@ -128,8 +127,7 @@ class ZiaTalker(object):
         :return: json object with the status
         """
         url = "/status"
-        response = self.hp_http.get_call(url, cookies=self.cookies,
-                                         error_handling=True)
+        response = self.hp_http.get_call(url, cookies=self.cookies, error_handling=True)
         return response.json()
 
     def activate_status(self):
@@ -160,8 +158,8 @@ class ZiaTalker(object):
         url = "/auditlogEntryReport"
 
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, headers=self.headers,
-            error_handling=True)
+            url, cookies=self.cookies, headers=self.headers, error_handling=True
+        )
         return response.json()
 
     def download_auditlogEntryReport(self):
@@ -178,8 +176,8 @@ class ZiaTalker(object):
 
         url = "/auditlogEntryReport/download"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, headers=self.headers,
-            error_handling=True)
+            url, cookies=self.cookies, headers=self.headers, error_handling=True
+        )
         return response
 
     def add_auditlogEntryReport(
@@ -249,8 +247,8 @@ class ZiaTalker(object):
         if userId:
             url = f"/adminUsers/{userId}"
             return self.hp_http.get_call(
-                url, cookies=self.cookies, error_handling=True,
-                headers=self.headers).json()
+                url, cookies=self.cookies, error_handling=True, headers=self.headers
+            ).json()
         else:
             if query:
                 url = f"/adminUsers?{query}?pageSize=1000"
@@ -269,8 +267,8 @@ class ZiaTalker(object):
         else:
             url = "/adminRoles/lite"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     # URL Categories
@@ -287,8 +285,8 @@ class ZiaTalker(object):
             url = "/urlCategories"
         # return self._obtain_all(url)
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_url_categories_lite(self):
@@ -297,8 +295,8 @@ class ZiaTalker(object):
         """
         url = "/urlCategories/lite"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def add_url_categories(
@@ -463,8 +461,8 @@ class ZiaTalker(object):
         """
         url = f"/urlCategories/{categoryid}"
         response = self.hp_http.delete_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response
 
     def delete_urlFilteringRules(self, ruleId):
@@ -478,8 +476,8 @@ class ZiaTalker(object):
         """
         url = f"/urlFilteringRules/{ruleId}"
         response = self.hp_http.delete_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response
 
     def list_url_categories_urlquota(self):
@@ -491,8 +489,8 @@ class ZiaTalker(object):
         """
         url = "/urlCategories/urlQuota"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         print(response.json())
         return response.json()
 
@@ -510,8 +508,8 @@ class ZiaTalker(object):
             print(f"{valid_category_ids}")
             raise ValueError("Invalid Category ID")
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def url_lookup(self, url_list):
@@ -526,9 +524,7 @@ class ZiaTalker(object):
         # Verify urls format
         list(set(url_list))
         # Rate limit 1/sec  and 400 hr and 100 URLs per call
-        list_of_lists = [
-            url_list[i: i + 100]
-            for i in range(0, len(url_list), 100)]
+        list_of_lists = [url_list[i : i + 100] for i in range(0, len(url_list), 100)]
         for item in list_of_lists:
             response = self.hp_http.post_call(
                 url,
@@ -555,8 +551,8 @@ class ZiaTalker(object):
         """
         url = "/urlFilteringRules"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def add_url_filtering_rules(
@@ -696,8 +692,8 @@ class ZiaTalker(object):
             url = f"/departments/{department_id}"
 
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_groups(self, group_id=None):
@@ -713,8 +709,8 @@ class ZiaTalker(object):
         else:
             url = f"/groups/{group_id}"
             response = self.hp_http.get_call(
-                url, cookies=self.cookies, error_handling=True,
-                headers=self.headers)
+                url, cookies=self.cookies, error_handling=True, headers=self.headers
+            )
 
         return response.json()
 
@@ -731,14 +727,14 @@ class ZiaTalker(object):
         if user_id:
             url = f"/users/{user_id}"
             return self.hp_http.get_call(
-                url, cookies=self.cookies, error_handling=True,
-                headers=self.headers).json()
+                url, cookies=self.cookies, error_handling=True, headers=self.headers
+            ).json()
         else:
             if query:
                 url = f"/users?{query}&pageSize=1000"
                 return self.hp_http.get_call(
-                    url, cookies=self.cookies, error_handling=True,
-                    headers=self.headers).json()
+                    url, cookies=self.cookies, error_handling=True, headers=self.headers
+                ).json()
             else:
                 url = "/users?pageSize=1000"
         return self._obtain_all(url)
@@ -822,8 +818,8 @@ class ZiaTalker(object):
         else:
             url = "/locations"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_sublocations(self, locationId):
@@ -837,8 +833,8 @@ class ZiaTalker(object):
         else:
             url = "/locations"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_locationsgroups(
@@ -851,8 +847,8 @@ class ZiaTalker(object):
         url = "/locations/groups"
         print(url)
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def delete_bulk_locations(self, locationIds):
@@ -883,8 +879,8 @@ class ZiaTalker(object):
         url = f"/locations/{locationId}"
 
         response = self.hp_http.delete_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response
 
     #   Traffic Forwarding
@@ -899,8 +895,8 @@ class ZiaTalker(object):
         else:
             url = "/greTunnels"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def add_greTunnels(
@@ -964,8 +960,8 @@ class ZiaTalker(object):
         """
         url = "/greTunnels/availableInternalIpRanges"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_gre_recommended_vips(self, query):
@@ -977,8 +973,8 @@ class ZiaTalker(object):
         """
         url = f"/vips/recommendedList?{query}"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_gre_validate_ip(self, ip):
@@ -991,8 +987,8 @@ class ZiaTalker(object):
         """
         url = f"/greTunnels/validateIP/{ip}"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_vpnCredentials(self, vpnId=None):
@@ -1006,8 +1002,8 @@ class ZiaTalker(object):
         else:
             url = "/vpnCredentials"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def add_vpnCredentials(
@@ -1051,8 +1047,8 @@ class ZiaTalker(object):
         url = f"/vpnCredentials/{vpnId}"
 
         response = self.hp_http.delete_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response
 
     def list_staticIP(self, IPId=None):
@@ -1066,8 +1062,8 @@ class ZiaTalker(object):
         else:
             url = "/staticIP"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def add_staticIP(
@@ -1131,8 +1127,8 @@ class ZiaTalker(object):
         """
         url = f"/staticIP/{Id}"
         response = self.hp_http.delete_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
 
         return response
 
@@ -1143,8 +1139,8 @@ class ZiaTalker(object):
         """
         url = "/authSettings/exemptedUrls"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def add_exemptedUrls(self, urls):
@@ -1187,8 +1183,8 @@ class ZiaTalker(object):
         """
         url = "/security"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def update_security_whitelisted_urls(self, urls):
@@ -1215,8 +1211,8 @@ class ZiaTalker(object):
         """
         url = "/security/advanced"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def update_security_blacklisted_urls(self, urls):
@@ -1280,8 +1276,8 @@ class ZiaTalker(object):
         else:
             url = "/dlpDictionaries"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_dlpDictionaries_lite(self):
@@ -1291,8 +1287,8 @@ class ZiaTalker(object):
 
         url = "/dlpDictionaries/lite"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def validateDlpPattern(self, pattern):
@@ -1326,8 +1322,8 @@ class ZiaTalker(object):
         """
         url = f"/dlpDictionaries/{dlpDicId}"
         response = self.hp_http.delete_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response
 
     def add_dlpDictionaries(
@@ -1414,8 +1410,8 @@ class ZiaTalker(object):
         else:
             url = "/dlpEngines"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_dlpExactDataMatchSchemas(self):
@@ -1435,8 +1431,8 @@ class ZiaTalker(object):
         """
         url = "/dlpExactDataMatchSchemas"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_dlpNotificationTemplates(self, templateId=None):
@@ -1451,8 +1447,8 @@ class ZiaTalker(object):
         else:
             url = "/dlpNotificationTemplates"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def add_dlpNotificationTemplates(
@@ -1509,8 +1505,8 @@ class ZiaTalker(object):
         """
         url = f"/dlpNotificationTemplates/{templateId}"
         response = self.hp_http.delete_call(
-            url=url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url=url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response
 
     def list_icapServer(self, icapServerId=None):
@@ -1525,8 +1521,8 @@ class ZiaTalker(object):
         else:
             url = "/icapServers"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_idmprofile(self, profileId=None):
@@ -1543,8 +1539,8 @@ class ZiaTalker(object):
         else:
             url = "/idmprofile"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_webDlpRules(self, ruleId=None):
@@ -1561,8 +1557,8 @@ class ZiaTalker(object):
         else:
             url = "/webDlpRules"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def delete_webDlpRules(self, ruleId):
@@ -1575,8 +1571,8 @@ class ZiaTalker(object):
         """
         url = f"/webDlpRules/{ruleId}"
         response = self.hp_http.delete_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     # Firewall Policies
@@ -1592,8 +1588,8 @@ class ZiaTalker(object):
         else:
             url = "/networkServices"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def add_networkServices(
@@ -1658,9 +1654,8 @@ class ZiaTalker(object):
         """
         url = f"/networkServices/{serviceid}"
         response = self.hp_http.delete_call(
-            url, cookies=self.cookies,
-            error_handling=False,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=False, headers=self.headers
+        )
         return response
 
     def list_firewallFilteringRules(self, ruleId=None):
@@ -1672,8 +1667,8 @@ class ZiaTalker(object):
         else:
             url = "/firewallFilteringRules"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def add_firewallFilteringRules(
@@ -1693,7 +1688,7 @@ class ZiaTalker(object):
         labels=None,
         nwServices=None,
         rank=0,
-        **kwargs
+        **kwargs,
     ):
         """
         :param name: type str,  Name of the Firewall
@@ -1765,8 +1760,8 @@ class ZiaTalker(object):
         """
         url = f"/firewallFilteringRules/{ruleId}"
         response = self.hp_http.delete_call(
-            url, cookies=self.cookies, error_handling=False,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=False, headers=self.headers
+        )
         return response
 
     def list_ipSourceGroups(self, ipGroupId=None):
@@ -1781,8 +1776,8 @@ class ZiaTalker(object):
         else:
             url = "/ipSourceGroups"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_ipSourceGroups_lite(
@@ -1794,8 +1789,8 @@ class ZiaTalker(object):
         """
         url = "/ipSourceGroups/lite"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_ipDestinationGroups(self, ipGroupId=None):
@@ -1810,8 +1805,8 @@ class ZiaTalker(object):
         else:
             url = "/ipDestinationGroups/"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_ipDestinationGroups_lite(self):
@@ -1822,8 +1817,8 @@ class ZiaTalker(object):
 
         url = "/ipDestinationGroups/lite"
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def add_ipSourceGroups(self, name, ipAddresses, description=None):
@@ -1834,10 +1829,7 @@ class ZiaTalker(object):
         """
 
         url = "/ipSourceGroups"
-        payload = {
-            "name": name, "ipAddresses": ipAddresses,
-            "description": description
-            }
+        payload = {"name": name, "ipAddresses": ipAddresses, "description": description}
         response = self.hp_http.post_call(
             url,
             payload=payload,
@@ -1882,9 +1874,7 @@ class ZiaTalker(object):
         return response
 
     def add_ipDestinationGroups(
-        self, name, type, addresses, ipCategories=None,
-        countries=None,
-        description=None
+        self, name, type, addresses, ipCategories=None, countries=None, description=None
     ):
         """
         :param name: mame
@@ -1948,8 +1938,8 @@ class ZiaTalker(object):
             url = "/deviceGroups"
 
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def list_devices(self, query=None):
@@ -1968,8 +1958,8 @@ class ZiaTalker(object):
             url = "/deviceGroups/devices"
 
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     # Rule Labels
@@ -1986,8 +1976,8 @@ class ZiaTalker(object):
             url = "/ruleLabels?pageSize=1000"
 
         response = self.hp_http.get_call(
-            url, cookies=self.cookies, error_handling=True,
-            headers=self.headers)
+            url, cookies=self.cookies, error_handling=True, headers=self.headers
+        )
         return response.json()
 
     def add_rule_label(self, payload):
