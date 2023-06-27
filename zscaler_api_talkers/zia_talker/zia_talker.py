@@ -1,10 +1,8 @@
 import pdb # noqa
-from zscaler_helpers.http_calls import HttpCalls
+from zscaler_helpers import HttpCalls
 import time
 from getpass import getpass
-from models.models import valid_category_ids
-from models.models import super_categories
-from models.models import valid_countries
+from models.models import valid_category_ids, super_categories,valid_countries
 
 
 class ZiaTalker(object):
