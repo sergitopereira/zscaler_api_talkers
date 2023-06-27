@@ -7,7 +7,7 @@ from zscaler_helpers import _request, get_user_agent, setup_logger
 logger = setup_logger(name=__name__)
 
 
-class ZDX:
+class ZdxPortalTalker:
     def __init__(
         self,
         username: str,
