@@ -2,7 +2,7 @@ import time
 
 import requests
 import requests.packages.urllib3.exceptions
-from .logger import setup_logger
+from logger import setup_logger
 
 # Disable the InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(
