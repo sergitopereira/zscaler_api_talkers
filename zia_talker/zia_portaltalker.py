@@ -341,9 +341,9 @@ class ZiaPortalTalker(object):
         """
         url = f'/groups/{groupid}'
         response = self.hp_http.delete_call(url=url, headers=self.headers,
-                                         cookies={'JSESSIONID': self.jsessionid,
-                                                  'ZS_SESSION_CODE': self.zs_session_code,
-                                                  })
+                                            cookies={'JSESSIONID': self.jsessionid,
+                                                     'ZS_SESSION_CODE': self.zs_session_code,
+                                                     })
         return response
 
     def delete_department(self, departmentid):
@@ -354,7 +354,20 @@ class ZiaPortalTalker(object):
         """
         url = f'/departments/{departmentid}'
         response = self.hp_http.delete_call(url=url, headers=self.headers,
+                                            cookies={'JSESSIONID': self.jsessionid,
+                                                     'ZS_SESSION_CODE': self.zs_session_code,
+                                                     })
+        return response
+
+    def list_webApplicationRules(self):
+        """
+        Method to list Cloud APP policies
+        :return:
+        :rtype:
+        """
+        url = '/webApplicationRules'
+        response = self.hp_http.get_call(url=url, headers=self.headers,
                                          cookies={'JSESSIONID': self.jsessionid,
                                                   'ZS_SESSION_CODE': self.zs_session_code,
                                                   })
-        return response
+        return response.json()
