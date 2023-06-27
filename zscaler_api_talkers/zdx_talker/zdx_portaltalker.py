@@ -12,16 +12,10 @@ class ZdxPortalTalker:
         self,
         username: str,
         password: str,
-        tenant_name: str,
-        domain_name: str,
         zia_cloud: str,
     ):
         self.username = username
         self.password = password
-        self.tenant_name = tenant_name
-        self.domain_name = domain_name
-        self.fqdn = f"{self.tenant_name}.{self.domain_name}"
-
         self.base_url = "https://admin.zdxcloud.net"
         self.api_base_url = f"{self.base_url}/zdx/api/v1"
         self.headers = {
