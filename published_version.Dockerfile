@@ -2,7 +2,7 @@ FROM python:3.11-slim
 
 LABEL MAINTAINER=" Dax Mickelson dmickelson@zscaler.com"
 
-WORKDIR /myapp
+WORKDIR /zscaler_api_talkers
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
