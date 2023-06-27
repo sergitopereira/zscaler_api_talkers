@@ -11,10 +11,10 @@ class ZccTalker(object):
     """
 
     def __init__(self, cloud):
-        self.base_uri = f'https://api-mobile.{cloud}/papi'
+        self.base_uri = f"https://api-mobile.{cloud}/papi"
         self.hp_http = HttpCalls(host=self.base_uri, verify=True)
         self.jsessionid = None
-        self.version = 'beta 0.1'
+        self.version = "beta 0.1"
 
     def authenticate(self, clientid, secretkey):
         """
@@ -23,15 +23,12 @@ class ZccTalker(object):
         :param secretkey: client secret, obtained from portal
         :return:  None
         """
-        payload = {
-            "apiKey": clientid,
-            "secretKey": secretkey
-        }
-        url = '/auth/v1/login'
-        response = self.hp_http.post_call(url=url, headers={'Accept': '*/*'}, payload=payload)
-        self.header = {
-            'auth-token': response.json()['jwtToken']
-        }
+        payload = {"apiKey": clientid, "secretKey": secretkey}
+        url = "/auth/v1/login"
+        response = self.hp_http.post_call(
+            url=url, headers={"Accept": "*/*"}, payload=payload
+        )
+        self.header = {"auth-token": response.json()["jwtToken"]}
 
     def _obtain_all(self, url, cookies=None, params=None, headers=None):
         """
@@ -42,8 +39,13 @@ class ZccTalker(object):
         page = 1
         result = []
         while True:
-            response = self.hp_http.get_call(f'{url}&page={page}', cookies=cookies, params=params, headers=headers,
-                                             error_handling=True)
+            response = self.hp_http.get_call(
+                f"{url}&page={page}",
+                cookies=cookies,
+                params=params,
+                headers=headers,
+                error_handling=True,
+            )
             if response.json():
                 result += response.json()
                 page += 1
@@ -61,11 +63,11 @@ class ZccTalker(object):
         :return:  type list
         """
         if username:
-            url = f'/public/v1/getDevices?username={username}'
+            url = f"/public/v1/getDevices?username={username}"
         elif osType:
-            url = f'/public/v1/getDevices?osType={osType}'
+            url = f"/public/v1/getDevices?osType={osType}"
         else:
-            url = '/public/v1/getDevices?pagesize100'
+            url = "/public/v1/getDevices?pagesize100"
         response = self._obtain_all(url=url, params=companyID, headers=self.header)
         return response
 
@@ -76,7 +78,7 @@ class ZccTalker(object):
         :param udid: type int. User device ID
         :return: type list
         """
-        url = f'/public/v1/getOtp?udid={udid}'
+        url = f"/public/v1/getOtp?udid={udid}"
         response = self.hp_http.get_call(url=url, params=companyID, headers=self.header)
         return response.json()
 
@@ -87,7 +89,7 @@ class ZccTalker(object):
         :param udid: type int. User device ID
         :return: type list
         """
-        url = f'/public/v1/getOtp?udid={udid}'
+        url = f"/public/v1/getOtp?udid={udid}"
         response = self.hp_http.get_call(url=url, params=companyID, headers=self.header)
         return response.json()
 
@@ -100,11 +102,8 @@ class ZccTalker(object):
         :param osType: 0 ALL OS types, 1 IOS, 2 Android, 3 Windows, 4 macOS, 5 Linux
         :return: type list
         """
-        url = f'/public/v1/removeDevices'
-        payload = {"companyId": companyID,
-                   "udids": udids,
-                   "osType": osType
-                   }
+        url = f"/public/v1/removeDevices"
+        payload = {"companyId": companyID, "udids": udids, "osType": osType}
         response = self.hp_http.post_call(url=url, headers=self.header, payload=payload)
         return response.json()
 
@@ -118,11 +117,8 @@ class ZccTalker(object):
         :param osType: 0 ALL OS types, 1 IOS, 2 Android, 3 Windows, 4 macOS, 5 Linux
         :return: type list
         """
-        url = f'/public/v1/forceRemoveDevices'
-        payload = {"companyId": companyID,
-                   "udids": udids,
-                   "osType": osType
-                   }
+        url = f"/public/v1/forceRemoveDevices"
+        payload = {"companyId": companyID, "udids": udids, "osType": osType}
         response = self.hp_http.post_call(url=url, headers=self.header, payload=payload)
         return response.json()
 
@@ -130,6 +126,6 @@ class ZccTalker(object):
         """
         Method to download Service Status
         """
-        url = '/public/v1/downloadServiceStatus'
+        url = "/public/v1/downloadServiceStatus"
         response = self.hp_http.get_call(url=url, params=companyID, headers=self.header)
         return response.content

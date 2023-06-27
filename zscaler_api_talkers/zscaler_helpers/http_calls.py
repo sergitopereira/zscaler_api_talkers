@@ -15,17 +15,17 @@ class HttpCalls(object):
         :param header: dictionary. HTTP header
         :param verify: Boolean. True to verify ssl cert with in HTTP call
         """
-        self.version = '1.1'
+        self.version = "1.1"
         self.host = host
-        self.headers = {'Content-type': 'application/json',
-                        'Cache-Control': 'no-cache'
-                        }
+        self.headers = {"Content-type": "application/json", "Cache-Control": "no-cache"}
         if header:
             self.headers.update(header)
         self.cookies = None
         self.verify = verify
 
-    def get_call(self, url, cookies=None, headers=None, params=None, error_handling=False):
+    def get_call(
+        self, url, cookies=None, headers=None, params=None, error_handling=False
+    ):
         """
         Method to perform a GET HTTP  call
         :param url: url
@@ -35,22 +35,35 @@ class HttpCalls(object):
         :param error_handling: Boolean, when TRUE will use Zscaler HTTP codes
         :return: response
         """
-        full_url = f'{self.host}{url}'
+        full_url = f"{self.host}{url}"
         if headers:
             self.headers.update(headers)
         try:
-            response = requests.get(url=full_url, headers=self.headers, cookies=cookies, params=params,
-                                    verify=self.verify)
+            response = requests.get(
+                url=full_url,
+                headers=self.headers,
+                cookies=cookies,
+                params=params,
+                verify=self.verify,
+            )
             if error_handling:
                 self._zia_http_codes(response)
             else:
                 if response.status_code not in [200, 201, 204]:
-                    raise ValueError(f'{response.status_code} -> {response.content}')
+                    raise ValueError(f"{response.status_code} -> {response.content}")
             return response
         except requests.HTTPError as e:
             raise ValueError(e)
 
-    def post_call(self, url, payload, headers=None, cookies=None, error_handling=False, urlencoded=False):
+    def post_call(
+        self,
+        url,
+        payload,
+        headers=None,
+        cookies=None,
+        error_handling=False,
+        urlencoded=False,
+    ):
         """
         Method to perform an HTTP POST call
         :param url: url
@@ -58,37 +71,57 @@ class HttpCalls(object):
         :param error_handling: Boolean, when TRUE will use Zscaler HTTP codes
         :return: response
         """
-        full_url = f'{self.host}{url}'
+        full_url = f"{self.host}{url}"
         try:
             if urlencoded:
                 url_encoded_headers = headers
-                response = requests.post(url=full_url, headers=url_encoded_headers, cookies=cookies, data=payload,
-                                         verify=self.verify)
+                response = requests.post(
+                    url=full_url,
+                    headers=url_encoded_headers,
+                    cookies=cookies,
+                    data=payload,
+                    verify=self.verify,
+                )
             else:
                 if headers:
                     self.headers.update(headers)
-                response = requests.post(url=full_url, headers=self.headers, cookies=cookies, json=payload,
-                                         verify=self.verify)          
+                response = requests.post(
+                    url=full_url,
+                    headers=self.headers,
+                    cookies=cookies,
+                    json=payload,
+                    verify=self.verify,
+                )
             if error_handling:
                 self._zia_http_codes(response)
             else:
                 if response.status_code not in [200, 201, 204]:
-                    raise ValueError(f'{response.status_code} -> {response.content}')
+                    raise ValueError(f"{response.status_code} -> {response.content}")
             return response
         except requests.HTTPError as e:
             raise ValueError(e)
 
-    def patch_call(self, url, payload, cookies=None, ):
+    def patch_call(
+        self,
+        url,
+        payload,
+        cookies=None,
+    ):
         """
         Method to perform an HTTP PATH call
         :param url: url
         :param cookies: cookies
         :return: response
         """
-        full_url = f'{self.host}{url}'
+        full_url = f"{self.host}{url}"
         try:
-            response = requests.patch(url=full_url, headers=self.headers, cookies=cookies, json=payload,
-                                      verify=self.verify)
+            response = requests.patch(
+                url=full_url,
+                headers=self.headers,
+                cookies=cookies,
+                json=payload,
+                verify=self.verify,
+            )
             if response.status_code not in [200, 201, 204]:
                 raise ValueError(response.status_code)
             return response
@@ -103,25 +136,34 @@ class HttpCalls(object):
         :param error_handling: Boolean, when TRUE will use Zscaler HTTP codes
         :return: response
         """
-        full_url = f'{self.host}{url}'
+        full_url = f"{self.host}{url}"
         if headers:
             self.headers.update(headers)
         try:
-            response = requests.put(url=full_url, headers=self.headers, cookies=cookies, json=payload,
-                                    verify=self.verify)
+            response = requests.put(
+                url=full_url,
+                headers=self.headers,
+                cookies=cookies,
+                json=payload,
+                verify=self.verify,
+            )
             if error_handling:
                 self._zia_http_codes(response)
             else:
                 if response.status_code not in [200, 201, 204]:
                     try:
-                        raise ValueError(f'HTTPS Response code {response.status_code} : {response.json()}')
+                        raise ValueError(
+                            f"HTTPS Response code {response.status_code} : {response.json()}"
+                        )
                     except ValueError:
                         raise ValueError(response.status_code)
             return response
         except requests.HTTPError as e:
             raise ValueError(e)
 
-    def delete_call(self, url, payload=None, headers=None, cookies=None, error_handling=False):
+    def delete_call(
+        self, url, payload=None, headers=None, cookies=None, error_handling=False
+    ):
         """
         Method to perform an HTTP DELETE call
         :param url: url
@@ -130,12 +172,17 @@ class HttpCalls(object):
         :param error_handling: Boolean, when TRUE will use Zscaler HTTP codes
         :return: response
         """
-        full_url = f'{self.host}{url}'
+        full_url = f"{self.host}{url}"
         if headers:
             self.headers.update(headers)
         try:
-            response = requests.delete(url=full_url, headers=self.headers, cookies=cookies, json=payload,
-                                       verify=self.verify)
+            response = requests.delete(
+                url=full_url,
+                headers=self.headers,
+                cookies=cookies,
+                json=payload,
+                verify=self.verify,
+            )
             if error_handling:
                 self._zia_http_codes(response)
             else:
@@ -153,24 +200,29 @@ class HttpCalls(object):
         :return: None
         """
         if response.status_code in [200, 201, 202, 204]:
-            return    
+            return
         elif response.status_code == 401:
-            raise ValueError(f'{response.status_code} :Session is not authenticated or timed out')
+            raise ValueError(
+                f"{response.status_code} :Session is not authenticated or timed out"
+            )
         elif response.status_code == 403:
             raise ValueError(
-                f'{response.status_code} :API key disabled or SKU subscription missing or user role has not access')
+                f"{response.status_code} :API key disabled or SKU subscription missing or user role has not access"
+            )
         elif response.status_code == 404:
-            raise ValueError('Resource does not exist')
+            raise ValueError("Resource does not exist")
         elif response.status_code == 409:
-            raise ValueError('Request could not be processed because of possible edit conflict occurred')
+            raise ValueError(
+                "Request could not be processed because of possible edit conflict occurred"
+            )
         elif response.status_code == 415:
-            raise ValueError('Unsupported media type')
+            raise ValueError("Unsupported media type")
         elif response.status_code == 429:
-            raise ValueError('Exceeded the rate limit or quota')
+            raise ValueError("Exceeded the rate limit or quota")
         elif response.status_code == 500:
-            raise ValueError('Unexpected error')
+            raise ValueError("Unexpected error")
         elif response.status_code == 503:
-            raise ValueError('Service is temporarily unavailable')
+            raise ValueError("Service is temporarily unavailable")
         else:
             print(response.content)
-            raise ValueError(f'Unexpected HTTP response code: {response.status_code}')
+            raise ValueError(f"Unexpected HTTP response code: {response.status_code}")
