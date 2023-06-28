@@ -1,4 +1,9 @@
-v4.1.0 ( TO BE RELEASED )
+v4.1.1 ( in progress)
+=========================
+PEP8, docstrings, typehints, misc restructuring code (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+Added the ability to "authenticate" during object instantiation (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+
+v4.1.0 ( June 2023 )
 =========================
 Added ZDX Portal Talker (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 Added my logger and helper methods (goes along with ZDX Portal Talker) (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
