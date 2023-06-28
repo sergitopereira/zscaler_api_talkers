@@ -10,7 +10,6 @@ packages = [{include = "zscaler_api_talkers"}]
 python = "^3.11"
 requests = "^2.31.0"
 appdirs = "^1.4.4"
-ipython = "^8.14.0"
 
 [build-system]
 requires = ["poetry-core"]
