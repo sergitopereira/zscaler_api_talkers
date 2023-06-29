@@ -1,7 +1,2 @@
-# Required
 requests
 appdirs
-
-# Optional
-ipython
-python-dotenv
