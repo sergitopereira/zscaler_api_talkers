@@ -141,7 +141,7 @@ class ZpaTalker(object):
     def list_application_segments(
         self,
         applicationId: int = None,
-    ) -> json | list:
+    ) -> json or list:
         """
         Method to obtain application segments
 
@@ -306,7 +306,7 @@ class ZpaTalker(object):
         self,
         segmentGroupId: int = None,
         query: str = False,
-    ) -> json | list:
+    ) -> json or list:
         """
         Get all the configured Segment Groups. If segmentGroupId obtains the segment sroup details
 
@@ -363,7 +363,7 @@ class ZpaTalker(object):
     def list_connector(
         self,
         connectorId: int = None,
-    ) -> json | list:
+    ) -> json or list:
         """
         Get all the configured Segment Groups. If segmentGroupId obtains the segment group details
 
@@ -410,7 +410,7 @@ class ZpaTalker(object):
     def list_connector_group(
         self,
         appConnectorGroupId: int = None,
-    ) -> json | list:
+    ) -> json or list:
         """
         Gets all configured App Connector Groups for a ZPA tenant.
 
@@ -727,7 +727,7 @@ class ZpaTalker(object):
     def list_server_groups(
         self,
         groupId: int = None,
-    ) -> json | list:
+    ) -> json or list:
         """
         Method to get all configured Server Groups. If groupI, get the Server Group details
 
