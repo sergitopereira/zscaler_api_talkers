@@ -16,7 +16,7 @@ The ZPA API talker is divided into two Class objects: ZpaTalker and ZpaPortalTal
 with ZPA via the published APIs; whereas ZpaPortalTalker interacts with ZPA via the URLs presented in the Portal 
 (aka, the ZPA configuration website).
 
-## ZCC API Talker
+### ZCC API Talker
 Python client to leverage Zscaler Client Connector API. ( Currently in Beta status)
 
 The ZCC API talker is accessed via the Class object named: ZccTalker.
@@ -28,8 +28,8 @@ We provide two methods to build a Docker container.  Either using the code hoste
 
 #### GitHub Method
 1. Download Dockerfile
-  - Linux: `curl -O https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/git_version.Dockerfile`
-  - Windows: `wget -O Dockerfile https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/git_version.Dockerfile` 
+   - Linux: `curl -O https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/git_version.Dockerfile`
+   - Windows: `wget -O Dockerfile https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/git_version.Dockerfile` 
 1. Build Image and Run Container
    1. `docker build -f git_version.Dockerfile -t zscaler_api_talkers .`
    1. `docker run -it zscaler_api_talkers bash`
@@ -38,8 +38,8 @@ We provide two methods to build a Docker container.  Either using the code hoste
 
 #### PyPi Method
 1. Download Dockerfile
-  - Linux: `curl -O https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/Dockerfile`
-  - Windows: `wget -O Dockerfile https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/Dockerfile` 
+   - Linux: `curl -O https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/Dockerfile`
+   - Windows: `wget -O Dockerfile https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/Dockerfile` 
 1. Build Image and Run Container
    1. `docker build -t zscaler_api_talkers .`
    1. `docker run -it zscaler_api_talkers bash`
