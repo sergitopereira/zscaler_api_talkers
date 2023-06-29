@@ -7,22 +7,22 @@ The "os.environ.get()" references used below call variables that are set in the 
 Example .env file contents:
 zia_cloud = "zscalerthree.net"
 zia_username = "you@you.com"
-zia_password = "asdfasdfasdf"
-zia_api_key = "asdfasdfasdf"
+zia_password = "you_password"
+zia_api_key = "you_api_key"
 
 zcc_cloud = "zscalerthree.net"
-zcc_client_id = "asdfasdfasdf"
-zcc_secret_key = "asdfasdfasdf"
+zcc_client_id = "you_client_id"
+zcc_secret_key = "you_secret_key"
 
 zdx_username = "you@you.com"
-zdx_password = "asdfasdfasdf"
-zdx_zia_cloud = "zscalerthree"
+zdx_password = "you_password"
+zdx_zia_cloud = "zscalerthree.net"
 
-zpa_customer_id = "asdfasdfasdf"
-zpa_client_id = "asdfasdfasdf"
-zpa_client_secret = "asdfasdfasdf"
+zpa_customer_id = "you_customer_id"
+zpa_client_id = "you_client_id"
+zpa_client_secret = "you_client_secret"
 zpa_username = "you@you.com"
-zpa_password = "asdfasdfasdf"
+zpa_password = "you_password"
 """
 
 import os
