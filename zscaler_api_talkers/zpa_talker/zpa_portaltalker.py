@@ -104,7 +104,7 @@ class ZpaPortalTalker(object):
             headers=self.headers,
         )
         if int(response.json()["totalPages"]) > 1:
-            response = self._obtain_all_pages(url)
+            response = self._obtain_all_pages(url)  # FIXME: url isn't the whole URL thus _obtain_all_pages is failing
         else:
             response = response.json()["list"]
 
