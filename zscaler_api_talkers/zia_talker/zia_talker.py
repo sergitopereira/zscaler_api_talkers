@@ -71,7 +71,7 @@ class ZiaTalker(object):
 
     def authenticate(
         self,
-        apikey: str,  # FIXME: Not used?
+        apikey: str,
         username: str,
         password: str = None,
     ):
