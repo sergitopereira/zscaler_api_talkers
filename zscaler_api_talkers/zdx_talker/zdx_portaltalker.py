@@ -65,7 +65,7 @@ class ZdxPortalTalker:
             }
         )
         data = {
-            "username": f"zdx-{self.username}",
+            "username": self.username,
             "password": self.password,
         }
         result = _request(
