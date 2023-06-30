@@ -4,7 +4,6 @@ from zscaler_api_talkers.zia_talker.zia_portaltalker import ZiaPortalTalker
 from zscaler_api_talkers.zia_talker.zia_talker import ZiaTalker
 from zscaler_api_talkers.zpa_talker.zpa_portaltalker import ZpaPortalTalker
 from zscaler_api_talkers.zpa_talker.zpa_talker import ZpaTalker
-from zscaler_api_talkers.zscaler_helpers import http_calls
 
 __all__ = [
     "ZccTalker",
