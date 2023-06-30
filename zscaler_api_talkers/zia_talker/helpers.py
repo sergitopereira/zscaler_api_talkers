@@ -35,6 +35,7 @@ def _get_seed(url: str,) -> str:
         if each.startswith("js"):
             if each.find("lean") > 0:
                 js = each
+                break
 
     result = _request(
         method="get",
