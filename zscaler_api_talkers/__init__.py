@@ -1,9 +1,10 @@
-from zcc_talker.zcc_talker import ZccTalker
-from zdx_talker.zdx_portaltalker import ZdxPortalTalker
-from zia_talker.zia_portaltalker import ZiaPortalTalker
-from zia_talker.zia_talker import ZiaTalker
-from zpa_talker.zpa_portaltalker import ZpaPortalTalker
-from zpa_talker.zpa_talker import ZpaTalker
+from zscaler_api_talkers.zcc_talker.zcc_talker import ZccTalker
+from zscaler_api_talkers.zdx_talker.zdx_portaltalker import ZdxPortalTalker
+from zscaler_api_talkers.zia_talker.zia_portaltalker import ZiaPortalTalker
+from zscaler_api_talkers.zia_talker.zia_talker import ZiaTalker
+from zscaler_api_talkers.zpa_talker.zpa_portaltalker import ZpaPortalTalker
+from zscaler_api_talkers.zpa_talker.zpa_talker import ZpaTalker
+from zscaler_api_talkers.zscaler_helpers import http_calls
 
 __all__ = [
     "ZccTalker",
