@@ -47,12 +47,12 @@ We provide two methods to build a Docker container.  Either using the code hoste
 1. Usage (program is in /zscaler_api_talkers/)
    - `cd zscaler_api_talkers`
 
-### Option2: Run in a Python Virtual Environment
+### Option 2: Run in a Python Virtual Environment
 1. Create a virtual Environment: `python3 -m venv .zs_api_talkers`
-1. Activate virtual environment: 
-  - Linux: `source .zs_api_talkers/bin/activate`
-  - Windows: `.\.zs_api_talkers\Scripts\activate`
-1. Install Zscales API talkers: `pip install zscaler-api-talkers`
+1. Activate virtual environment:
+   - Linux: `source .zs_api_talkers/bin/activate`
+   - Windows: `.\.zs_api_talkers\Scripts\activate`
+1. Install Zscaler API talkers: `pip install zscaler-api-talkers`
 
 
 ## Zscaler Secure Internet and SaaS Access SDK (zia_talker)
