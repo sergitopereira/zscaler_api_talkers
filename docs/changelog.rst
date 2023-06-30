@@ -4,6 +4,7 @@ Fix: ZiaTalker list_department method now returns all departments  (by `Sergio P
 Fix: Updated contribution guidelines (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 PEP8, docstrings, typehints, misc restructuring code (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 Added the ability to "authenticate" during object instantiation (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+Edited multiple files to include missing zscaler_api_talker form the import statements (by 'Gurnaib Brar <mailto: gbrar@zscaler.com>'_)
 
 v4.1.0 ( June 2023 )
 =========================
