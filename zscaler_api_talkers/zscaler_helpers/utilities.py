@@ -84,7 +84,7 @@ def _request(
             )
             if result.status_code < 400:
                 break  # Only stop looping if the status_code is reported as not an error.
-        except requests.exceptions.SSLError as e:
+        except requests.exceptions.SSLError:
             if not silence_logs:
                 logger.debug("Disabling SSL verification for the next request attempt.")
             kwargs.update(
