@@ -776,30 +776,27 @@ class ZiaTalker(object):
 
     def list_departments(
         self,
-        department_id: str = "",
-    ) -> json:
+        department_id: int = None,
+    ) -> json or list:
         """
         Gets a list of departments. The search parameters find matching values within the "name" or "comments"
         attributes. if ID, gets the department for the specified ID
 
-        :param department_id: (str) department ID
+        :param department_id: (int) department ID
 
         :return: (json)
         """
 
-        if department_id:
-            url = "/departments"
+        if not department_id:
+            url = "/departments?pageSize=10000"
+            return self._obtain_all(url)
         else:
             url = f"/departments/{department_id}"
 
-        response = self.hp_http.get_call(
-            url,
-            cookies=self.cookies,
-            error_handling=True,
-            headers=self.headers,
-        )
-
-        return response.json()
+            response = self.hp_http.get_call(
+                url, cookies=self.cookies, error_handling=True, headers=self.headers
+            )
+            return response.json()
 
     def list_groups(
         self,
