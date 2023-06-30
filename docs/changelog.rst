@@ -1,3 +1,7 @@
+v5.<date>.0 (massive update/changes)
+=========================
+Style: Renamed a lot of Class methods to fix Python formats (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+
 v4.1.1 ( in progress)
 =========================
 Fix: ZiaTalker list_department method now returns all departments  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
