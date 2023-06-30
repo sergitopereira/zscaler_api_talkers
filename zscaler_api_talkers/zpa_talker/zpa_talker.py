@@ -461,9 +461,9 @@ class ZpaTalker(object):
 
         return response
 
-    def list_browser_access_certificates(
+    def list_v1_browser_access_certificates(
         self,
-    ) -> list:  # FIXME: duplicate but URL is slightly different.
+    ) -> list:
         """
         Get all the issued certificates
 
