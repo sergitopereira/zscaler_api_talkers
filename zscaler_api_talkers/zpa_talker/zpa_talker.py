@@ -125,7 +125,9 @@ class ZpaTalker(object):
         :return: (json)
         """
         if server_id:
-            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/server/{server_id}"
+            url = (
+                f"/mgmtconfig/v1/admin/customers/{self.customer_id}/server/{server_id}"
+            )
         else:
             if not query:
                 query = "?pagesize=500"
@@ -607,9 +609,7 @@ class ZpaTalker(object):
         """
         if not query:
             query = "?pagesize=500"
-        url = (
-            f"/userconfig/v1/customers/{self.customer_id}/scimgroup/idpId/{idp_id}{query}"
-        )
+        url = f"/userconfig/v1/customers/{self.customer_id}/scimgroup/idpId/{idp_id}{query}"
         response = self._obtain_all_results(url)
 
         return response

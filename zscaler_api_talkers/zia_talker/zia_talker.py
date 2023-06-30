@@ -6,6 +6,7 @@ import requests
 from zia_talker.models import (super_categories, valid_category_ids,
                                valid_countries)
 from zscaler_helpers import HttpCalls, setup_logger
+
 from .helpers import _obfuscate_api_key
 
 logger = setup_logger(name=__name__)
@@ -472,16 +473,11 @@ class ZiaTalker(object):
         url = f"/urlCategories/{category_id}"
         parameters = {}
 
-        if action and action not in [
-            "ADD_TO_LIST",
-            "REMOVE_FROM_LIST"
-        ]:
+        if action and action not in ["ADD_TO_LIST", "REMOVE_FROM_LIST"]:
             logger.error(f"Invalid action: {action}")
             raise ValueError("Invalid action")
         else:
-            parameters.update(
-                {'action': action}
-            )
+            parameters.update({"action": action})
 
         payload = {
             "configuredName": configured_name,
@@ -610,7 +606,7 @@ class ZiaTalker(object):
         # Verify urls format
         list(set(url_list))
         # Rate limit 1/sec  and 400 hr and 100 URLs per call
-        list_of_lists = [url_list[i: i + 100] for i in range(0, len(url_list), 100)]
+        list_of_lists = [url_list[i : i + 100] for i in range(0, len(url_list), 100)]
         for item in list_of_lists:
             response = self.hp_http.post_call(
                 url,
@@ -772,7 +768,10 @@ class ZiaTalker(object):
         else:
             url = f"/departments/{department_id}"
             response = self.hp_http.get_call(
-                url, cookies=self.cookies, error_handling=True, headers=self.headers,
+                url,
+                cookies=self.cookies,
+                error_handling=True,
+                headers=self.headers,
             )
             return response.json()
 
@@ -1374,7 +1373,7 @@ class ZiaTalker(object):
         :return: (json)
         """
         url = "/authSettings/exemptedUrls"
-        parameters = {'action': "REMOVE_FROM_LIST"}
+        parameters = {"action": "REMOVE_FROM_LIST"}
         payload = {"urls": urls}
         response = self.hp_http.post_call(
             url,
@@ -1481,7 +1480,7 @@ class ZiaTalker(object):
         :return: (request.Response object)
         """
         url = "/security/advanced/blacklistUrls"
-        parameters = {'action': "ADD_TO_LIST"}
+        parameters = {"action": "ADD_TO_LIST"}
         payload = {"blacklistUrls": urls}
         response = self.hp_http.post_call(
             url,
@@ -1506,7 +1505,7 @@ class ZiaTalker(object):
         :return: (json)
         """
         url = "/security/advanced/blacklistUrls"
-        parameters = {'action' 'REMOVE_FROM_LIST'}
+        parameters = {"action" "REMOVE_FROM_LIST"}
         payload = {"blacklistUrls": urls}
         response = self.hp_http.post_call(
             url,
@@ -2404,7 +2403,10 @@ class ZiaTalker(object):
 
         return response.json()
 
-    def add_rule_label(self, payload: dict,) -> json:
+    def add_rule_label(
+        self,
+        payload: dict,
+    ) -> json:
         """
         Adds new rule labels with the given name
         :param name: (str) name  # FIXME: Not in passed attributes.

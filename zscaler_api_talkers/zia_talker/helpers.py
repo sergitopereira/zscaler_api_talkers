@@ -1,9 +1,10 @@
 import time
+
 from zscaler_helpers import _request
 
 
 def _obfuscate_api_key(
-        seed: str,
+    seed: str,
 ) -> (time, str):
     """
     Internal method to Obfuscate the API key
@@ -24,7 +25,9 @@ def _obfuscate_api_key(
     return now, key
 
 
-def _get_seed(url: str,) -> str:
+def _get_seed(
+    url: str,
+) -> str:
     result = _request(
         method="get",
         url=url,

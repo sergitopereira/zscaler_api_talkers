@@ -104,7 +104,9 @@ def zpa_portal_talker_example():
 
 
 if __name__ == "__main__":
-    print("Uncomment one or more of the following to test/see example of that API Talker.")
+    print(
+        "Uncomment one or more of the following to test/see example of that API Talker."
+    )
     zia_talker_example()
     zia_portal_talker_example()
     # zcc_talker_example()

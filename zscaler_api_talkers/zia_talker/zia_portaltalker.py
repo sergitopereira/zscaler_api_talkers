@@ -2,7 +2,8 @@ import json
 
 import requests
 from zscaler_helpers import HttpCalls, setup_logger
-from .helpers import _obfuscate_api_key, _get_seed
+
+from .helpers import _get_seed, _obfuscate_api_key
 
 logger = setup_logger(name=__name__)
 
@@ -29,7 +30,10 @@ class ZiaPortalTalker(object):
         """
         self.cloud_name = cloud_name
         self.base_uri = f"https://admin.{cloud_name}/zsapi/v1"
-        self.hp_http = HttpCalls(host=self.base_uri, verify=True,)
+        self.hp_http = HttpCalls(
+            host=self.base_uri,
+            verify=True,
+        )
         self.j_session_id = None
         self.zs_session_code = None
         self.headers = None
@@ -51,7 +55,9 @@ class ZiaPortalTalker(object):
         :param username: (str) A string that contains the email ID of the API admin
         :param password: (str) A string that contains the password for the API admin
         """
-        timestamp, key = _obfuscate_api_key(_get_seed(url=f"https://admin.{self.cloud_name}"))
+        timestamp, key = _obfuscate_api_key(
+            _get_seed(url=f"https://admin.{self.cloud_name}")
+        )
         payload = {
             "apiKey": key,
             "username": username,

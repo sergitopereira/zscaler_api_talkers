@@ -1,8 +1,7 @@
 import json
 import time
 
-from zscaler_helpers import HttpCalls
-from zscaler_helpers import setup_logger
+from zscaler_helpers import HttpCalls, setup_logger
 
 logger = setup_logger(name=__name__)
 
@@ -115,14 +114,14 @@ class ZccTalker(object):
         """
         url = "/public/v1/getDevices"
         parameters = {
-            'companyId': company_id,
+            "companyId": company_id,
         }
         if username:
-            parameters.update({'username': username})
+            parameters.update({"username": username})
         elif os_type:
-            parameters.update({'osType': os_type})
+            parameters.update({"osType": os_type})
         else:
-            parameters.update({'pagesize': 100})
+            parameters.update({"pagesize": 100})
         response = self._obtain_all(
             url=url,
             params=parameters,
@@ -147,8 +146,8 @@ class ZccTalker(object):
         """
         url = f"/public/v1/getOtp"
         parameters = {
-            'companyId': company_id,
-            'udid': ud_id,
+            "companyId": company_id,
+            "udid": ud_id,
         }
         response = self.hp_http.get_call(
             url=url,
@@ -173,8 +172,8 @@ class ZccTalker(object):
         """
         url = f"/public/v1/getOtp"
         parameters = {
-            'companyId': company_id,
-            'udid': ud_id,
+            "companyId": company_id,
+            "udid": ud_id,
         }
         response = self.hp_http.get_call(
             url=url,
