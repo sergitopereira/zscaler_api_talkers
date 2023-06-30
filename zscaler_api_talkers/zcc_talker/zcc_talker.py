@@ -16,7 +16,6 @@ class ZccTalker(object):
         cloud: str,
         client_id: str = "",
         secret_key: str = "",
-        company_id: str ="",
     ):
         """
         :param cloud: (str) Top Level Domain (TLD) of the Zscaler cloud where tenant resides.
