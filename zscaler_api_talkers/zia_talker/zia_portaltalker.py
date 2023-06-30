@@ -32,10 +32,9 @@ class ZiaPortalTalker(object):
         self.zs_session_code = None
         self.headers = None
         self.version = "0.1"
-        if username and any([password, api_key]):
+        if username and password:
             self.authenticate(
                 username=username,
-                apikey=api_key,
                 password=password,
             )
 
