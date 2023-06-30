@@ -15,7 +15,6 @@ class ZiaPortalTalker(object):
     def __init__(
         self,
         cloud_name: str,
-        api_key: str = "",
         username: str = "",
         password: str = "",
     ):
@@ -23,9 +22,9 @@ class ZiaPortalTalker(object):
         Method to start the class
 
         :param cloud_name: (str) Example: zscalerbeta.net, zscalerone.net, zscalertwo.net, zscalerthree.net,
-            zscaler.net, zscloud.net
-        :param client_id: (str) Client ID
-        :param secret_key: (str) Secret Key
+        zscaler.net, zscloud.net
+        :param username: (str) Client ID
+        :param password: (str) Secret Key
         """
         self.base_uri = f"https://admin.{cloud_name}/zsapi/v1"
         self.hp_http = HttpCalls(host=self.base_uri, verify=True)
@@ -64,14 +63,12 @@ class ZiaPortalTalker(object):
 
     def authenticate(
         self,
-        apikey: str,  # FIXME: Not used?
         username: str,
         password: str = None,
     ):
         """
         Method to authenticate.
 
-        :param apikey: API key
         :param username: A string that contains the email ID of the API admin
         :param password: A string that contains the password for the API admin
         """
