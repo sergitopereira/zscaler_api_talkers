@@ -52,11 +52,10 @@ def zia_portal_talker_example():
     print("Example of using ZiaPortalTalker")
     zia_portal = ZiaPortalTalker(
         cloud_name=os.environ.get("zia_cloud"),
-        api_key=os.environ.get("zia_api_key"),
         username=os.environ.get("zia_username"),
         password=os.environ.get("zia_password"),
     )
-    print(f"{zia_portal.list_apiKeys()=}")
+    print(f"{zia_portal.list_api_keys()=}")
 
 
 def zcc_talker_example():
@@ -66,7 +65,7 @@ def zcc_talker_example():
         client_id=os.environ.get("zcc_client_id"),
         secret_key=os.environ.get("zcc_secret_key"),
     )
-    print(f"{zcc.list_devices(companyID=10, username='asdf', osType='asdf',)=}")
+    print(f"{zcc.list_devices(company_id=10, username='asdf', os_type='asdf',)=}")
 
 
 def zdx_portal_talker_example():
@@ -86,7 +85,7 @@ def zdx_portal_talker_example():
 def zpa_talker_example():
     print("Example of using ZpaTalker")
     zpa = ZpaTalker(
-        customerID=int(os.environ.get("zpa_customer_id")),
+        customer_id=int(os.environ.get("zpa_customer_id")),
         client_id=os.environ.get("zpa_client_id"),
         client_secret=os.environ.get("zpa_client_secret"),
     )
@@ -96,7 +95,7 @@ def zpa_talker_example():
 def zpa_portal_talker_example():
     print("Example of using ZpaPortalTalker")
     zpa_portal = ZpaPortalTalker(
-        customerId=int(os.environ.get("zpa_customer_id")),
+        customer_id=int(os.environ.get("zpa_customer_id")),
         username=os.environ.get("zpa_username"),
         password=os.environ.get("zpa_password"),
     )
@@ -106,9 +105,9 @@ def zpa_portal_talker_example():
 
 if __name__ == "__main__":
     print("Uncomment one or more of the following to test/see example of that API Talker.")
-    # zia_talker_example()
-    # zia_portal_talker_example()
-    # # zcc_talker_example()
-    # zdx_portal_talker_example()
-    # zpa_talker_example()
-    # zpa_portal_talker_example()
+    zia_talker_example()
+    zia_portal_talker_example()
+    # zcc_talker_example()
+    zdx_portal_talker_example()
+    zpa_talker_example()
+    zpa_portal_talker_example()
