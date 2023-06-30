@@ -119,7 +119,7 @@ print(dir(a))
   - https://github.com/sergitopereira/zscaler_api_talkers/blob/main/example.py
 
 ## Bugs and enhancements
-Feel free to open an issues using [Gihub Issues](https://github.com/sergitopereira/zscaler_api_talkers)
+Feel free to open an issues using [GitHub Issues](https://github.com/sergitopereira/zscaler_api_talkers)
 
 ## Author
 Sergio Pereira: Zscaler Professional Services 
