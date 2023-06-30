@@ -1,7 +1,7 @@
 import json
 import time
 
-from zscaler_helpers import HttpCalls
+from zscaler_api_talkers.zscaler_helpers import HttpCalls
 
 
 class ZccTalker(object):
@@ -16,6 +16,7 @@ class ZccTalker(object):
         cloud: str,
         client_id: str = "",
         secret_key: str = "",
+        company_id: str ="",
     ):
         """
         :param cloud: (str) Top Level Domain (TLD) of the Zscaler cloud where tenant resides.
