@@ -55,7 +55,7 @@ We provide two methods to build a Docker container.  Either using the code hoste
 1. Install Zscaler API talkers: `pip install zscaler-api-talkers`
 
 
-## Zscaler Secure Internet and SaaS Access SDK (zia_talker)
+## Zscaler Secure Internet and SaaS Access SDK
 
 ### Usage ZiaTalker
 ``` python
@@ -90,7 +90,7 @@ a.authenticate(client_id='clientID',client_secret='clientSecret')
 print(dir(a))
 ```
 
-## Zscaler Client Connector SDK  (zcc_talker)
+## Zscaler Client Connector SDK
 
 ### Usage ZccTalker
 ``` python
@@ -103,7 +103,7 @@ a.list_OTP('companyID','user device id')
 print(dir(a))
 ```
 
-## Zscaler Digital Experience SDK  (zdx_talker)
+## Zscaler Digital Experience SDK
 
 ### Usage ZdxTalker
 ``` python
