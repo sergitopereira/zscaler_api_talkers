@@ -1,5 +1,5 @@
 import requests
-from zscaler_helpers import HttpCalls
+from zscaler_api_talkers.zscaler_helpers.http_calls import HttpCalls
 
 
 class ZpaPortalTalker(object):
