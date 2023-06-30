@@ -1,9 +1,10 @@
 import json
-import time
-from getpass import getpass
 
 import requests
-from zscaler_helpers import HttpCalls
+from zscaler_helpers import HttpCalls, setup_logger
+from .helpers import _obfuscate_api_key, _get_seed
+
+logger = setup_logger(name=__name__)
 
 
 class ZiaPortalTalker(object):
@@ -27,8 +28,8 @@ class ZiaPortalTalker(object):
         :param password: (str) Secret Key
         """
         self.base_uri = f"https://admin.{cloud_name}/zsapi/v1"
-        self.hp_http = HttpCalls(host=self.base_uri, verify=True)
-        self.jsessionid = None
+        self.hp_http = HttpCalls(host=self.base_uri, verify=True,)
+        self.j_session_id = None
         self.zs_session_code = None
         self.headers = None
         self.version = "0.1"
@@ -38,45 +39,18 @@ class ZiaPortalTalker(object):
                 password=password,
             )
 
-    def _obfuscateApiKey(
-        self,
-        seed: str,
-    ) -> (time, str):
-        """
-        Internal method to Obfuscate the API key
-
-        :param seed: (str) API key
-
-        :return: (str, str) timestamp,obfuscated key
-        """
-        now = int(time.time() * 1000)
-        n = str(now)[-6:]
-        r = str(int(n) >> 1).zfill(6)
-        key = ""
-        for i in range(0, len(str(n)), 1):
-            key += seed[int(str(n)[i])]
-        for j in range(0, len(str(r)), 1):
-            key += seed[int(str(r)[j]) + 2]
-
-        return now, key
-
     def authenticate(
         self,
         username: str,
-        password: str = None,
+        password: str,
     ):
         """
         Method to authenticate.
 
-        :param username: A string that contains the email ID of the API admin
-        :param password: A string that contains the password for the API admin
+        :param username: (str) A string that contains the email ID of the API admin
+        :param password: (str) A string that contains the password for the API admin
         """
-        if not password:
-            password = getpass(" Introduce password: ")  # FIXME: I have a better way.
-        timestamp, key = self._obfuscateApiKey(
-            "jj7tg80fEGao"
-        )  # FIXME: Why is this hard coded?
-
+        timestamp, key = _obfuscate_api_key(_get_seed(url=self.base_uri,))
         payload = {
             "apiKey": key,
             "username": username,
@@ -92,7 +66,7 @@ class ZiaPortalTalker(object):
             },
         )
         if response.cookies.get("JSESSIONID"):
-            self.jsessionid = response.cookies["JSESSIONID"]
+            self.j_session_id = response.cookies["JSESSIONID"]
         else:
             raise ValueError("Invalid Credentials")
         if response.cookies.get("ZS_SESSION_CODE"):
@@ -104,24 +78,24 @@ class ZiaPortalTalker(object):
         else:
             raise ValueError("Invalid API key")
 
-    def add_dlpEngine(
+    def add_dlp_engine(
         self,
         payload: dict = None,
-        EngineExpression: str = None,
-        Name: str = None,
-        CustomDlpEngine: bool = True,
-        PredefinedEngineName: bool = None,
-        Description: str = None,
+        engine_expression: str = None,
+        name: str = None,
+        custom_dlp_engine: bool = True,
+        predefined_engine_name: bool = None,
+        description: str = None,
     ) -> requests.Response:
         """
         Method to create a DLP engine
 
         :param payload: (dict?)
-        :param Name: (str) Name of the DLP ENGINE
-        :param EngineExpression: (str) Engine Expression
-        :param CustomDlpEngine: : (bool) True if custom DLP engine
-        :param PredefinedEngineName: (bool)
-        :param Description: (str) Description
+        :param name: (str) Name of the DLP ENGINE
+        :param engine_expression: (str) Engine Expression
+        :param custom_dlp_engine: : (bool) True if custom DLP engine
+        :param predefined_engine_name: (bool)
+        :param description: (str) Description
 
         :return: requests.Response object
         """
@@ -130,55 +104,54 @@ class ZiaPortalTalker(object):
             payload = payload
         else:
             payload = {
-                "EngineExpression": EngineExpression,
-                "CustomDlpEngine": CustomDlpEngine,
+                "EngineExpression": engine_expression,
+                "CustomDlpEngine": custom_dlp_engine,
             }
-            if PredefinedEngineName:
-                payload.update(PredefinedEngineName=PredefinedEngineName)
+            if predefined_engine_name:
+                payload.update(PredefinedEngineName=predefined_engine_name)
             else:
-                payload.update(Name=Name)
-
-            if Description:
-                payload.update(Description=Description)
+                payload.update(Name=name)
+            if description:
+                payload.update(Description=description)
         response = self.hp_http.post_call(
             url=url,
             payload=payload,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response
 
-    def update_dlpEngine(
+    def update_dlp_engine(
         self,
         payload: json,
-        id: int,
+        dlp_id: int,
     ) -> requests.Response:
         """
         Method to update a DLP engine
 
         :param payload: (json) payload
-        :param id: (int) ID  # FIXME: This attribute overwrites a Python  built-in name.  We should change.
+        :param dlp_id: (int) ID
 
         :return: requests.Response object
         """
-        url = f"/dlpEngines/{id}"
+        url = f"/dlpEngines/{dlp_id}"
         response = self.hp_http.put_call(
             url=url,
             payload=payload,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response
 
-    def list_PacFiles(self) -> json:
+    def list_pac_files(self) -> json:
         """
         Method to list PAC files
 
@@ -189,21 +162,21 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def add_PacFile(
+    def add_pac_file(
         self,
-        name: (str),
-        description: (str),
-        domain: (str),
-        PacContent: (str),
+        name: str,
+        description: str,
+        domain: str,
+        pac_content: str,
         editable: bool = True,
-        pacUrlObfuscated: bool = True,
+        pac_url_obfuscated: bool = True,
     ) -> json:
         """
         Method to Add a PAC file
@@ -211,17 +184,17 @@ class ZiaPortalTalker(object):
         :param name: (str) Name of the PAC
         :param description: (str) Description
         :param domain: (str) Domain
-        :param PacContent: (str) PAC content
+        :param pac_content: (str) PAC content
         :param editable: (bool) Default True
-        :param pacUrlObfuscated: (bool) Default True
+        :param pac_url_obfuscated: (bool) Default True
 
         :return: (json)
         """
         payload = {
             "name": name,
             "editable": editable,
-            "pacContent": PacContent,
-            "pacUrlObfuscated": pacUrlObfuscated,
+            "pacContent": pac_content,
+            "pacUrlObfuscated": pac_url_obfuscated,
             "domain": domain,
             "description": description,
             "pacVerificationStatus": "VERIFY_NOERR",
@@ -232,14 +205,14 @@ class ZiaPortalTalker(object):
             headers=self.headers,
             payload=payload,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def list_malwarePolicy(self) -> json:
+    def list_malware_policy(self) -> json:
         """
         Method to list Malware Policy.  Policy > Malware Protection > Malware Policy
 
@@ -250,16 +223,17 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def list_virusSpywareSettings(self) -> json:
+    def list_virus_spyware_settings(self) -> json:
         """
         Method to list virus, malware, adware and spyware settings.  Policy > Malware Protection > Malware Policy
+
         :return: (json)
         """
         url = f"/virusSpywareSettings"
@@ -267,14 +241,14 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def list_advancedUrlFilteringSettings(self) -> json:
+    def list_advanced_url_filtering_settings(self) -> json:
         """
         Method to list Advanced Policy settings.  Policy > URL & Cloud App Control > Advanced  Policy Settings
 
@@ -285,7 +259,7 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
@@ -303,14 +277,14 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def list_cyberRiskScore(self) -> json:
+    def list_cyber_risk_score(self) -> json:
         """
         Method to list tenant subscriptions.  Administration > Company Profile > Subscriptions
 
@@ -321,7 +295,7 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
@@ -344,14 +318,14 @@ class ZiaPortalTalker(object):
             headers=self.headers,
             payload=payload,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def list_samlSettings(self) -> json:
+    def list_saml_settings(self) -> json:
         """
         Method to list SAML settings.  Administration > Authentication Settings
 
@@ -362,14 +336,14 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def list_advancedSettings(self) -> json:
+    def list_advanced_settings(self) -> json:
         """
         Method to list ZIA advanced settings.  Administration > Advanced Settings
 
@@ -380,14 +354,14 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def list_idpConfig(self) -> json:
+    def list_idp_config(self) -> json:
         """
         Method to list ZIA idp configuration.  Administration > Authentication Settings > identity Providers
 
@@ -398,16 +372,16 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def list_icapServers(self) -> json:
+    def list_icap_servers(self) -> json:
         """
-        Method to list ZIA icap servers.  Administration > DLP iincident Receiver > ICAP Settings
+        Method to list ZIA icap servers.  Administration > DLP incident Receiver > ICAP Settings
 
         :return: (json)
         """
@@ -416,14 +390,14 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def list_authSettings(self) -> json:
+    def list_auth_settings(self) -> json:
         """
         Method to list ZIA auth settings.  Administration > Authentication Settings
 
@@ -434,14 +408,14 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def list_samlAdminSettings(self) -> json:
+    def list_saml_admin_settings(self) -> json:
         """
         Method to list ZIA auth settings.  Administration > Authentication Settings
 
@@ -452,7 +426,7 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
@@ -470,7 +444,7 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
@@ -488,14 +462,14 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
 
-    def list_apiKeys(self) -> json:
+    def list_api_keys(self) -> json:
         """
         Method to list ZIA Administrator Management password.  Administration > Administration Management
 
@@ -506,7 +480,7 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
@@ -515,21 +489,21 @@ class ZiaPortalTalker(object):
 
     def delete_group(
         self,
-        groupid: int,
+        group_id: int,
     ) -> requests.Response:
         """
         Method to delete a group given group id
 
-        :param groupid: (int) Group id
+        :param group_id: (int) Group id
 
         :return: requests.Response object
         """
-        url = f"/groups/{groupid}"
+        url = f"/groups/{group_id}"
         response = self.hp_http.delete_call(
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
@@ -538,28 +512,28 @@ class ZiaPortalTalker(object):
 
     def delete_department(
         self,
-        departmentid: int,
+        department_id: int,
     ) -> requests.Response:
         """
         Method to delete a group given department
 
-        :param departmentid: (int) Departmentid id
+        :param department_id: (int) Departmentid id
 
         :return: requests.Response object
         """
-        url = f"/departments/{departmentid}"
+        url = f"/departments/{department_id}"
         response = self.hp_http.delete_call(
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response
 
-    def list_webApplicationRules(self) -> json:
+    def list_web_application_rules(self) -> json:
         """
         Method to list Cloud APP policies
 
@@ -570,7 +544,7 @@ class ZiaPortalTalker(object):
             url=url,
             headers=self.headers,
             cookies={
-                "JSESSIONID": self.jsessionid,
+                "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
