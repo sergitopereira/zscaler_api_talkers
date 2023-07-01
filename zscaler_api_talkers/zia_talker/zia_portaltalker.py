@@ -1,7 +1,7 @@
 import json
 
 import requests
-from zscaler_helpers import HttpCalls, setup_logger
+from zscaler_helpers import HttpCalls, setup_logger, request_
 
 from .helpers import _get_seed, _obfuscate_api_key
 
@@ -520,17 +520,17 @@ class ZiaPortalTalker(object):
     def delete_department(
         self,
         department_id: int,
-    ) -> requests.Response:
+    ) -> json:
         """
         Method to delete a group given department
 
-        :param department_id: (int) Departmentid id
+        :param department_id: (int) Department id
 
         :return: requests.Response object
         """
-        url = f"/departments/{department_id}"
-        response = self.hp_http.delete_call(
-            url=url,
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/departments/{department_id}",
             headers=self.headers,
             cookies={
                 "JSESSIONID": self.j_session_id,
@@ -538,7 +538,7 @@ class ZiaPortalTalker(object):
             },
         )
 
-        return response
+        return result.json()
 
     def list_web_application_rules(self) -> json:
         """
