@@ -1,4 +1,7 @@
 import requests
+from .logger import setup_logger
+
+logger = setup_logger(name=__name__)
 
 
 def _zia_http_codes(response: requests.Response):
