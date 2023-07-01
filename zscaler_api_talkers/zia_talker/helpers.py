@@ -1,6 +1,6 @@
 import time
 
-from zscaler_helpers import _request
+from zscaler_helpers import request_
 
 
 def _obfuscate_api_key(
@@ -28,7 +28,7 @@ def _obfuscate_api_key(
 def _get_seed(
     url: str,
 ) -> str:
-    result = _request(
+    result = request_(
         method="get",
         url=url,
     )
@@ -40,7 +40,7 @@ def _get_seed(
                 js = each
                 break
 
-    result = _request(
+    result = request_(
         method="get",
         url=f"{url}/{js}",
     )

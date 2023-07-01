@@ -17,7 +17,7 @@ def get_user_agent() -> str:
     return "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36"
 
 
-def _request(
+def request_(
     method: str,
     url: str,
     retries: int = 10,
