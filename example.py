@@ -75,11 +75,9 @@ def zdx_portal_talker_example():
         password=os.environ.get("zdx_password"),
         zia_cloud=os.environ.get("zdx_zia_cloud"),
     )
-    result = zdx.list_alerts()
-    print(f"ZDX Alerts: {result.json()}")
+    print(f"ZDX Alerts: {zdx.list_alerts()}")
     zdx.zia_authenticate()  # Cross authenticate to ZIA for user/admin/role functions.
-    result = zdx.zia_list_admin_roles()
-    print(f"Admin Roles: {result.json()}")
+    print(f"Admin Roles: {zdx.zia_list_admin_roles()}")
 
 
 def zpa_talker_example():
