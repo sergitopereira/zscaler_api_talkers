@@ -3,7 +3,7 @@ import time
 from getpass import getpass
 
 import requests
-from zscaler_helpers import HttpCalls
+from zscaler_api_talkers.zscaler_helpers import HttpCalls
 
 
 class ZiaPortalTalker(object):

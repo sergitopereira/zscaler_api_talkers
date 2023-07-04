@@ -4,9 +4,9 @@ import time
 from getpass import getpass
 
 import requests
-from zia_talker.models import (super_categories, valid_category_ids,
+from zscaler_api_talkers.zia_talker.models import (super_categories, valid_category_ids,
                                valid_countries)
-from zscaler_helpers import HttpCalls
+from zscaler_api_talkers.zscaler_helpers import HttpCalls
 
 
 class ZiaTalker(object):

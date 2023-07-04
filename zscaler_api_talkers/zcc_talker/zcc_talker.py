@@ -1,7 +1,7 @@
 import json
 import time
 
-from zscaler_helpers import HttpCalls
+from zscaler_api_talkers.zscaler_helpers import HttpCalls
 
 
 class ZccTalker(object):
