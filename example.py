@@ -113,4 +113,4 @@ if __name__ == "__main__":
     # zcc_talker_example()
     # zdx_portal_talker_example()
     # zpa_talker_example()
-    # zpa_portal_talker_example()
+    zpa_portal_talker_example()
