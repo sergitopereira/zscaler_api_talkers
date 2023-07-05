@@ -1,9 +1,9 @@
 from .client_connector.talker import ClientConnectorTalker, ZccTalker
-from .zdx_talker.zdx_portaltalker import ZdxPortalTalker
-from .zia_talker.zia_portaltalker import ZiaPortalTalker
-from .zia_talker.zia_talker import ZiaTalker
-from .zpa_talker.zpa_portaltalker import ZpaPortalTalker
-from .zpa_talker.zpa_talker import ZpaTalker
+from .zdx.portal_talker import ZdxPortalTalker
+from .zia.portal_talker import ZiaPortalTalker
+from .zia.talker import ZiaTalker
+from .zpa.portal_talker import ZpaPortalTalker
+from .zpa.talker import ZpaTalker
 
 __all__ = [
     "ZccTalker",  # Deprecated on 20230705.

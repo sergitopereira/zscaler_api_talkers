@@ -1,6 +1,7 @@
 v5.<date>.0 (in progress)
 =========================
 Fix: Renamed ZccTalker to ClientConnectorTalker. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+Style: Rename files and folders to reduce redundancies. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 
 v4.1.1 ( July 2023 )
 =========================
