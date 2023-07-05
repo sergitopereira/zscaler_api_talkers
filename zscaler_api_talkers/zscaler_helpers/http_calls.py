@@ -1,4 +1,7 @@
 import requests
+from .logger import setup_logger
+
+logger = setup_logger(name=__name__)
 
 
 def _zia_http_codes(response: requests.Response):
@@ -66,7 +69,7 @@ class HttpCalls(object):
     def get_call(
         self,
         url: str,
-        cookies: str = None,
+        cookies: dict = None,
         headers: dict = None,
         params: dict = None,
         error_handling: bool = False,
@@ -106,8 +109,9 @@ class HttpCalls(object):
         self,
         url: str,
         payload: dict,
+        params: dict = None,
         headers: dict = None,
-        cookies: str = None,
+        cookies: dict = None,
         error_handling: bool = False,
         urlencoded: bool = False,
     ) -> requests.Response:
@@ -116,6 +120,7 @@ class HttpCalls(object):
 
         :param url: (str) url
         :param payload: (dict)
+        :param params: (dict)
         :param headers: (dict)
         :param cookies: (str) cookies
         :param error_handling: (bool) when TRUE will use Zscaler HTTP codes
@@ -129,6 +134,7 @@ class HttpCalls(object):
                 url_encoded_headers = headers
                 response = requests.post(
                     url=full_url,
+                    params=params,
                     headers=url_encoded_headers,
                     cookies=cookies,
                     data=payload,
@@ -139,6 +145,7 @@ class HttpCalls(object):
                     self.headers.update(headers)
                 response = requests.post(
                     url=full_url,
+                    params=params,
                     headers=self.headers,
                     cookies=cookies,
                     json=payload,
@@ -157,7 +164,7 @@ class HttpCalls(object):
         self,
         url: str,
         payload: dict,
-        cookies: str = None,
+        cookies: dict = None,
     ) -> requests.Response:
         """
         Method to perform an HTTP PATH call
@@ -187,14 +194,16 @@ class HttpCalls(object):
         self,
         url: str,
         payload: dict,
+        params: dict = None,
         headers: dict = None,
-        cookies: str = None,
+        cookies: dict = None,
         error_handling: bool = False,
     ) -> requests.Response:
         """
         Method to perform an HTTP PUT call
 
         :param url: (str) url
+        :param params: (dict) Parameters to add to url
         :param payload: (dict)
         :param headers: (dict)
         :param cookies: (str) cookies
@@ -208,6 +217,7 @@ class HttpCalls(object):
         try:
             response = requests.put(
                 url=full_url,
+                params=params,
                 headers=self.headers,
                 cookies=cookies,
                 json=payload,
@@ -232,7 +242,7 @@ class HttpCalls(object):
         url: str,
         payload: dict = None,
         headers: dict = None,
-        cookies: str = None,
+        cookies: dict = None,
         error_handling: bool = False,
     ) -> requests.Response:
         """

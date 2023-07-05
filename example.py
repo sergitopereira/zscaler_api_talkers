@@ -7,22 +7,22 @@ The "os.environ.get()" references used below call variables that are set in the 
 Example .env file contents:
 zia_cloud = "zscalerthree.net"
 zia_username = "you@you.com"
-zia_password = "asdfasdfasdf"
-zia_api_key = "asdfasdfasdf"
+zia_password = "you_password"
+zia_api_key = "you_api_key"
 
 zcc_cloud = "zscalerthree.net"
-zcc_client_id = "asdfasdfasdf"
-zcc_secret_key = "asdfasdfasdf"
+zcc_client_id = "you_client_id"
+zcc_secret_key = "you_secret_key"
 
 zdx_username = "you@you.com"
-zdx_password = "asdfasdfasdf"
-zdx_zia_cloud = "zscalerthree"
+zdx_password = "you_password"
+zdx_zia_cloud = "zscalerthree.net"
 
-zpa_customer_id = "asdfasdfasdf"
-zpa_client_id = "asdfasdfasdf"
-zpa_client_secret = "asdfasdfasdf"
+zpa_customer_id = "you_customer_id"
+zpa_client_id = "you_client_id"
+zpa_client_secret = "you_client_secret"
 zpa_username = "you@you.com"
-zpa_password = "asdfasdfasdf"
+zpa_password = "you_password"
 """
 
 import os
@@ -54,11 +54,10 @@ def zia_portal_talker_example():
     print("Example of using ZiaPortalTalker")
     zia_portal = ZiaPortalTalker(
         cloud_name=os.environ.get("zia_cloud"),
-        api_key=os.environ.get("zia_api_key"),
         username=os.environ.get("zia_username"),
         password=os.environ.get("zia_password"),
     )
-    print(f"{zia_portal.list_apiKeys()=}")
+    print(f"{zia_portal.list_api_keys()=}")
 
 
 def zcc_talker_example():
@@ -78,17 +77,15 @@ def zdx_portal_talker_example():
         password=os.environ.get("zdx_password"),
         zia_cloud=os.environ.get("zdx_zia_cloud"),
     )
-    result = zdx.get_alerts()
-    print(f"ZDX Alerts: {result.json()}")
+    print(f"ZDX Alerts: {zdx.list_alerts()}")
     zdx.zia_authenticate()  # Cross authenticate to ZIA for user/admin/role functions.
-    result = zdx.zia_get_admin_roles()
-    print(f"Admin Roles: {result.json()}")
+    print(f"Admin Roles: {zdx.zia_list_admin_roles()}")
 
 
 def zpa_talker_example():
     print("Example of using ZpaTalker")
     zpa = ZpaTalker(
-        customerID=int(os.environ.get("zpa_customer_id")),
+        customer_id=int(os.environ.get("zpa_customer_id")),
         client_id=os.environ.get("zpa_client_id"),
         client_secret=os.environ.get("zpa_client_secret"),
     )
@@ -98,7 +95,7 @@ def zpa_talker_example():
 def zpa_portal_talker_example():
     print("Example of using ZpaPortalTalker")
     zpa_portal = ZpaPortalTalker(
-        customerId=int(os.environ.get("zpa_customer_id")),
+        customer_id=int(os.environ.get("zpa_customer_id")),
         username=os.environ.get("zpa_username"),
         password=os.environ.get("zpa_password"),
     )
@@ -107,10 +104,12 @@ def zpa_portal_talker_example():
 
 
 if __name__ == "__main__":
-    print("Uncomment one or more of the following to test/see example of that API Talker.")
-    # zia_talker_example()
-    # zia_portal_talker_example()
+    print(
+        "Uncomment one or more of the following to test/see example of that API Talker."
+    )
+    zia_talker_example()
+    zia_portal_talker_example()
     # zcc_talker_example()
-    # zdx_portal_talker_example()
-    # zpa_talker_example()
+    zdx_portal_talker_example()
+    zpa_talker_example()
     zpa_portal_talker_example()

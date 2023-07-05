@@ -1,7 +1,8 @@
 import urllib
 
+import json
 import requests
-from zscaler_api_talkers.zscaler_helpers import _request, get_user_agent, setup_logger
+from zscaler_helpers import request_, get_user_agent, setup_logger
 
 logger = setup_logger(name=__name__)
 
@@ -13,6 +14,13 @@ class ZdxPortalTalker:
         password: str,
         zia_cloud: str,
     ):
+        """Class object to provide access to ZDX via web portal backend APIs.
+
+        :param username: (str) Admin username
+        :param password: (str) Admin password
+        :param zia_cloud: (str) ZIA Portal associated with this ZDX tenant. Example: "zscalerthree.net"
+        """
+        logger.warning("These API endpoints are unsupported and Zscaler can change at will and without notice.")
         self.username = username
         self.password = password
         self.base_url = "https://admin.zdxcloud.net"
@@ -45,9 +53,10 @@ class ZdxPortalTalker:
         self,
         **kwargs,
     ):
+        """Authenticate to ZDX Web Portal"""
         url = f"{self.api_base_url}/auth"
         #  Expect 401 status code; we just want the headers/cookies that get returned.
-        result = _request(
+        result = request_(
             method="get",
             url=url,
             headers=self.headers,
@@ -68,7 +77,7 @@ class ZdxPortalTalker:
             "username": self.username,
             "password": self.password,
         }
-        result = _request(
+        result = request_(
             method="post",
             url=url,
             headers=self.headers,
@@ -78,25 +87,37 @@ class ZdxPortalTalker:
         )
         self.cookie_jar.update(result.cookies)
 
-    def get_alerts(
+    def list_alerts(
         self,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Collect a list of ZDX Alerts.
+
+        :return: (json)
+        """
+        result = request_(
             method="get",
             url=f"{self.api_base_url}/alerts/summaries",
             headers=self.headers,
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def delete_alert(
         self,
         data: dict,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Delete Alert.
+
+        :param data: (dict) Dict of select Alert.  # TODO: Can this just be the alert_id?
+
+        :return: (json)
+        """
+        result = request_(
             method="delete",
             url=f"{self.api_base_url}/alerts/{data['id']}",
             json=data,
@@ -104,40 +125,55 @@ class ZdxPortalTalker:
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def activate(
         self,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Activate Changes.
+
+        :return: (json)
+        """
+        result = request_(
             method="put",
             url=f"{self.api_base_url}/activate",
             headers=self.headers,
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
-    def get_applications(
+    def list_applications(
         self,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Collect a list of ZDX Applications
+
+        :return: (json)
+        """
+        result = request_(
             method="get",
             url=f"{self.api_base_url}/applications",
             headers=self.headers,
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def update_application(
         self,
         data: dict,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Update an Application
+
+        :return: (json)
+        """
+        result = request_(
             method="put",
             url=f"{self.api_base_url}/applications/{data['id']}",
             json=data,
@@ -145,28 +181,40 @@ class ZdxPortalTalker:
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def deactivate_application(
         self,
         app_id: str,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Deactivate an Application
+
+        :return: (json)
+        """
+        result = request_(
             method="put",
             url=f"{self.api_base_url}/applications/{app_id}/deactivate",
             headers=self.headers,
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def delete_application(
         self,
         data: dict,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Delete a ZDX Application
+
+        :param data: (dict) Dict of Application  # TODO: Can this be changed to just be the app_id?
+
+        :return: json
+        """
+        result = request_(
             method="delete",
             url=f"{self.api_base_url}/applications/{data['id']}",
             json=data,
@@ -174,16 +222,21 @@ class ZdxPortalTalker:
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
-    def get_probes(
+    def list_probes(
         self,
         **kwargs,
-    ) -> requests.Response:
+    ) -> json:
+        """
+        Collect a list of ZDX Probes
+
+        :return: (json)
+        """
         parameters = {
             "pageName": "PROBES",
         }
-        result = _request(
+        result = request_(
             method="get",
             url=f"{self.api_base_url}/monitors/summary",
             params=parameters,
@@ -191,29 +244,39 @@ class ZdxPortalTalker:
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def delete_probe(
         self,
         app_id: str,
         probe_id: str,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Delete specific Application's Probe
+
+        :param app_id: (str) ID of Application
+        :param probe_id: (str) ID of Probe
+
+        :return: (json)
+        """
+        result = request_(
             method="delete",
             url=f"{self.api_base_url}/applications/{app_id}/monitors/{probe_id}",
             headers=self.headers,
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def zia_authenticate(
         self,
         **kwargs,
     ):
-        """You need to cross authenticate into ZIA to work on the Admin accounts."""
-        result = _request(
+        """Cross authentication into ZIA to work on user and roles."""
+        logger.warning("Regular ZDX methods will no longer work after ZIA auth.  Create a new ZdxPortalTalker object "
+                       "if further access is needed.")
+        result = request_(
             method="post",
             url=f"{self.api_base_url}/auth/token",
             headers=self.headers,
@@ -228,7 +291,7 @@ class ZdxPortalTalker:
             f"&source=SMFALCONUI"
             f"&relay={urllib.parse.quote('#administration/admin-management')}"
         )
-        sso = _request(
+        sso = request_(
             method="post",
             url=saml["acceptedTargets"][0]["url"],
             headers=self.zia_headers,
@@ -254,7 +317,15 @@ class ZdxPortalTalker:
         filename: str,
         certificate: str,
         **kwargs,
-    ) -> requests.Response:
+    ) -> json:
+        """
+        Upload a certificate to ZIA (for ZDX Admin auth)
+
+        :param filename: (str) Name representation of this cert.
+        :param certificate: (str) x509-ca-cert formatted cert.
+
+        :return: (json)
+        """
         file = [
             (
                 "fileUpload",
@@ -265,7 +336,7 @@ class ZdxPortalTalker:
                 ),
             )
         ]
-        result = _request(
+        result = request_(
             method="post",
             url=f"{self.zia_base_url}/samlAdminSettings/uploadCert/text",
             files=file,
@@ -273,19 +344,26 @@ class ZdxPortalTalker:
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def zia_enable_saml_sso(
         self,
         data: dict,
         **kwargs,
-    ) -> requests.Response:
+    ) -> json:
+        """
+        Enable SAML SSO
+
+        :param data: (dict)
+
+        :return: (json)
+        """
         self.zia_headers.update(
             {
                 "Content-Type": "application/json",
             }
         )
-        result = _request(
+        result = request_(
             method="put",
             url=f"{self.zia_base_url}/samlAdminSettings",
             json=data,
@@ -293,31 +371,41 @@ class ZdxPortalTalker:
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def zia_activate(
         self,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Activate changes in ZIA Portal
+
+        :return: (json)
+        """
+        result = request_(
             method="put",
             url=f"{self.zia_base_url}/orgAdminStatus/activate",
             headers=self.zia_headers,
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
-    def zia_get_admin_roles(
+    def zia_list_admin_roles(
         self,
         **kwargs,
-    ) -> requests.Response:
+    ) -> json:
+        """
+        Collect a list of Admin Roles.
+
+        :return: (json)
+        """
         parameters = {
             "includeAuditorRole": False,
             "includePartnerRole": False,
             "includeApiRole": False,
         }
-        result = _request(
+        result = request_(
             method="get",
             url=f"{self.zia_base_url}/adminRoles",
             params=parameters,
@@ -325,14 +413,21 @@ class ZdxPortalTalker:
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
-    def zia_create_admin_role(
+    def zia_add_admin_role(
         self,
         data: dict,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Add an Admin Role
+
+        :param data: (dict) Admin role configuration
+
+        :return: (json)
+        """
+        result = request_(
             method="post",
             url=f"{self.zia_base_url}/adminRoles",
             json=data,
@@ -340,33 +435,45 @@ class ZdxPortalTalker:
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def zia_delete_admin_role(
         self,
         role_id: int,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Delete an Admin Role
+
+        :param role_id: (int) ID of role
+
+        :return: (json)
+        """
+        result = request_(
             method="delete",
             url=f"{self.zia_base_url}/adminRoles/{role_id}",
             headers=self.zia_headers,
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
-    def zia_get_admin_users(
+    def zia_list_admin_users(
         self,
         **kwargs,
-    ) -> requests.Response:
+    ) -> json:
+        """
+        Collect a list of ZDX Admin Users
+
+        :return: (json)
+        """
         parameters = {
-            "page": 1,
+            "page": 1,  # TODO: Change this and pageSize to an interator
             "pageSize": 100,
             "includeAuditorUsers": False,
             "includeAdminUsers": True,
         }
-        result = _request(
+        result = request_(
             method="get",
             url=f"{self.zia_base_url}/adminUsers",
             params=parameters,
@@ -374,28 +481,42 @@ class ZdxPortalTalker:
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def zia_delete_admin_user(
         self,
         user_id: int,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Delete a ZDX Admin User
+
+        :param user_id: (int) ID of User
+
+        :return: (json)
+        """
+        result = request_(
             method="delete",
             url=f"{self.zia_base_url}/adminUsers/{user_id}",
             headers=self.zia_headers,
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
-    def zia_create_admin_user(
+    def zia_add_admin_user(
         self,
         data: dict,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Add a ZDX Admin User
+
+        :param data: (dict) Dict of Admin user settings
+
+        :return: (json)
+        """
+        result = request_(
             method="post",
             url=f"{self.zia_base_url}/adminUsers",
             json=data,
@@ -403,15 +524,23 @@ class ZdxPortalTalker:
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()
 
     def zia_update_admin_user(
         self,
         data: dict,
-        user_id: str,
+        user_id: int,
         **kwargs,
-    ) -> requests.Response:
-        result = _request(
+    ) -> json:
+        """
+        Update settings for a ZDX Admin User
+
+        :param data: (dict) Settings for this admin user
+        :param user_id: (int) ID of this user  # TODO: Can't this just be in the data var?
+
+        :return: (json)
+        """
+        result = request_(
             method="put",
             url=f"{self.zia_base_url}/adminUsers/{user_id}",
             json=data,
@@ -419,4 +548,4 @@ class ZdxPortalTalker:
             cookies=self.cookie_jar,
             **kwargs,
         )
-        return result
+        return result.json()

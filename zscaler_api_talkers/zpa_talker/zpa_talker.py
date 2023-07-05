@@ -1,7 +1,9 @@
 import json
 
 import requests
-from zscaler_api_talkers.zscaler_helpers import HttpCalls
+from zscaler_helpers import HttpCalls, setup_logger
+
+logger = setup_logger(name=__name__)
 
 
 class ZpaTalker(object):
@@ -12,19 +14,18 @@ class ZpaTalker(object):
 
     def __init__(
         self,
-        customerID: int,
+        customer_id: int,
         cloud: str = "https://config.private.zscaler.com",
         client_id: str = None,
         client_secret: str = "",
     ):
         """
         :param cloud: (str) Example https://config.zpabeta.net
-        :param customerID: (int) The unique identifier of the ZPA tenant
+        :param customer_id: (int) The unique identifier of the ZPA tenant
         :param client_id: (str)
         :param client_secret: (str)
         """
         self.base_uri = cloud
-        # self.base_uri = f'https://config.zpabeta.net'
         self.hp_http = HttpCalls(
             host=self.base_uri,
             verify=True,
@@ -32,7 +33,7 @@ class ZpaTalker(object):
         self.jsessionid = None
         self.version = "1.3"
         self.header = None
-        self.customerId = customerID
+        self.customer_id = customer_id
         if client_id and client_secret:
             self.authenticate(
                 client_id=client_id,
@@ -52,7 +53,7 @@ class ZpaTalker(object):
         """
         result = []
         if "?pagesize" not in url:
-            url = f"{url}?pagesize=500"
+            url = f"{url}?pagesize=500"  # TODO: Move to parameters
         response = self.hp_http.get_call(
             url,
             headers=self.header,
@@ -113,22 +114,24 @@ class ZpaTalker(object):
     def list_servers(
         self,
         query: str = False,
-        serverId: int = None,
+        server_id: int = None,
     ) -> json:
         """
         Method to obtain all the configured Servers.
 
         :param query: (str) Example ?page=1&pagesize=20&search=consequat
-        :param serverId: (int) Unique server id number
+        :param server_id: (int) Unique server id number
 
         :return: (json)
         """
-        if serverId:
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/server/{serverId}"
+        if server_id:
+            url = (
+                f"/mgmtconfig/v1/admin/customers/{self.customer_id}/server/{server_id}"
+            )
         else:
             if not query:
                 query = "?pagesize=500"
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/server{query}"
+            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/server{query}"
         response = self.hp_http.get_call(
             url,
             headers=self.header,
@@ -140,24 +143,25 @@ class ZpaTalker(object):
     # application-controller
     def list_application_segments(
         self,
-        applicationId: int = None,
+        application_id: int = None,
     ) -> json or list:
         """
         Method to obtain application segments
 
-        :param applicationId: (int) Application unique identified id
+        :param application_id: (int) Application unique identified id
 
         :return: (json|list)
         """
-        if applicationId:
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/application/{applicationId}"
+        if application_id:
+            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/application/{application_id}"
             response = self.hp_http.get_call(
                 url,
                 headers=self.header,
                 error_handling=True,
             )
             return response.json()
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/application"
+
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/application"
         response = self._obtain_all_results(url)
 
         return response
@@ -165,89 +169,89 @@ class ZpaTalker(object):
     def add_application_segment(
         self,
         name: str,
-        healthReporting: str,
-        domainNames: list,
-        segmentGroupId: str,
-        serverGroups: list,
-        commonAppsDto: list = [],
-        segmentGroupName: str = "",
-        healthCheckType: str = "DEFAULT",
-        clientlessApps: list = [],
-        inspectionApps: list = [],
-        sraApps: list = [],
-        tcpPortRange: dict = {},
-        tcpPortRanges: list = [],
-        udpPortRanges: list = [],
-        udpPortRange: dict = {},
+        health_reporting: str,
+        domain_names: list,
+        segment_group_id: str,
+        server_groups: list,
+        common_apps_dto: list = None,
+        segment_group_name: str = "",
+        health_check_type: str = "DEFAULT",
+        clientless_apps: list = None,
+        inspection_apps: list = None,
+        sra_apps: list = None,
+        tcp_port_range: dict = None,
+        tcp_port_ranges: list = None,
+        udp_port_ranges: list = None,
+        udp_port_range: dict = None,
         description: str = "",
         enabled: bool = True,
-        icmpAccessType: str = "NONE",
-        ipAnchored: bool = False,
-        doubleEncrypt: bool = False,
-        bypassType: str = "NEVER",
-        isCnameEnabled: bool = True,
-        selectConnectorCloseToApp: bool = False,
-        passiveHealthEnabled: bool = True,
+        icmp_access_type: str = "NONE",
+        ip_anchored: bool = False,
+        double_encrypt: bool = False,
+        bypass_type: str = "NEVER",
+        is_cname_enabled: bool = True,
+        select_connector_close_to_app: bool = False,
+        passive_health_enabled: bool = True,
     ) -> json:
         """
         Adds a new Application Segment for a ZPA tenant.
         :param name: (str) App Name
-        :param healthReporting: (str) possible values: NONE, ON_ACCESS, CONTINUOUS
-        :param domainNames: (list) List of domains or IP addresses
-        :param segmentGroupId: (str) Application Segment Group id
-        :param serverGroups=(list) List of dictionaries, where key is id and value is serverGroupId [
+        :param health_reporting: (str) possible values: NONE, ON_ACCESS, CONTINUOUS
+        :param domain_names: (list) List of domains or IP addresses
+        :param segment_group_id: (str) Application Segment Group id
+        :param server_groups=(list) List of dictionaries, where key is id and value is serverGroupId [
         {"id": "<serverGroupId>"}
         ]
-        :param commonAppsDto: (list) List of dictionaries, where appsConfig will list the apps with Browser Access
+        :param common_apps_dto: (list) List of dictionaries, where appsConfig will list the apps with Browser Access
         or Inspection
-        :param segmentGroupName: (str) Application Segment Group Name
-        :param healthCheckType: (str)
-        :param clientlessApps: (list) List of application domains in Application Segment with Browser access enabled
-        :param inspectionApps: (list) List of application domains in Application Segment with Inspection enabled
-        :param sraApps: (list) List of application domains in Application Segment with Privileged Remote Access enabled
-        :param tcpPortRange: type dict.  [{"from":int, "to":int}]
-        :param tcpPortRanges: (list)  ["from", "to"]. This will be deprecated in the future.
-        :param udpPortRange: type dict.  [{"from":int, "to":int}]
-        :param udpPortRanges: (list)  ["from", "to"]. This will be deprecated in the future.
+        :param segment_group_name: (str) Application Segment Group Name
+        :param health_check_type: (str)
+        :param clientless_apps: (list) List of application domains in Application Segment with Browser access enabled
+        :param inspection_apps: (list) List of application domains in Application Segment with Inspection enabled
+        :param sra_apps: (list) List of application domains in Application Segment with Privileged Remote Access enabled
+        :param tcp_port_range: type dict.  [{"from":int, "to":int}]
+        :param tcp_port_ranges: (list)  ["from", "to"]. This will be deprecated in the future.
+        :param udp_port_range: type dict.  [{"from":int, "to":int}]
+        :param udp_port_ranges: (list)  ["from", "to"]. This will be deprecated in the future.
         :param description: (str) Description
         :param enabled: (bool) (True|False)
-        :param icmpAccessType: (str) possible values: PING_TRACEROUTING, PING, NONE
-        :param ipAnchored: (bool) (True|False)
-        :param doubleEncrypt: (bool) (True|False)
-        :param bypassType: (str) possible values ALWAYS, NEVER, ON_NET
-        :param isCnameEnabled: (bool) (True|False)
-        :param selectConnectorCloseToApp: (bool) (True|False)
-        :param passiveHealthEnabled: (bool) (True|False)
+        :param icmp_access_type: (str) possible values: PING_TRACEROUTING, PING, NONE
+        :param ip_anchored: (bool) (True|False)
+        :param double_encrypt: (bool) (True|False)
+        :param bypass_type: (str) possible values ALWAYS, NEVER, ON_NET
+        :param is_cname_enabled: (bool) (True|False)
+        :param select_connector_close_to_app: (bool) (True|False)
+        :param passive_health_enabled: (bool) (True|False)
 
         :return: (json)
         """
 
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/application"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/application"
         payload = {
             "name": name,
             "description": description,
             "enabled": enabled,
-            "healthCheckType": healthCheckType,
-            "healthReporting": healthReporting,
-            "icmpAccessType": icmpAccessType,
-            "ipAnchored": ipAnchored,
-            "doubleEncrypt": doubleEncrypt,
-            "bypassType": bypassType,
-            "isCnameEnabled": isCnameEnabled,
-            "clientlessApps": clientlessApps,
-            "inspectionApps": inspectionApps,
-            "sraApps": sraApps,
-            "commonAppsDto": commonAppsDto,
-            "selectConnectorCloseToApp": selectConnectorCloseToApp,
-            "passiveHealthEnabled": passiveHealthEnabled,
-            "tcpPortRanges": tcpPortRanges,
-            "tcpPortRange": tcpPortRange,
-            "udpPortRange": udpPortRange,
-            "udpPortRanges": udpPortRanges,
-            "domainNames": domainNames,
-            "segmentGroupId": segmentGroupId,
-            "segmentGroupName": segmentGroupName,
-            "serverGroups": serverGroups,
+            "healthCheckType": health_check_type,
+            "healthReporting": health_reporting,
+            "icmpAccessType": icmp_access_type,
+            "ipAnchored": ip_anchored,
+            "doubleEncrypt": double_encrypt,
+            "bypassType": bypass_type,
+            "isCnameEnabled": is_cname_enabled,
+            "clientlessApps": clientless_apps,
+            "inspectionApps": inspection_apps,
+            "sraApps": sra_apps,
+            "commonAppsDto": common_apps_dto,
+            "selectConnectorCloseToApp": select_connector_close_to_app,
+            "passiveHealthEnabled": passive_health_enabled,
+            "tcpPortRanges": tcp_port_ranges,
+            "tcpPortRange": tcp_port_range,
+            "udpPortRange": udp_port_range,
+            "udpPortRanges": udp_port_ranges,
+            "domainNames": domain_names,
+            "segmentGroupId": segment_group_id,
+            "segmentGroupName": segment_group_name,
+            "serverGroups": server_groups,
         }
         response = self.hp_http.post_call(
             url=url,
@@ -260,18 +264,18 @@ class ZpaTalker(object):
 
     def update_application_segment(
         self,
-        applicationId: int,
+        application_id: int,
         payload: dict,
     ) -> requests.Response:
         """
         Updates the Application Segment details for the specified ID
 
-        :param applicationId: (int) Application ID
+        :param application_id: (int) Application ID
         :param payload: (dict)
 
         :return: (requests.Response Object)
         """
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/application/{applicationId}"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/application/{application_id}"
         response = self.hp_http.put_call(
             url=url,
             payload=payload,
@@ -283,16 +287,16 @@ class ZpaTalker(object):
 
     def delete_application_segment(
         self,
-        applicationId: int,
+        application_id: int,
     ) -> requests.Response:
         """
         Updates the Application Segment details for the specified ID
 
-        :param applicationId: (int) Application ID
+        :param application_id: (int) Application ID
 
         :return: (requests.Response Object)
         """
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/application/{applicationId}"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/application/{application_id}"
         response = self.hp_http.delete_call(
             url=url,
             error_handling=True,
@@ -304,19 +308,19 @@ class ZpaTalker(object):
 
     def list_segment_group(
         self,
-        segmentGroupId: int = None,
+        segment_group_id: int = None,
         query: str = False,
     ) -> json or list:
         """
         Get all the configured Segment Groups. If segmentGroupId obtains the segment sroup details
 
-        :param segmentGroupId: (int) The unique identifier of the Segment Group.
+        :param segment_group_id: (int) The unique identifier of the Segment Group.
         :param query: (str) Example ?page=1&pagesize=20&search=consequat
 
         return (json|list)
         """
-        if segmentGroupId:
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{segmentGroupId}"
+        if segment_group_id:
+            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/segmentGroup/{segment_group_id}"
             response = self.hp_http.get_call(
                 url, headers=self.header, error_handling=True
             ).json()
@@ -324,7 +328,7 @@ class ZpaTalker(object):
             if not query:
                 query = "?pagesize=500"
             url = (
-                f"/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup{query}"
+                f"/mgmtconfig/v1/admin/customers/{self.customer_id}/segmentGroup{query}"
             )
             response = self._obtain_all_results(url)
 
@@ -344,7 +348,7 @@ class ZpaTalker(object):
         :param enabled: (bool): True or False
         :return: (json)
         """
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/segmentGroup"
         payload = {
             "name": name,
             "description": description,
@@ -362,25 +366,25 @@ class ZpaTalker(object):
     # connector-controller
     def list_connector(
         self,
-        connectorId: int = None,
+        connector_id: int = None,
     ) -> json or list:
         """
         Get all the configured Segment Groups. If segmentGroupId obtains the segment group details
 
-        :param connectorId: The unique identifier of the App Connector.
+        :param connector_id: The unique identifier of the App Connector.
 
         return (json|list)
         """
-        if connectorId:
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/connector/{connectorId}"
+        if connector_id:
+            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/connector/{connector_id}"
             return self.hp_http.get_call(
                 url,
                 headers=self.header,
                 error_handling=True,
             ).json()
         else:
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/connector"
-        response = self._obtain_all_results(url)
+            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/connector"
+            response = self._obtain_all_results(url)
 
         return response
 
@@ -395,7 +399,7 @@ class ZpaTalker(object):
 
         return (json)
         """
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/connector/bulkDelete"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/connector/bulkDelete"
         payload = {"ids": ids}
         response = self.hp_http.post_call(
             url=url,
@@ -409,24 +413,24 @@ class ZpaTalker(object):
     # Connector-group-controller
     def list_connector_group(
         self,
-        appConnectorGroupId: int = None,
+        app_connector_group_id: int = None,
     ) -> json or list:
         """
         Gets all configured App Connector Groups for a ZPA tenant.
 
-        :param appConnectorGroupId: (int) The unique identifier of the Connector Group.
+        :param app_connector_group_id: (int) The unique identifier of the Connector Group.
 
         return (json|list)
         """
-        if appConnectorGroupId:
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}"
+        if app_connector_group_id:
+            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/appConnectorGroup/{app_connector_group_id}"
             return self.hp_http.get_call(
                 url,
                 headers=self.header,
                 error_handling=True,
             ).json()
         else:
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup"
+            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/appConnectorGroup"
             response = self._obtain_all_results(url)
 
         return response
@@ -441,7 +445,7 @@ class ZpaTalker(object):
 
         :return: (list)
         """
-        url = f"/mgmtconfig/v2/admin/customers/{self.customerId}/clientlessCertificate/issued"
+        url = f"/mgmtconfig/v2/admin/customers/{self.customer_id}/clientlessCertificate/issued"
         response = self._obtain_all_results(url)
 
         return response
@@ -454,21 +458,21 @@ class ZpaTalker(object):
 
         :return: (list)
         """
-        url = f"/mgmtconfig/v2/admin/customers/{self.customerId}/enrollmentCert"
+        url = f"/mgmtconfig/v2/admin/customers/{self.customer_id}/enrollmentCert"
         response = self._obtain_all_results(url)
 
         return response
 
-    def list_browser_access_certificates(
+    def list_v1_browser_access_certificates(
         self,
-    ) -> list:  # FIXME: duplicate but URL is slightly different.
+    ) -> list:
         """
         Get all the issued certificates
 
         :return: (list)
         """
         url = (
-            f"/mgmtconfig/v1/admin/customers/{self.customerId}/visible/versionProfiles"
+            f"/mgmtconfig/v1/admin/customers/{self.customer_id}/visible/versionProfiles"
         )
         response = self._obtain_all_results(url)
 
@@ -489,7 +493,7 @@ class ZpaTalker(object):
         """
         if not query:
             query = "?pagesize=500"
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/visible/versionProfiles{query}"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/visible/versionProfiles{query}"
         response = self.hp_http.get_call(
             url,
             headers=self.header,
@@ -501,23 +505,24 @@ class ZpaTalker(object):
     # cloud - connector - group - controller
     def list_cloud_connector_group(
         self,
-        id: int = None,
+        group_id: int = None,
         query: str = False,
     ) -> json:
         """
         Get all configured Cloud Connector Groups. If id, Get the Cloud Connector Group details
 
-        :param id: (int)
+        :param group_id: (int)
         :param query: (str) Example ?page=1&pagesize=20&search=consequat
 
         :return: (json)
         """
-        if id:
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/cloudConnectorGroup/{id}"
+        if group_id:
+            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/cloudConnectorGroup/{group_id}"
         else:
             if not query:
                 query = "?pagesize=500"
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/cloudConnectorGroup{query}"
+            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/cloudConnectorGroup{query}"
+
         response = self.hp_http.get_call(
             url,
             headers=self.header,
@@ -527,7 +532,7 @@ class ZpaTalker(object):
         return response.json()
 
     # idp-controller-v-2
-    def list_idP(
+    def list_idp(
         self,
         query: str = False,
     ) -> list:
@@ -540,24 +545,24 @@ class ZpaTalker(object):
         """
         if not query:
             query = "?pagesize=500"
-        url = f"/mgmtconfig/v2/admin/customers/{self.customerId}/idp{query}"
+        url = f"/mgmtconfig/v2/admin/customers/{self.customer_id}/idp{query}"
         response = self._obtain_all_results(url)
 
         return response
 
     # provisioningKey-controller
-    def list_provisioningKey(
+    def list_provisioning_key(
         self,
-        associationType: str = "CONNECTOR_GRP",
+        association_type: str = "CONNECTOR_GRP",
     ) -> list:
         """
         Gets details of all the configured provisioning keys.
 
-        :param associationType: (str) The supported values are CONNECTOR_GRP and SERVICE_EDGE_GRP.
+        :param association_type: (str) The supported values are CONNECTOR_GRP and SERVICE_EDGE_GRP.
 
         :return: (list)
         """
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/associationType/{associationType}/provisioningKey"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/associationType/{association_type}/provisioningKey"
         response = self._obtain_all_results(url)
 
         return response
@@ -568,18 +573,18 @@ class ZpaTalker(object):
 
     def list_scim_attributes(
         self,
-        idpId: int,
+        idp_id: int,
         query: str = False,
     ) -> json:
         """
-        :param idpId: (int) The unique identifies of the Idp
+        :param idp_id: (int) The unique identifies of the Idp
         :param query: (str) ?page=1&pagesize=20&search=consequat
 
         :return: (json)
         """
         if not query:
             query = "?pagesize=500"
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/idp/{idpId}/scimattribute{query}"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/idp/{idp_id}/scimattribute{query}"
         response = self.hp_http.get_call(
             url,
             headers=self.header,
@@ -591,22 +596,20 @@ class ZpaTalker(object):
     # scim-group-controller
     def list_scim_groups(
         self,
-        idpId: int,
+        idp_id: int,
         query: str = False,
     ) -> list:
         """
         Method to list all SCIM groups
 
-        :param idpId: (int) The unique identifies of the Idp
+        :param idp_id: (int) The unique identifies of the Idp
         :param query: (str) ?page=1&pagesize=20&search=consequat
 
         :return: (list)
         """
         if not query:
             query = "?pagesize=500"
-        url = (
-            f"/userconfig/v1/customers/{self.customerId}/scimgroup/idpId/{idpId}{query}"
-        )
+        url = f"/userconfig/v1/customers/{self.customer_id}/scimgroup/idpId/{idp_id}{query}"
         response = self._obtain_all_results(url)
 
         return response
@@ -618,7 +621,7 @@ class ZpaTalker(object):
 
         :return: (list)
         """
-        url = f"/mgmtconfig/v2/admin/customers/{self.customerId}/samlAttribute"
+        url = f"/mgmtconfig/v2/admin/customers/{self.customer_id}/samlAttribute"
         response = self._obtain_all_results(url)
 
         return response
@@ -627,32 +630,32 @@ class ZpaTalker(object):
 
     def list_policies(
         self,
-        policyType: str = "ACCESS_POLICY",
+        policy_type: str = "ACCESS_POLICY",
     ) -> list:
         """list policie(s)  by policy type,
 
-        :param policyType: (str) Supported values Possible values = ACCESS_POLICY,GLOBAL_POLICY, TIMEOUT_POLICY,
+        :param policy_type: (str) Supported values Possible values = ACCESS_POLICY,GLOBAL_POLICY, TIMEOUT_POLICY,
         REAUTH_POLICY, SIEM_POLICY, CLIENT_FORWARDING_POLICY,BYPASS_POLICY
 
         :return: (list)
         """
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/rules/policyType/{policyType}"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/policySet/rules/policyType/{policy_type}"
         response = self._obtain_all_results(url)
 
         return response
 
-    def list_policySet(
+    def list_policy_set(
         self,
-        policyType: str = "ACCESS_POLICY",
+        policy_type: str = "ACCESS_POLICY",
     ) -> json:
         """Gets the policy set for the specified policy type
 
-        :param policyType: (str) Supported values are ACCESS_POLICY,GLOBAL_POLICY, TIMEOUT_POLICY,REAUTH_POLICY,
+        :param policy_type: (str) Supported values are ACCESS_POLICY,GLOBAL_POLICY, TIMEOUT_POLICY,REAUTH_POLICY,
         SIEM_POLICY, CLIENT_FORWARDING_POLICY,BYPASS_POLICY
 
         :return: (json)
         """
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/policyType/{policyType}"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/policySet/policyType/{policy_type}"
         response = self.hp_http.get_call(
             url,
             headers=self.header,
@@ -661,15 +664,15 @@ class ZpaTalker(object):
 
         return response.json()
 
-    def add_policySet(
+    def add_policy_set(
         self,
         app_operands: list,
-        RuleName: str,
-        Action: str,
-        policySetId: int,
+        rule_name: str,
+        action: str,
+        policy_set_id: int,
         operands: list,
         operator: str,
-        MsgString: str = None,
+        msg_string: str = None,
     ) -> json:
         """
         Method to create a new access Policy
@@ -679,9 +682,9 @@ class ZpaTalker(object):
         "lhs": "id",
         "rhs": applicationId,
         }]
-        :param RuleName: (str) Policy set Rule Name
-        :param Action: (str) ALLOW / DENY
-        :param policySetId: (int) Global Policy ID. can be obtained from list_global_policy_id
+        :param rule_name: (str) Policy set Rule Name
+        :param action: (str) ALLOW / DENY
+        :param policy_set_id: (int) Global Policy ID. can be obtained from list_global_policy_id
         :param operands: (list) List of operands. Example = [{
         "objectType": "SAML",
         "lhs": "<samlAttrId>",
@@ -692,11 +695,11 @@ class ZpaTalker(object):
         "rhs": "<scimAttrValue>”
         }]
         :param operator: (str)
-        :param MsgString: (str)
+        :param msg_string: (str)
 
         :return: (json)
         """
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/policySet/{policySetId}/rule"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/policySet/{policy_set_id}/rule"
         payload = {
             "conditions": [
                 {"operands": app_operands},
@@ -707,12 +710,12 @@ class ZpaTalker(object):
             ],
             # Seems here needs to be AND
             "operator": "AND",
-            "name": RuleName,
+            "name": rule_name,
             "description": "Description",
-            "action": Action,
-            "customMsg": MsgString,
+            "action": action,
+            "customMsg": msg_string,
         }
-        print(payload)
+        logger.info(payload)
         response = self.hp_http.post_call(
             url=url,
             headers=self.header,
@@ -726,24 +729,24 @@ class ZpaTalker(object):
 
     def list_server_groups(
         self,
-        groupId: int = None,
+        group_id: int = None,
     ) -> json or list:
         """
         Method to get all configured Server Groups. If groupI, get the Server Group details
 
-        :param groupId: (int) The unique identifier of the Server Group.
+        :param group_id: (int) The unique identifier of the Server Group.
 
         :return: (json|list)
         """
-        if groupId:
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/serverGroup/{groupId}"
+        if group_id:
+            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/serverGroup/{group_id}"
             response = self.hp_http.get_call(
                 url,
                 headers=self.header,
                 error_handling=True,
             ).json()
         else:
-            url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/serverGroup"
+            url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/serverGroup"
             response = self._obtain_all_results(url)
 
         return response
@@ -762,7 +765,7 @@ class ZpaTalker(object):
 
         :return: (json)
         """
-        url = f"/mgmtconfig/v1/admin/customers/{self.customerId}/serverGroup"
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/serverGroup"
         payload = {
             "enabled": True,
             "dynamicDiscovery": True,
@@ -793,7 +796,7 @@ class ZpaTalker(object):
         """
         if not query:
             query = "?pagesize=500"
-        url = f"/mgmtconfig/v2/admin/customers/{self.customerId}/posture{query}"
+        url = f"/mgmtconfig/v2/admin/customers/{self.customer_id}/posture{query}"
         response = self._obtain_all_results(url)
 
         return response
@@ -811,7 +814,7 @@ class ZpaTalker(object):
         """
         if not query:
             query = "?pagesize=500"
-        url = f"/mgmtconfig/v2/admin/customers/{self.customerId}/privilegedConsoles{query}"
+        url = f"/mgmtconfig/v2/admin/customers/{self.customer_id}/privilegedConsoles{query}"
         response = self._obtain_all_results(url)
 
         return response
@@ -822,14 +825,14 @@ class ZpaTalker(object):
 
         :return: (list)
         """
-        sralist = []
-        appsegments = self.list_application_segments()
-        for apps in appsegments:
+        sra_list = []
+        app_segments = self.list_application_segments()
+        for apps in app_segments:
             srap = apps.get("sraApps")
             if srap is not None:
-                sralist.extend(srap)
+                sra_list.extend(srap)
 
-        return sralist
+        return sra_list
 
     # Certificate Controller v2
     def list_issued_certificates(
@@ -842,9 +845,9 @@ class ZpaTalker(object):
         :return: (list)
         """
         if not query:
-            query = "?pagesize=500"
+            query = "?pagesize=500"  # TODO: Query never put into url.
 
-        url = f"/mgmtconfig/v2/admin/customers/{self.customerId}/certificate/issued"
+        url = f"/mgmtconfig/v2/admin/customers/{self.customer_id}/certificate/issued"
         response = self._obtain_all_results(url)
 
         return response

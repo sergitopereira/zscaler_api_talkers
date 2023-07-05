@@ -1,11 +1,13 @@
 import requests
-from zscaler_api_talkers.zscaler_helpers.http_calls import HttpCalls
+from zscaler_helpers import HttpCalls, setup_logger
+
+logger = setup_logger(name=__name__)
 
 
 class ZpaPortalTalker(object):
     def __init__(
         self,
-        customerId: int,
+        customer_id: int,
         cloud: str = "https://api.private.zscaler.com",
         username: str = "",
         password: str = "",
@@ -13,7 +15,7 @@ class ZpaPortalTalker(object):
         """
         Method to start the class
 
-        :param customerId: (int)
+        :param customer_id: (int)
         :param cloud: (str) Default = "https://api.private.zscaler.com"
         :param username: (str)
         :param password: (str)
@@ -24,7 +26,7 @@ class ZpaPortalTalker(object):
         self.bear = None
         self.token = None
         self.headers = None
-        self.customerId = customerId
+        self.customer_id = customer_id
         self.hp_http = HttpCalls(
             host=self.base_uri,
             verify=True,
@@ -69,6 +71,7 @@ class ZpaPortalTalker(object):
     ):
         """
         Method to obtain authorization token for subsequent calls.
+
         :param username: Email address
         :param password: Password for given user
         """
@@ -98,13 +101,15 @@ class ZpaPortalTalker(object):
 
         :return: (list)
         """
-        url = f"/shift/api/v2/admin/customers/{self.customerId}/users"
+        url = f"/shift/api/v2/admin/customers/{self.customer_id}/users"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
         )
         if int(response.json()["totalPages"]) > 1:
-            response = self._obtain_all_pages(url)  # FIXME: url isn't the whole URL thus _obtain_all_pages is failing
+            response = self._obtain_all_pages(
+                url
+            )  # FIXME: url isn't the whole URL thus _obtain_all_pages is failing
         else:
             response = response.json()["list"]
 
@@ -116,7 +121,7 @@ class ZpaPortalTalker(object):
 
         :return: (requests.Response Object)
         """
-        url = f"/zpn/api/v1/admin/customers/{self.customerId}/roles"
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/roles"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,

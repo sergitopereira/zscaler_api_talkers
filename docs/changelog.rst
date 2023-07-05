@@ -1,3 +1,7 @@
+v5.<date>.0 (massive update/changes)
+=========================
+Style: Renamed a lot of Class methods to fix Python formats (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+
 v4.1.1 ( in progress)
 =========================
 Fix: init_py updated to include missing zscaler_api_talker from the import statements (by 'Gurnaib Brar <mailto: gbrar@zscaler.com>'_)
