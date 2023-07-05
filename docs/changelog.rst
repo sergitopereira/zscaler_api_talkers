@@ -7,7 +7,7 @@ v4.1.1 ( in progress)
 Fix: init_py updated to include missing zscaler_api_talker from the import statements (by 'Gurnaib Brar <mailto: gbrar@zscaler.com>'_)
 Fix: ZiaTalker list_department method now returns all departments  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Fix: Updated contribution guidelines (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
-PEP8, docstrings, typehints, misc restructuring code (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+PEP8, docstrings, typehints, misc rehostructuring code (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 Added the ability to "authenticate" during object instantiation (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 
 
