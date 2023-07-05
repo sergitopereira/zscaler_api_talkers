@@ -272,4 +272,15 @@ class ClientConnectorTalker(object):
 
 
 class ZccTalker(ClientConnectorTalker):
-    logger.warning("Deprecating ZccTalker. Start using ClientConnectorTalker instead.")
+    def __init__(
+        self,
+        cloud: str,
+        client_id: str = "",
+        secret_key: str = "",
+    ):
+        logger.warning("Deprecating ZccTalker. Start using ClientConnectorTalker instead.")
+        super().__init__(
+            cloud,
+            client_id,
+            secret_key,
+        )
