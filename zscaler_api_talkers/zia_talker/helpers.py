@@ -1,6 +1,6 @@
 import time
 
-from zscaler_helpers import request_
+from zscaler_api_talkers.zscaler_helpers import request_
 
 
 def _obfuscate_api_key(

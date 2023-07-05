@@ -1,7 +1,7 @@
 import json
 
 import requests
-from zscaler_helpers import HttpCalls, setup_logger, request_
+from zscaler_api_talkers.zscaler_helpers import HttpCalls, setup_logger, request_
 
 from .helpers import _get_seed, _obfuscate_api_key
 

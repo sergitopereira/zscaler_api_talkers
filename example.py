@@ -33,8 +33,6 @@ from dotenv import load_dotenv
 from zscaler_api_talkers import (ZccTalker, ZdxPortalTalker, ZiaPortalTalker,
                                  ZiaTalker, ZpaPortalTalker, ZpaTalker)
 
-
-
 #  Load user variables from ".env" file or from OS.
 load_dotenv()
 
