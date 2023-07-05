@@ -1,8 +1,8 @@
-v5.<date>.0 (massive update/changes)
+v5.<date>.0 (in progress)
 =========================
-Style: Renamed a lot of Class methods to fix Python formats (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+Fix: Renamed ZccTalker to ClientConnectorTalker. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 
-v4.1.1 ( in progress)
+v4.1.1 ( July 2023 )
 =========================
 Fix: init_py updated to include missing zscaler_api_talker from the import statements (by 'Gurnaib Brar <mailto: gbrar@zscaler.com>'_)
 Fix: ZiaTalker list_department method now returns all departments  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
@@ -16,12 +16,13 @@ v4.1.0 ( June 2023 )
 Added ZDX Portal Talker (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 Added my logger and helper methods (goes along with ZDX Portal Talker) (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 Worked on init to advertise methods/classes that should be publicly accessible. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
-Created pip_version.Dockefile to provide method to use pip version in Docker. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
+Created pip_version.Dockerfile to provide method to use pip version in Docker. (by `Dax Mickelson <mailto:
+dmickelson@zscaler.com>`_)
 Moved working python code into sub-dir to isolate from other repo uses. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 Built working Poetry build structure (renamed previous files to *.old). (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 
 Updated readme.md for consistency in examples (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
-Began adding typehinting to ZIA Talker methods (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
+Began adding type hinting to ZIA Talker methods (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 PEP8 Linting for zia_talker.py (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Refactored API Key Obfuscation for increased performance on repeated runs (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Added add_rule_label method to zia_talker (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)

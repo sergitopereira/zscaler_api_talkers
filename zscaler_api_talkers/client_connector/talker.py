@@ -7,7 +7,7 @@ from zscaler_api_talkers.zscaler_helpers.logger import setup_logger
 logger = setup_logger(name=__name__)
 
 
-class ZccTalker(object):
+class ClientConnectorTalker(object):
     """
     Client Connector API talker
     Documentation: under development
@@ -269,3 +269,7 @@ class ZccTalker(object):
         )
 
         return response.json()
+
+
+class ZccTalker(ClientConnectorTalker):
+    logger.warning("Deprecating ZccTalker. Start using ClientConnectorTalker instead.")
