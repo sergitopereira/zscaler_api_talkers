@@ -5,37 +5,37 @@
 ### ZIA API Talker
 Python classes to leverage [Zscaler Internet Access API](https://help.zscaler.com/zia/api)
 
-The ZIA API talker is divided into two Class objects: ZiaTalker and ZiaPortalTalker.  ZiaTalker interacts with ZIA via the published APIs; whereas ZiaPortalTalker interacts with ZIA via the URLs presented in the Portal (aka, the ZIA configuration website).
+The ZIA API talker is divided into two Class objects: **ZiaTalker** and **ZiaPortalTalker**.  ZiaTalker interacts with 
+ZIA via the published APIs; whereas ZiaPortalTalker interacts with ZIA via the URLs presented in the Portal (aka, the ZIA configuration website).
 
 ### ZPA API Talker
 Python classes to leverage [Zscaler Private Access API](https://help.zscaler.com/zpa/api-reference)
 
-The ZPA API talker is divided into two Class objects: ZpaTalker and ZpaPortalTalker.  ZpaTalker interacts with ZPA via the published APIs; whereas ZpaPortalTalker interacts with ZPA via the URLs presented in the Portal (aka, the ZPA configuration website).
+The ZPA API talker is divided into two Class objects: **ZpaTalker** and **ZpaPortalTalker**.  ZpaTalker interacts with 
+ZPA via the published APIs; whereas ZpaPortalTalker interacts with ZPA via the URLs presented in the Portal (aka, the ZPA configuration website).
 
-### ZCC API Talker
+### Client Connector API Talker
 A Python class to leverage Zscaler Client Connector API. (Currently in Beta status.)
 
-The ZCC API talker is accessed via the Class object named: ZccTalker
+The Client Connector API talker is accessed via the Class object named: **ClientConnectorTalker**
 
 ### ZDX API Talker
 A Python class to leverage Zscaler Digital Experience API. (Currently in development.)
 
-This class is interacts with ZDX via the URLs presented in the Portal (aka, the ZDX configuration website).  It is named: ZdxPortalTalker
+This class is interacts with ZDX via the URLs presented in the Portal (aka, the ZDX configuration website).  It is 
+named: **ZdxPortalTalker**
 
 ## Installation
 
-### Option 1: Run within a Docker Container
-We provide two methods to build a Docker container.  Either using the code hosted on GitHub or the code published to PyPi.
+### Option 1: Run in a Python Virtual Environment
+1. Create a virtual Environment: `python3 -m venv .zs_api_talkers`
+1. Activate virtual environment:
+   - Linux: `source .zs_api_talkers/bin/activate`
+   - Windows: `.\.zs_api_talkers\Scripts\activate`
+1. Install Zscaler API talkers: `pip install zscaler-api-talkers`
 
-#### GitHub Method
-1. Download Dockerfile
-   - Linux: `curl -O https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/git_version.Dockerfile`
-   - Windows: `wget -O Dockerfile https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/git_version.Dockerfile` 
-1. Build Image and Run Container
-   1. `docker build -f git_version.Dockerfile -t zscaler_api_talkers .`
-   1. `docker run -it zscaler_api_talkers bash`
-1. Usage (program is in /zscaler_api_talkers/)
-   - `cd zscaler_api_talkers`
+### Option 2: Run within a Docker Container
+We provide two methods to build a Docker container.  Either using the code hosted on GitHub or the code published to PyPi.
 
 #### PyPi Method
 1. Download Dockerfile
@@ -47,13 +47,15 @@ We provide two methods to build a Docker container.  Either using the code hoste
 1. Usage (program is in /zscaler_api_talkers/)
    - `cd zscaler_api_talkers`
 
-### Option 2: Run in a Python Virtual Environment
-1. Create a virtual Environment: `python3 -m venv .zs_api_talkers`
-1. Activate virtual environment:
-   - Linux: `source .zs_api_talkers/bin/activate`
-   - Windows: `.\.zs_api_talkers\Scripts\activate`
-1. Install Zscaler API talkers: `pip install zscaler-api-talkers`
-
+#### GitHub Method
+1. Download Dockerfile
+   - Linux: `curl -O https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/git_version.Dockerfile`
+   - Windows: `wget -O Dockerfile https://raw.githubusercontent.com/sergitopereira/zscaler_api_talkers/sergiodevelop/git_version.Dockerfile` 
+1. Build Image and Run Container
+   1. `docker build -f git_version.Dockerfile -t zscaler_api_talkers .`
+   1. `docker run -it zscaler_api_talkers bash`
+1. Usage (program is in /zscaler_api_talkers/)
+   - `cd zscaler_api_talkers`
 
 ## Zscaler Secure Internet and SaaS Access SDK
 
@@ -92,10 +94,10 @@ print(dir(a))
 
 ## Zscaler Client Connector SDK
 
-### Usage ZccTalker
+### Usage ClientConnectorTalker
 ``` python
-from zscaler_api_talkers import ZccTalker
-a=ZccTalker('<Zscaler Cloud Name>')    
+from zscaler_api_talkers import ClientConnectorTalker
+a=ClientConnectorTalker('<Zscaler Cloud Name>')    
 a.authenticate(clientid='clientID',secretkey='clientSecret')
 a.list_devices('companyID')
 a.list_OTP('companyID','user device id')

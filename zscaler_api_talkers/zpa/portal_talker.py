@@ -1,5 +1,5 @@
 import requests
-from zscaler_api_talkers.zscaler_helpers import HttpCalls, setup_logger
+from zscaler_api_talkers.helpers import HttpCalls, setup_logger
 
 logger = setup_logger(name=__name__)
 
@@ -20,6 +20,7 @@ class ZpaPortalTalker(object):
         :param username: (str)
         :param password: (str)
         """
+        logger.warning("These API endpoints are unsupported and Zscaler can change at will and without notice.")
         self.base_uri = cloud
         self.version = "1.0"
         self.cookies = None

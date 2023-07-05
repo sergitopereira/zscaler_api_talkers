@@ -30,7 +30,7 @@ import os
 # `pyp install python-dotenv` to load this package
 from dotenv import load_dotenv
 
-from zscaler_api_talkers import (ZccTalker, ZdxPortalTalker, ZiaPortalTalker,
+from zscaler_api_talkers import (ClientConnectorTalker, ZdxPortalTalker, ZiaPortalTalker,
                                  ZiaTalker, ZpaPortalTalker, ZpaTalker)
 
 #  Load user variables from ".env" file or from OS.
@@ -58,15 +58,17 @@ def zia_portal_talker_example():
     print(f"{zia_portal.list_api_keys()=}")
 
 
-def zcc_talker_example():
-    print("Example of using ZccTalker")
-    zcc = ZccTalker(
+def client_connector_talker_example():
+    print("Example of using ClientConnectorTalker")
+    zcc = ClientConnectorTalker(
         cloud=os.environ.get("zcc_cloud"),
         client_id=os.environ.get("zcc_client_id"),
         secret_key=os.environ.get("zcc_secret_key"),
     )
-    companyID=os.environ.get("zcc_company_id")
-    print(f"{zcc.list_devices(companyID)}")
+
+    company_id = int(os.environ.get("zcc_company_id"))
+    print(f"{zcc.list_devices(company_id)}")
+
 
 def zdx_portal_talker_example():
     print("Example of using ZdxPortalTalker")
@@ -107,7 +109,7 @@ if __name__ == "__main__":
     )
     zia_talker_example()
     zia_portal_talker_example()
-    # zcc_talker_example()
+    # client_connector_talker_example()
     zdx_portal_talker_example()
     zpa_talker_example()
     zpa_portal_talker_example()

@@ -1,7 +1,7 @@
 import json
 
 import requests
-from zscaler_api_talkers.zscaler_helpers import HttpCalls, setup_logger
+from zscaler_api_talkers.helpers import HttpCalls, setup_logger
 
 logger = setup_logger(name=__name__)
 

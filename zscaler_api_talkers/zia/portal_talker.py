@@ -1,7 +1,7 @@
 import json
 
 import requests
-from zscaler_api_talkers.zscaler_helpers import HttpCalls, setup_logger, request_
+from zscaler_api_talkers.helpers import HttpCalls, setup_logger, request_
 
 from .helpers import _get_seed, _obfuscate_api_key
 
@@ -28,6 +28,7 @@ class ZiaPortalTalker(object):
         :param username: (str) Client ID
         :param password: (str) Secret Key
         """
+        logger.warning("These API endpoints are unsupported and Zscaler can change at will and without notice.")
         self.cloud_name = cloud_name
         self.base_uri = f"https://admin.{cloud_name}/zsapi/v1"
         self.hp_http = HttpCalls(
