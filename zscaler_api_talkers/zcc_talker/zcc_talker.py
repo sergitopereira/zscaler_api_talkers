@@ -1,7 +1,8 @@
 import json
 import time
 
-from zscaler_helpers import HttpCalls, setup_logger
+from zscaler_api_talkers.zscaler_helpers.http_calls import HttpCalls
+from zscaler_api_talkers.zscaler_helpers.logger import setup_logger
 
 logger = setup_logger(name=__name__)
 

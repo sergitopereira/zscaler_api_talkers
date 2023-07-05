@@ -2,7 +2,7 @@ import urllib
 
 import json
 import requests
-from zscaler_helpers import request_, get_user_agent, setup_logger
+from zscaler_api_talkers.zscaler_helpers import request_, get_user_agent, setup_logger
 
 logger = setup_logger(name=__name__)
 
