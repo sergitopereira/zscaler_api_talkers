@@ -4,6 +4,7 @@ import requests
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger, request_
 
 from .helpers import _get_seed, _obfuscate_api_key
+from http.cookies import SimpleCookie
 
 logger = setup_logger(name=__name__)
 
@@ -61,12 +62,14 @@ class ZiaPortalTalker(object):
         :param zsui_customcode: (str) A string that contains the ZS_CUSTOM_CODE value (optional)
         """
         if zsui_cookie and zsui_customcode:
+            cookie = SimpleCookie()
+            cookie.load(zsui_cookie)
             self.headers = {
                 "Content-Type": "application/json",
                 "Zs_custom_code": zsui_customcode,
             }
-            self.j_session_id = zsui_cookie
-            self.zs_session_code = zsui_customcode
+            self.j_session_id = cookie['JSESSIONID']
+            self.zs_session_code = cookie['ZS_SESSION_CODE']
         else:
             timestamp, key = _obfuscate_api_key(
                 _get_seed(url=f"https://admin.{self.cloud_name}")
