@@ -46,45 +46,58 @@ class ZiaPortalTalker(object):
             )
 
     def authenticate(
-        self,
-        username: str,
-        password: str,
+            self,
+            username: str = "",
+            password: str = "",
+            zsui_cookie: str = "",
+            zsui_customcode: str = ""
     ):
         """
         Method to authenticate.
 
         :param username: (str) A string that contains the email ID of the API admin
         :param password: (str) A string that contains the password for the API admin
+        :param zsui_cookie: (str) A string that contains the JSESSIONID cookie (optional)
+        :param zsui_customcode: (str) A string that contains the ZS_CUSTOM_CODE value (optional)
         """
-        timestamp, key = _obfuscate_api_key(
-            _get_seed(url=f"https://admin.{self.cloud_name}")
-        )
-        payload = {
-            "apiKey": key,
-            "username": username,
-            "password": password,
-            "timestamp": timestamp,
-        }
-        url = "/authenticatedSession"
-        response = self.hp_http.post_call(
-            url=url,
-            payload=payload,
-            headers={
-                "Accept": "application/json",
-            },
-        )
-        if response.cookies.get("JSESSIONID"):
-            self.j_session_id = response.cookies["JSESSIONID"]
-        else:
-            raise ValueError("Invalid Credentials")
-        if response.cookies.get("ZS_SESSION_CODE"):
-            self.zs_session_code = response.cookies["ZS_SESSION_CODE"]
+        if zsui_cookie and zsui_customcode:
             self.headers = {
                 "Content-Type": "application/json",
-                "ZS_CUSTOM_CODE": self.zs_session_code,
+                "Zs_custom_code": zsui_customcode,
             }
+            self.j_session_id = zsui_cookie
+            self.zs_session_code = zsui_customcode
         else:
-            raise ValueError("Invalid API key")
+            timestamp, key = _obfuscate_api_key(
+                _get_seed(url=f"https://admin.{self.cloud_name}")
+            )
+            payload = {
+                "apiKey": key,
+                "username": username,
+                "password": password,
+                "timestamp": timestamp,
+            }
+            url = "/authenticatedSession"
+            response = self.hp_http.post_call(
+                url=url,
+                payload=payload,
+                headers={
+                    "Accept": "application/json",
+                },
+            )
+            if response.cookies.get("JSESSIONID"):
+                self.j_session_id = response.cookies["JSESSIONID"]
+            else:
+                raise ValueError("Invalid Credentials")
+            if response.cookies.get("ZS_SESSION_CODE"):
+                self.zs_session_code = response.cookies["ZS_SESSION_CODE"]
+                self.headers = {
+                    "Content-Type": "application/json",
+                    "ZS_CUSTOM_CODE": self.zs_session_code,
+                }
+            else:
+                raise ValueError("Invalid API key")
+
 
     def add_dlp_engine(
         self,
