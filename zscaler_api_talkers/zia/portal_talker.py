@@ -68,8 +68,8 @@ class ZiaPortalTalker(object):
                 "Content-Type": "application/json",
                 "Zs_custom_code": zsui_customcode,
             }
-            self.j_session_id = cookie['JSESSIONID']
-            self.zs_session_code = cookie['ZS_SESSION_CODE']
+            self.j_session_id = cookie['JSESSIONID'].value
+            self.zs_session_code = cookie['ZS_SESSION_CODE'].value
         else:
             timestamp, key = _obfuscate_api_key(
                 _get_seed(url=f"https://admin.{self.cloud_name}")
