@@ -1,41 +1,12 @@
-v5.<date>.0 (in progress)
+v4.0.3 ( TO BE RELEASED )
 =========================
-Fix: Resolved issue with ZiaPortal Talker Cookie parsing (by `Patrick de Niet`)
-Feat: Added additional methods to ZiaPortal Talker (by `Patrick de Niet`)
-Feat: Added several methods to ZiaPortal Talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
-Feat: ZiaPortal Talker now accepts cookies as authentication  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
-Fix: Renamed ZccTalker to ClientConnectorTalker. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
-Style: Rename files and folders to reduce redundancies. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
-
-v4.1.1 ( July 2023 )
-=========================
-Fix: init_py updated to include missing zscaler_api_talker from the import statements (by 'Gurnaib Brar <mailto: gbrar@zscaler.com>'_)
-Fix: ZiaTalker list_department method now returns all departments  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
-Fix: Updated contribution guidelines (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
-PEP8, docstrings, typehints, misc restructuring code (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
-Added the ability to "authenticate" during object instantiation (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
-
-
-v4.1.0 ( June 2023 )
-=========================
-Added ZDX Portal Talker (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
-Added my logger and helper methods (goes along with ZDX Portal Talker) (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
-Worked on init to advertise methods/classes that should be publicly accessible. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
-Created pip_version.Dockerfile to provide method to use pip version in Docker. (by `Dax Mickelson <mailto:
-dmickelson@zscaler.com>`_)
-Moved working python code into sub-dir to isolate from other repo uses. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
-Built working Poetry build structure (renamed previous files to *.old). (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
-
 Updated readme.md for consistency in examples (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
-Began adding type hinting to ZIA Talker methods (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
+Began adding typehinting to ZIA Talker methods (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 PEP8 Linting for zia_talker.py (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Refactored API Key Obfuscation for increased performance on repeated runs (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Added add_rule_label method to zia_talker (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Fix: ZPA list_segment_group paging  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
-Fix: Added **kwargs to ziatalker add_FirewallFilteringRules method to prevent erroring when replicating configuration. (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
-Added Method to zcc_talker to download downloadServiceStatus (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
-Added Method to zia_portaltalker to list Cloud App policies (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
-
+Added ZIA Talker method add_adminUsers to add Administrator. (by `Brijesh Shingadia <mailto:bshingadia@zscaler.com>`_)
 v4.0.2 ( APRIL 2023 )
 =========================
 Replaced deprecated ZPA method list_global_policy_id method with list_policySet (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
