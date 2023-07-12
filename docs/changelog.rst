@@ -1,5 +1,7 @@
 v5.<date>.0 (in progress)
 =========================
+Fix: Resolved issue with ZiaPortal Talker Cookie parsing (by `Patrick de Niet`)
+Feat: Added additional methods to ZiaPortal Talker (by `Patrick de Niet`)
 Feat: Added several methods to ZiaPortal Talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Feat: ZiaPortal Talker now accepts cookies as authentication  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Fix: Renamed ZccTalker to ClientConnectorTalker. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
