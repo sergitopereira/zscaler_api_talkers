@@ -7,6 +7,7 @@ Refactored API Key Obfuscation for increased performance on repeated runs (by `R
 Added add_rule_label method to zia_talker (by `Ryan Ulrick <mailto:rulrick@zscaler.com>`_)
 Fix: ZPA list_segment_group paging  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Added ZIA Talker method add_adminUsers to add Administrator. (by `Brijesh Shingadia <mailto:bshingadia@zscaler.com>`_)
+Added update_segment_group, update_connector, update_connector_group, delete_connector_group, add_connector_group methods to ZPA Talker. (by `Brijesh Shingadia <mailto:bshingadia@zscaler.com>`_)
 v4.0.2 ( APRIL 2023 )
 =========================
 Replaced deprecated ZPA method list_global_policy_id method with list_policySet (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
