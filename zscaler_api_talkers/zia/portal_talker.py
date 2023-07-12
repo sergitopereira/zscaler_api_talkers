@@ -574,3 +574,35 @@ class ZiaPortalTalker(object):
         )
 
         return response.json()
+    def list_org_information(self) -> json:
+        """
+        Method to list org information
+        :return: (json)
+        """
+        url="/orgInformation"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+    def list_subscriptions(self) -> json:
+        """
+        Method to list org subscriptions
+        :return: (json)
+        """
+        url="/subscriptions"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()

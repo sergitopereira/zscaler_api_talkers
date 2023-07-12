@@ -1,5 +1,6 @@
 v5.<date>.0 (in progress)
 =========================
+Feat: Added several methods to ZiaPortal Talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Feat: ZiaPortal Talker now accepts cookies as authentication  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Fix: Renamed ZccTalker to ClientConnectorTalker. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 Style: Rename files and folders to reduce redundancies. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
