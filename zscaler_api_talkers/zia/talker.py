@@ -285,6 +285,67 @@ class ZiaTalker(object):
 
         return self._obtain_all(url)
 
+    def add_adminUsers(self, loginName, userName, email, password, role, comments='',
+                       adminScope={},
+                       isNonEditable=False,
+                       disabled=False,
+                       isAuditor=False,
+                       isPasswordLoginAllowed=False,
+                       isSecurityReportCommEnabled=False,
+                       isServiceUpdateCommEnabled=False,
+                       isProductUpdateCommEnabled=False,
+                       isPasswordExpired=False,
+                       isExecMobileAppEnabled=False,
+                       execMobileAppTokens=[]):
+        """
+        Adds a new Admininstrator.
+               :param loginName: string. Admin or auditor's login name. loginName is in email format
+               and uses the domain name associated to the Zscaler account.
+               :param userName: string. UserName.
+               :param email: string. Email Address.
+               :param role : Role of the Admin
+               :param comments: string. Comments.
+               :param adminScope: Scope of the admin.
+               :param isNonEditable: boolean. Indicates whether or not the admin can be edited or deleted. default: False.
+               :param disabled: boolean. If admin accounts is disabled. default: False.
+               :param isAuditor:boolean. Indicates if user is auditor. default: False.
+               :param password: string. Password for administrator. If admin single sign-on (SSO) is disabled, then this field is mandatory
+               :param isPasswordLoginAllowed: boolean. If password login is allowed. default: False.
+               :param isSecurityReportCommEnabled: boolean. Communication for Security Report is enabled. default: False.
+               :param isServiceUpdateCommEnabled: boolean. Communication setting for Service Update. default: False.
+               :param isProductUpdateCommEnabled: boolean. Communication setting for Product Update. default: False.
+               :param isPasswordExpired: boolean. Expire password to force user to change password on logon. default: False.
+               :param isExecMobileAppEnabled: boolean. Indicates whether or not Executive Insights App access is enabled for the admin. default: False.
+               :return:json()
+               """
+        url = "/adminUsers"
+        payload = {
+            "loginName": loginName,
+            "userName": userName,
+            "email": email,
+            "password": password,
+            "role": role,
+            "comments": comments,
+            "adminScope": adminScope,
+            "isNonEditable": isNonEditable,
+            "disabled": disabled,
+            "isAuditor": isAuditor,
+            "isPasswordLoginAllowed": isPasswordLoginAllowed,
+            "isSecurityReportCommEnabled": isSecurityReportCommEnabled,
+            "isServiceUpdateCommEnabled": isServiceUpdateCommEnabled,
+            "isProductUpdateCommEnabled": isProductUpdateCommEnabled,
+            "isPasswordExpired": isPasswordExpired,
+            "isExecMobileAppEnabled": isExecMobileAppEnabled,
+            "execMobileAppTokens": execMobileAppTokens
+        }
+        response = self.hp_http.post_call(
+            url,
+            payload=payload,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+        return response.json()
     def list_admin_roles(
         self,
         query: str = None,
