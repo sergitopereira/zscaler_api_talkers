@@ -200,13 +200,50 @@ class ZpaPortalTalker(object):
         """
         Delete an API Key.
 
-        :param key_id: (int) ID of the role
+        :param key_id: (int) ID of the API Key
 
         :return: (requests.Response object)
         """
         result = request_(
             method="delete",
             url=f"{self.base_uri}/clientCredentials/{key_id}",
+            **kwargs,
+        )
+
+        return result
+
+    def list_application(
+        self,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        List Applications
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/v2/application",
+            **kwargs,
+        )
+
+        return result
+
+    def delete_application(
+        self,
+        application_id: str,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete an API Key.
+
+        :param application_id: (int) ID of the application
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            path=f"{self.base_uri}/v2/application/{application_id}",
             **kwargs,
         )
 
