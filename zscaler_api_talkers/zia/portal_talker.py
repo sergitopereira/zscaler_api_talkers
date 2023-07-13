@@ -899,4 +899,4 @@ class ZiaPortalTalker(object):
             }
         )
 
-        return response.json()
+        return response

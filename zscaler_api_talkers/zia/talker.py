@@ -578,7 +578,7 @@ class ZiaTalker(object):
 
     def delete_url_categories(
         self,
-        category_id: int,
+        category_id: str,
     ) -> requests.Response:
         """
         Deletes the custom URL category for the specified ID. You cannot delete a custom category while it is being
