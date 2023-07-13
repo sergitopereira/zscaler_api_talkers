@@ -444,6 +444,52 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
+    def update_saml_admin_settings(self, data: dict, **kwargs,) -> requests.Response:
+        """
+        Update SAML Admin Settings
+
+        :param data: (dict) Dict of SAML Admin Settings configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="put",
+            url=f"{self.base_uri}/samlAdminSettings",
+            json=data,
+            **kwargs,
+        )
+
+        return result
+
+    def upload_saml_admin_settings_certificate(self, filename: str, certificate: str, **kwargs) -> requests.Response:
+        """
+        Upload Certificate for SAML Admin
+
+        :param filename: (str) Name of certificate
+        :param certificate: (str) X509 encoded certificate
+
+        :return: (requests.Response Object)
+        """
+        file = [
+            (
+                "fileUpload",
+                (
+                    filename,
+                    certificate,
+                    "application/x-x509-ca-cert",
+                ),
+            )
+        ]
+
+        result = request_(
+            method="post",
+            url=f"{self.base_uri}/samlAdminSettings/uploadCert/text",
+            files=file,
+            **kwargs,
+        )
+
+        return result
+
     def list_eun(self) -> json:
         """
         Method to list ZIA End User Notification settings.  Administration > End User Notifications
