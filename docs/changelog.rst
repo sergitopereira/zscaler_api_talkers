@@ -12,6 +12,8 @@ Feat: Added method to update pre-exisiting url filtering rule (by `Ryan Ulrick <
 Fix: Fixed add_rule_label method in ZiaTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
 Feat: Add delete_rule_label method for ZiaTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
 Feat: Add generic PUT, POST, GET, DELETE calls for ZiaPortalTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
+Fix: Remove json method from Generic DELETE call in ZiaPortalTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
+Fix: Correct typehinting for delete_url_category method arguments (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
 
 v4.1.1 ( July 2023 )
 =========================
