@@ -1,6 +1,6 @@
 import requests
-
-from zscaler_api_talkers.helpers import HttpCalls, setup_logger
+import json
+from zscaler_api_talkers.helpers import HttpCalls, setup_logger, request_
 
 logger = setup_logger(name=__name__)
 
@@ -132,3 +132,82 @@ class ZpaPortalTalker(object):
         )
 
         return response
+
+    def list_api_key(
+        self,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        List the configured API Keys
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/clientCredentials",
+            **kwargs,
+        )
+
+        return result
+
+    def create_api_key(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Create an API Key
+
+        :param data: (dict) Dict of API Key configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="post",
+            url=f"{self.base_uri}/clientCredentials",
+            json=data,
+            **kwargs,
+        )
+
+        return result
+
+    def update_api_key(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Update an API Key
+
+        :param data: (dict) Dict of API Key configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="put",
+            url=f"{self.base_uri}/clientCredentials/{data.get('id')}",
+            json=data,
+            **kwargs,
+        )
+
+        return result
+
+    def delete_api_key(
+        self,
+        key_id: str,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete an API Key.
+
+        :param key_id: (int) ID of the role
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/clientCredentials/{key_id}",
+            **kwargs,
+        )
+
+        return result
