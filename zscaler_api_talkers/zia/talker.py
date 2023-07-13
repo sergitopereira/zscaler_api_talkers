@@ -2094,7 +2094,7 @@ class ZiaTalker(object):
 
         return response
 
-    def delete_firewall_f_iltering_rules(
+    def delete_firewall_filtering_rules(
         self,
         rule_id: int,
     ) -> requests.Response:
