@@ -417,3 +417,20 @@ class ZpaPortalTalker(object):
         )
 
         return result
+
+    def create_search_suffix(self, data: dict, **kwargs,) -> requests.Response:
+        """
+        Create a Search Suffix
+
+        :param data: (dict) Dict of Search Suffix configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="post",
+            url=f"{self.base_uri}/v2/associationtype/SEARCH_SUFFIX/domains",
+            json=data,
+            **kwargs,
+        )
+
+        return result
