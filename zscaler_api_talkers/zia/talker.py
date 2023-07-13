@@ -363,6 +363,7 @@ class ZiaTalker(object):
         custom_category: bool = False,
         ip_ranges: list = None,
         ip_ranges_retaining_parent_category: list = None,
+        description: str = None
     ) -> json:
         """
          Adds a new custom URL category.
