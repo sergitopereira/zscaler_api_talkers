@@ -474,3 +474,24 @@ class ZpaPortalTalker(object):
         )
 
         return result
+
+    def create_support_access(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Create a Support Access
+
+        :param data: (dict) Dict of Support Access configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="post",
+            url=f"{self.base_uri}/ancestorPolicy",
+            json=data,
+            **kwargs,
+        )
+
+        return result
