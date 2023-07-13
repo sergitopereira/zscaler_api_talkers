@@ -12,6 +12,8 @@ Feat: Added method to update pre-exisiting url filtering rule (by `Ryan Ulrick <
 Fix: Fixed add_rule_label method in ZiaTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
 Feat: Add delete_rule_label method for ZiaTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
 Feat: Add generic PUT, POST, GET, DELETE calls for ZiaPortalTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
+Added: ZIATalker method add_adminUsers to add Administrator.(by`BrijeshShingadia<mailto:bshingadia@zscaler.com>`_)
+Added: update_segment_group,update_connector_group,delete_connector_group,add_connector_group methods to ZPATalker.(by`BrijeshShingadia<mailto:bshingadia@zscaler.com>`_)
 
 v4.1.1 ( July 2023 )
 =========================
