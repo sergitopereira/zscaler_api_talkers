@@ -454,3 +454,23 @@ class ZpaPortalTalker(object):
         )
 
         return result
+
+    def delete_server_group(
+        self,
+        group_id: str,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete a Server Group
+
+        :param group_id: (int) ID of the Server Gropu
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/serverGroup/{group_id}",
+            **kwargs,
+        )
+
+        return result
