@@ -685,3 +685,63 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
+    def create_api_key(
+        self,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Generate an API Key
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="post",
+            url=f"{self.base_uri}/apiKeys/generate",
+            **kwargs,
+        )
+
+        return result
+
+    def update_api_key(
+        self,
+        data: dict,
+        api_key_id: int,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Update an API Key
+
+        :param data: (dict) Dict of API Key configuration.
+        :param api_key_id: (int) ID of API Key
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="put",
+            url=f"{self.base_uri}/apiKeys/{api_key_id}",
+            json=data,
+            **kwargs,
+        )
+
+        return result
+
+    def delete_api_key(
+        self,
+        api_key_id: int,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete API Key
+
+        :param api_key_id: (int) ID of API Key.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/apiKeys/{api_key_id}",
+            **kwargs,
+        )
+
+        return result
