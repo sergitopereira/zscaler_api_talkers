@@ -1,6 +1,8 @@
-import requests
 import json
-from zscaler_api_talkers.helpers import HttpCalls, setup_logger, request_
+
+import requests
+
+from zscaler_api_talkers.helpers import HttpCalls, request_, setup_logger
 
 logger = setup_logger(name=__name__)
 
@@ -418,7 +420,11 @@ class ZpaPortalTalker(object):
 
         return result
 
-    def create_search_suffix(self, data: dict, **kwargs,) -> requests.Response:
+    def create_search_suffix(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
         """
         Create a Search Suffix
 
