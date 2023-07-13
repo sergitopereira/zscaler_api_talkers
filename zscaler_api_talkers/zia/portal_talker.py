@@ -521,13 +521,13 @@ class ZiaPortalTalker(object):
     def delete_department(
         self,
         department_id: int,
-    ) -> json:
+    ) -> requests.Response:
         """
         Method to delete a group given department
 
         :param department_id: (int) Department id
 
-        :return: requests.Response object
+        :return: (requests.Response object)
         """
         result = request_(
             method="delete",
@@ -539,7 +539,49 @@ class ZiaPortalTalker(object):
             },
         )
 
-        return result.json()
+        return result
+
+    def delete_admin_role(
+            self,
+            role_id,
+            **kwargs,
+    ) -> requests.Response:
+        """
+        Delete an Admin Role.
+        Note: Deletion will fail if there are still users assigned to this role.
+
+        :param role_id: (int) ID of the role
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/adminRoles/{role_id}",
+            **kwargs,
+        )
+
+        return result
+
+    def create_admin_role(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Create an Admin Role
+
+        :param data: (dict) Dict of Admin Role configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="post",
+            url=f"{self.base_uri}/adminRoles",
+            json=data,
+            **kwargs,
+        )
+
+        return result
 
     def list_web_application_rules(self) -> json:
         """
