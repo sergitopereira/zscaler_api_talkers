@@ -1,7 +1,8 @@
 import json
 
 import requests
-from zscaler_api_talkers.helpers import HttpCalls, setup_logger, request_
+
+from zscaler_api_talkers.helpers import HttpCalls, request_, setup_logger
 
 from .helpers import _get_seed, _obfuscate_api_key
 
@@ -28,7 +29,9 @@ class ZiaPortalTalker(object):
         :param username: (str) Client ID
         :param password: (str) Secret Key
         """
-        logger.warning("These API endpoints are unsupported and Zscaler can change at will and without notice.")
+        logger.warning(
+            "These API endpoints are unsupported and Zscaler can change at will and without notice."
+        )
         self.cloud_name = cloud_name
         self.base_uri = f"https://admin.{cloud_name}/zsapi/v1"
         self.hp_http = HttpCalls(
@@ -542,9 +545,9 @@ class ZiaPortalTalker(object):
         return result
 
     def delete_admin_role(
-            self,
-            role_id,
-            **kwargs,
+        self,
+        role_id,
+        **kwargs,
     ) -> requests.Response:
         """
         Delete an Admin Role.
@@ -622,9 +625,9 @@ class ZiaPortalTalker(object):
         return result
 
     def create_admin_user(
-            self,
-            data: dict,
-            **kwargs,
+        self,
+        data: dict,
+        **kwargs,
     ) -> requests.Response:
         """
         Create an Admin User
@@ -643,10 +646,10 @@ class ZiaPortalTalker(object):
         return result
 
     def update_admin_user(
-            self,
-            data: dict,
-            user_id: int,
-            **kwargs,
+        self,
+        data: dict,
+        user_id: int,
+        **kwargs,
     ) -> requests.Response:
         """
         Update an Admin User
@@ -747,14 +750,58 @@ class ZiaPortalTalker(object):
         return result
 
     def update_auth_settings(
-            self,
-            data: dict,
-            **kwargs,
+        self,
+        data: dict,
+        **kwargs,
     ) -> requests.Response:
+        """
+        Update an Auth Setting
+
+        :param data: (dict) Dict of Auth Settings configuration.
+
+        :return: (requests.Response object)
+        """
         result = request_(
             method="put",
             url=f"{self.base_uri}/authSettings",
             json=data,
+            **kwargs,
+        )
+
+        return result
+
+    def list_eusa_status(
+        self,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        List the configured EUSA Status
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/eusaStatus/latest",
+            **kwargs,
+        )
+
+        return result
+
+    def create_eusa_status(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Create an EUSA Status
+
+        :param data: (dict) Dict of EUSA Status configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/eusaStatus",
             **kwargs,
         )
 

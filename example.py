@@ -30,8 +30,9 @@ import os
 # `pyp install python-dotenv` to load this package
 from dotenv import load_dotenv
 
-from zscaler_api_talkers import (ClientConnectorTalker, ZdxPortalTalker, ZiaPortalTalker,
-                                 ZiaTalker, ZpaPortalTalker, ZpaTalker)
+from zscaler_api_talkers import (ClientConnectorTalker, ZdxPortalTalker,
+                                 ZiaPortalTalker, ZiaTalker, ZpaPortalTalker,
+                                 ZpaTalker)
 
 #  Load user variables from ".env" file or from OS.
 load_dotenv()

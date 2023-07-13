@@ -3,8 +3,11 @@ import pdb  # noqa
 import time
 
 import requests
-from zscaler_api_talkers.zia.models import (super_categories, valid_category_ids, valid_countries)
+
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
+from zscaler_api_talkers.zia.models import (super_categories,
+                                            valid_category_ids,
+                                            valid_countries)
 
 from .helpers import _obfuscate_api_key
 
