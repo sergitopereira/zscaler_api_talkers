@@ -1366,7 +1366,7 @@ class ZiaPortalTalker(object):
         self,
         data: dict,
         **kwargs,
-    ) -> json:
+    ) -> requests.Response:
         """
         Update an IDP Config
 
@@ -1386,7 +1386,7 @@ class ZiaPortalTalker(object):
         self,
         data: dict,
         **kwargs,
-    ) -> json:
+    ) -> requests.Response:
         result = request_(
             method="post",
             url=f"{self.base_uri}/idpConfig",
