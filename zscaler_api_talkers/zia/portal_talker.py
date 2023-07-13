@@ -980,3 +980,20 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
+    def update_remote_assistance(self, data: dict, **kwargs,) -> requests.Response:
+        """
+        Update Remote Assistance
+
+        :param data: (dict) Dict of Remote Assistance configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="put",
+            url=f"{self.base_uri}/remoteAssistance",
+            json=data,
+            **kwargs,
+        )
+
+        return result
