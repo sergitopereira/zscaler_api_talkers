@@ -936,6 +936,13 @@ class ZiaPortalTalker(object):
         data: dict,
         **kwargs,
     ) -> json:
+        """
+        Update an IDP Config
+
+        :param data: (dict) Dict of IDP Config configuration.
+
+        :return: (requests.Response object)
+        """
         result = request_(
             method="put",
             url=f"{self.base_uri}/idpConfig/{data['id']}",
@@ -955,4 +962,21 @@ class ZiaPortalTalker(object):
             json=data,
             **kwargs,
         )
+        return result
+
+    def update_malware_policy(self, data: dict, **kwargs,) -> requests.Response:
+        """
+        Update Malware Policy
+
+        :param data: (dict) Dict of Malware Policy configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="put",
+            url=f"{self.base_uri}/malwarePolicy",
+            json=data,
+            **kwargs,
+        )
+
         return result
