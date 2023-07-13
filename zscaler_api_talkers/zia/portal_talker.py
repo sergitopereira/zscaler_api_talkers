@@ -869,3 +869,33 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
+    def list_firewall_ips_rule(self, **kwargs,) -> requests.Response:
+        """
+        List the configured Firewall IPS Rules
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method='get',
+            url=f"{self.base_uri}/firewallIpsRules",
+            **kwargs,
+        )
+
+        return result
+
+    def delete_firewall_ips_rule(self, rule_id: int, **kwargs,) -> requests.Response:
+        """
+        Delete Firewall IPS Rule
+
+        :param rule_id: (int) ID of Firewall IPS Rule.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method='delete',
+            url=f"{self.base_uri}/firewallIpsRules/{rule_id}",
+            **kwargs,
+        )
+
+        return result
