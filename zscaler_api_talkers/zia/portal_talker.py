@@ -664,3 +664,24 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
+    def update_advanced_threat_settings(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Update an Advanced Threat Settings
+
+        :param data: (dict) Dict of Advanced Threat Settings configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="put",
+            url=f"{self.base_uri}/advancedThreatSettings",
+            json=data,
+            **kwargs,
+        )
+
+        return result
