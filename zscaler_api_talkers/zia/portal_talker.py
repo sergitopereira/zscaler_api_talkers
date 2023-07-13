@@ -68,8 +68,8 @@ class ZiaPortalTalker(object):
                 "Content-Type": "application/json",
                 "Zs_custom_code": zsui_customcode,
             }
-            self.j_session_id = cookie['JSESSIONID']
-            self.zs_session_code = cookie['ZS_SESSION_CODE']
+            self.j_session_id = cookie['JSESSIONID'].value
+            self.zs_session_code = cookie['ZS_SESSION_CODE'].value
         else:
             timestamp, key = _obfuscate_api_key(
                 _get_seed(url=f"https://admin.{self.cloud_name}")
@@ -603,6 +603,300 @@ class ZiaPortalTalker(object):
                 "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
+        )
+
+        return response.json()
+
+    def list_advanced_threat_settings(self) -> json:
+        """
+        Method to list Advanced Threat Protection settings.  Policy > Advanced Threat Protection > Advanced Threats Policy
+
+        :return: (json)
+        """
+        url = f"/advancedThreatSettings"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_ftp_settings(self) -> json:
+        """
+        Method to list FTP settings.  Policy > FTP Control
+
+        :return: (json)
+        """
+        url = f"/ftpSettings"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_mobile_advance_threat_settings(self) -> json:
+        """
+        Method to list Mobile Advance Threat settings.  Policy > Mobile Malware Protection
+
+        :return: (json)
+        """
+        url = f"/mobileAdvanceThreatSettings"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_nss_servers(self) -> json:
+        """
+        Method to list NSS Servers.  Administration > Nanolog Streaming Service
+
+        :return: (json)
+        """
+        url = f"/nssServers"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_orginformation(self) -> json:
+        """
+        Method to list tenant Org Information.  Administration > Company Profile
+
+        :return: (json)
+        """
+        url = f"/orgInformation"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_ssl_inspection_rules(self) -> json:
+        """
+        Method to list SSL Inspection rules.  Policy > SSL Inspection > SSL Inspection Policy
+
+        :return: (json)
+        """
+        url = f"/sslInspectionRules"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_intermediate_ca_certificate(self) -> json:
+        """
+        Method to list SSL Inspection Intermediate CA Certificates.  Policy > SSL Inspection > Intermediate CA Certificates
+
+        :return: (json)
+        """
+        url = f"/intermediateCaCertificate/lite"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_security_policy_audit_traffic_inspection(self) -> json:
+        """
+        Method to list the Traffic Inspection section within the Security Policy Audit Report. Analytics > Security Policy Audit Report
+
+        :return: (json)
+        """
+        url = f"/securityPolicyAudit/trafficInspection"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_system_audit_report_gre_tunnel(self) -> json:
+        """
+        Method to list the GRE Tunnel recommendation within the System Audit Report. Analytics > System Audit Report
+
+        :return: (json)
+        """
+        url = f"/configAudit/greTunnel"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_system_audit_report_pac_file(self) -> json:
+        """
+        Method to list the PAC File recommendation within the System Audit Report. Analytics > System Audit Report
+
+        :return: (json)
+        """
+        url = f"/configAudit/pacFile"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_system_audit_report_ip_visibility(self) -> json:
+        """
+        Method to list the IP Visability recommendation within the System Audit Report. Analytics > System Audit Report
+
+        :return: (json)
+        """
+        url = f"/configAudit/ipVisibility"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def update_eun(self, **kwargs) -> json:
+        """
+        Method to update the EUN settings for a ZIA Tenant
+
+        :return: (json)
+        """
+        url = "/eun"
+        payload = kwargs
+        response = self.hp_http.put_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+            payload=payload
+        )
+
+        return response.json()
+
+    def generic_post(self, url, **kwargs) -> json:
+        """
+        Generic POST method
+
+        :return: (json)
+        """
+        url = url
+        payload = kwargs
+        response = self.hp_http.post_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+            payload=payload
+        )
+
+        return response.json()
+
+    def generic_put(self, url, **kwargs) -> json:
+        """
+        Generic PUT method
+
+        :return: (json)
+        """
+        url = url
+        payload = kwargs
+        response = self.hp_http.put_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+            payload=payload
+        )
+
+        return response.json()
+
+    def generic_get(self, url) -> json:
+        """
+        Generic GET method
+
+        :return: (json)
+        """
+        url = url
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            }
+        )
+
+        return response.json()
+
+    def generic_delete(self, url) -> json:
+        """
+        Generic DELETE method
+
+        :return: (json)
+        """
+        url = url
+        response = self.hp_http.delete_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            }
         )
 
         return response.json()
