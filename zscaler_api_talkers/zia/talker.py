@@ -355,7 +355,7 @@ class ZiaTalker(object):
         self,
         name: str,
         super_category: str,
-        type_list: list = None,
+        type_list: str = None,
         urls: list = None,
         db_categorized_urls: list = None,
         keywords_retaining_parent_category: list = None,
@@ -384,7 +384,7 @@ class ZiaTalker(object):
         :return:  json
         """
         if not type_list:
-            type_list = ["URL_CATEGORY"]
+            type_list = "URL_CATEGORY"
 
         if keywords_retaining_parent_category is None:
             keywords_retaining_parent_category = []
