@@ -1043,3 +1043,33 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
+    def list_ssl_inspection_rule(self, **kwargs,) -> requests.Response:
+        """
+        List the configured SSL Inspection Rules
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method='get',
+            url=f"{self.base_uri}/sslInspectionRules",
+            **kwargs,
+        )
+
+        return result
+
+    def delete_ssl_inspection_rule(self, rule_id: int, **kwargs,) -> requests.Response:
+        """
+        Delete SSL Inspection Rule
+
+        :param rule_id: (int) ID of SSL Inspection Rule.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method='delete',
+            url=f"{self.base_uri}/sslInspectionRules/{rule_id}",
+            **kwargs,
+        )
+
+        return result
