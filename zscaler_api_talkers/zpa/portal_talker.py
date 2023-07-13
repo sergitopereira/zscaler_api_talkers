@@ -322,3 +322,40 @@ class ZpaPortalTalker(object):
         )
 
         return result
+
+    def list_clientless_certificate(
+        self,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        List Clientless Certificates
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/clientlessCertificate",
+            **kwargs,
+        )
+
+        return result
+
+    def delete_clientless_certificate(
+        self,
+        cert_id: str,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete a Clientless Certificate
+
+        :param cert_id: (int) ID of the Clientless Certificate
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/clientlessCertificate/{cert_id}",
+            **kwargs,
+        )
+
+        return result
