@@ -1901,6 +1901,23 @@ class ZiaTalker(object):
 
     # Firewall Policies
 
+    def list_network_services_lite(
+        self,
+    ) -> json:
+        """
+        Gets a summary list of all network service groups.
+
+        :return: (json)
+        """
+        response = self.hp_http.get_call(
+            "/networkServices/lite",
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+
+        return response.json()
+
     def list_network_services(
         self,
         service_id: int = None,
