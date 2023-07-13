@@ -259,6 +259,23 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
+    def update_virus_spyware_settings(self, data: dict, **kwargs,) -> requests.Response:
+        """
+        Update Virus Spyware Settings
+
+        :param data: (dict) Dict of Virus Spyware Settings configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="put",
+            url=f"{self.base_uri}/virusSpywareSettings",
+            json=data,
+            **kwargs,
+        )
+
+        return result
+
     def list_advanced_url_filtering_settings(self) -> json:
         """
         Method to list Advanced Policy settings.  Policy > URL & Cloud App Control > Advanced  Policy Settings
