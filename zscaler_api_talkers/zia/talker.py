@@ -746,6 +746,18 @@ class ZiaTalker(object):
 
         return response.json()
 
+    def update_url_filtering_rules(self, id: int, **kwargs) -> json:
+        url = f"/urlFilteringRules/{str(id)}"
+        payload = kwargs
+        response = self.hp_http.post_call(
+            url,
+            payload=payload,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+
+        return response.json()
     # User Management
 
     def list_departments(
