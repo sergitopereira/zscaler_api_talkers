@@ -559,3 +559,40 @@ class ZpaPortalTalker(object):
         )
 
         return result
+
+    def list_user_portal(
+        self,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        List User Portals
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/userPortal",
+            **kwargs,
+        )
+
+        return result
+
+    def delete_user_portal(
+        self,
+        portal_id: str,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete a User Portal
+
+        :param portal_id: (int) ID of the User Portal
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/userPortal/{portal_id}",
+            **kwargs,
+        )
+
+        return result
