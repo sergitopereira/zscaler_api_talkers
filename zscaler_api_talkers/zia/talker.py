@@ -405,6 +405,7 @@ class ZiaTalker(object):
             "ipRanges": ip_ranges,
             "ipRangesRetainingParentCategory": ip_ranges_retaining_parent_category,
             "type": type_list,
+            "description": description
         }
         response = self.hp_http.post_call(
             url,
