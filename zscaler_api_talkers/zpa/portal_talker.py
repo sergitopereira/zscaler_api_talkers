@@ -359,3 +359,61 @@ class ZpaPortalTalker(object):
         )
 
         return result
+
+    def list_role(
+        self,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        List Roles
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/roles",
+            **kwargs,
+        )
+
+        return result
+
+    def delete_role(
+        self,
+        role_id: str,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete a Role
+
+        :param role_id: (int) ID of the Role
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/roles/{role_id}",
+            **kwargs,
+        )
+
+        return result
+
+    def create_role(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Create a Role
+
+        :param data: (dict) Dict of Role configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="post",
+            url=f"{self.base_uri}/roles",
+            json=data,
+            **kwargs,
+        )
+
+        return result
