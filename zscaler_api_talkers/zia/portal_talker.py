@@ -839,3 +839,33 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
+    def list_firewall_dns_rule(self, **kwargs,) -> requests.Response:
+        """
+        List the configured Firewall DNS Rules
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method='get',
+            url=f"{self.base_uri}/firewallDnsRules",
+            **kwargs,
+        )
+
+        return result
+
+    def delete_firewall_dns_rule(self, rule_id: int, **kwargs,) -> requests.Response:
+        """
+        Delete Firewall DNS Rule
+
+        :param rule_id: (int) ID of Firewall DNS Rule.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method='delete',
+            url=f"{self.base_uri}/firewallDnsRules/{rule_id}",
+            **kwargs,
+        )
+
+        return result
