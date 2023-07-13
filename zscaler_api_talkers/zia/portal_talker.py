@@ -804,3 +804,99 @@ class ZiaPortalTalker(object):
         )
 
         return response.json()
+    
+    def update_eun(self, **kwargs) -> json:
+        """
+        Method to update the EUN settings for a ZIA Tenant
+
+        :return: (json)
+        """
+        url = "/eun"
+        payload = kwargs
+        response = self.hp_http.put_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+            payload=payload
+        )
+
+        return response.json()
+
+    def generic_post(self, url, **kwargs) -> json:
+        """
+        Generic POST method
+
+        :return: (json)
+        """
+        url = url
+        payload = kwargs
+        response = self.hp_http.post_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+            payload=payload
+        )
+
+        return response.json()
+
+    def generic_put(self, url, **kwargs) -> json:
+        """
+        Generic PUT method
+
+        :return: (json)
+        """
+        url = url
+        payload = kwargs
+        response = self.hp_http.put_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+            payload=payload
+        )
+
+        return response.json()
+
+    def generic_get(self, url) -> json:
+        """
+        Generic GET method
+
+        :return: (json)
+        """
+        url = url
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            }
+        )
+
+        return response.json()
+
+    def generic_delete(self, url) -> json:
+        """
+        Generic DELETE method
+
+        :return: (json)
+        """
+        url = url
+        response = self.hp_http.delete_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            }
+        )
+
+        return response.json()

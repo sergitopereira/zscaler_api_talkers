@@ -6,8 +6,12 @@ Feat: Added several methods to ZiaPortal Talker (by `Sergio Pereira <mailto:sper
 Feat: ZiaPortal Talker now accepts cookies as authentication  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Fix: Renamed ZccTalker to ClientConnectorTalker. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 Style: Rename files and folders to reduce redundancies. (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
-Added: ZIATalker method add_adminUsers to add Administrator.(by`BrijeshShingadia<mailto:bshingadia@zscaler.com>`_)
-Added: update_segment_group,update_connector_group,delete_connector_group,add_connector_group methods to ZPATalker.(by`BrijeshShingadia<mailto:bshingadia@zscaler.com>`_)
+Fix: Add list object for adding url categories in ZiaTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
+Fix: Add kwargs for url filtering rule to allow for dictionary pass in (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
+Feat: Added method to update pre-exisiting url filtering rule (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
+Fix: Fixed add_rule_label method in ZiaTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
+Feat: Add delete_rule_label method for ZiaTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
+Feat: Add generic PUT, POST, GET, DELETE calls for ZiaPortalTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
 
 v4.1.1 ( July 2023 )
 =========================

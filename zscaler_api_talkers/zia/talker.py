@@ -418,7 +418,7 @@ class ZiaTalker(object):
         self,
         name: str,
         super_category: str,
-        type_list: list = None,
+        type_list: str = None,
         urls: list = None,
         db_categorized_urls: list = None,
         keywords_retaining_parent_category: list = None,
@@ -426,6 +426,7 @@ class ZiaTalker(object):
         custom_category: bool = False,
         ip_ranges: list = None,
         ip_ranges_retaining_parent_category: list = None,
+        description: str = None
     ) -> json:
         """
          Adds a new custom URL category.
@@ -446,7 +447,7 @@ class ZiaTalker(object):
         :return:  json
         """
         if not type_list:
-            type_list = ["URL_CATEGORY"]
+            type_list = "URL_CATEGORY"
 
         if keywords_retaining_parent_category is None:
             keywords_retaining_parent_category = []
@@ -454,6 +455,12 @@ class ZiaTalker(object):
         if super_category not in super_categories:
             logger.error(f"Invalid Super Category: {super_categories}")
             raise ValueError("Invalid super category")
+        
+        if keywords is None:
+            keywords = []
+
+        if ip_ranges is None:
+            ip_ranges = []
 
         url = "/urlCategories"
         payload = {
@@ -467,6 +474,7 @@ class ZiaTalker(object):
             "ipRanges": ip_ranges,
             "ipRangesRetainingParentCategory": ip_ranges_retaining_parent_category,
             "type": type_list,
+            "description": description
         }
         response = self.hp_http.post_call(
             url,
@@ -725,6 +733,7 @@ class ZiaTalker(object):
         validity_time_zone_id=None,
         cbi_profile_id: int = 0,
         block_override: bool = False,
+        **kwargs
     ) -> json:
         """
          Adds a URL Filtering Policy rule. If you are using the Rank feature, refer to About Admin Rank to
@@ -782,6 +791,7 @@ class ZiaTalker(object):
             "rank": rank,
             "action": action,
         }
+        payload.update(kwargs)
         if locations:
             payload.update(locations=locations)
         if location_groups:
@@ -800,6 +810,19 @@ class ZiaTalker(object):
             payload.update(validityTimeZoneId=validity_time_zone_id)
 
         response = self.hp_http.post_call(
+            url,
+            payload=payload,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+
+        return response.json()
+
+    def update_url_filtering_rules(self, id: int, **kwargs) -> json:
+        url = f"/urlFilteringRules/{id}"
+        payload = kwargs
+        response = self.hp_http.put_call(
             url,
             payload=payload,
             cookies=self.cookies,
@@ -2467,7 +2490,8 @@ class ZiaTalker(object):
 
     def add_rule_label(
         self,
-        payload: dict,
+        name: str,
+        description: str = ""
     ) -> json:
         """
         Adds new rule labels with the given name
@@ -2476,6 +2500,10 @@ class ZiaTalker(object):
         :param payload: (dict)
         """
         url = "/ruleLabels"
+        payload = {
+            "name": name,
+            "description": description
+        }
         response = self.hp_http.post_call(
             url,
             cookies=self.cookies,
@@ -2485,6 +2513,16 @@ class ZiaTalker(object):
         )
 
         return response.json()
+
+    def delete_rule_label(self, id: str):
+        url = f"/ruleLabels/{id}"
+        response = self.hp_http.delete_call(
+            url,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers
+        )
+        return response
 
     def update_call(
         self,
