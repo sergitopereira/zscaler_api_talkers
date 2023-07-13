@@ -806,3 +806,36 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
+    def list_file_type_rule(self,
+                            **kwargs,) -> requests.Response:
+        """
+        List the configured File Type Rules
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method='get',
+            url=f"{self.base_uri}/fileTypeRules",
+            **kwargs,
+        )
+
+        return result
+
+    def delete_file_type_rule(self,
+                              rule_id: int,
+                              **kwargs,) -> requests.Response:
+        """
+        Delete File Type Rule
+
+        :param rule_id: (int) ID of File Type Rule.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method='delete',
+            url=f"{self.base_uri}/fileTypeRules/{rule_id}",
+            **kwargs,
+        )
+
+        return result
