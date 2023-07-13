@@ -285,3 +285,40 @@ class ZpaPortalTalker(object):
         )
 
         return result
+
+    def list_assistant_group(
+        self,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        List Assistant Groups
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/assistantGroup",
+            **kwargs,
+        )
+
+        return result
+
+    def delete_assistant_group(
+        self,
+        group_id,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete an Assistant Group.
+
+        :param group_id: (int) ID of the assitant group
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/assistantGroup/{group_id}",
+            **kwargs,
+        )
+
+        return result
