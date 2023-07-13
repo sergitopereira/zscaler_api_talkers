@@ -235,7 +235,7 @@ class ZpaPortalTalker(object):
         **kwargs,
     ) -> requests.Response:
         """
-        Delete an API Key.
+        Delete an Application.
 
         :param application_id: (int) ID of the application
 
@@ -243,7 +243,44 @@ class ZpaPortalTalker(object):
         """
         result = request_(
             method="delete",
-            path=f"{self.base_uri}/v2/application/{application_id}",
+            url=f"{self.base_uri}/v2/application/{application_id}",
+            **kwargs,
+        )
+
+        return result
+
+    def list_application_group(
+        self,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        List Application Groups
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/applicationGroup",
+            **kwargs,
+        )
+
+        return result
+
+    def delete_application_group(
+        self,
+        group_id: str,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete an Application Group.
+
+        :param group_id: (int) ID of the application group
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/applicationGroup/{group_id}",
             **kwargs,
         )
 
