@@ -392,6 +392,12 @@ class ZiaTalker(object):
         if super_category not in super_categories:
             logger.error(f"Invalid Super Category: {super_categories}")
             raise ValueError("Invalid super category")
+        
+        if keywords is None:
+            keywords = []
+
+        if ip_ranges is None:
+            ip_ranges = []
 
         url = "/urlCategories"
         payload = {
@@ -664,6 +670,7 @@ class ZiaTalker(object):
         validity_time_zone_id=None,
         cbi_profile_id: int = 0,
         block_override: bool = False,
+        **kwargs
     ) -> json:
         """
          Adds a URL Filtering Policy rule. If you are using the Rank feature, refer to About Admin Rank to
@@ -721,6 +728,7 @@ class ZiaTalker(object):
             "rank": rank,
             "action": action,
         }
+        payload.update(kwargs)
         if locations:
             payload.update(locations=locations)
         if location_groups:
@@ -749,9 +757,9 @@ class ZiaTalker(object):
         return response.json()
 
     def update_url_filtering_rules(self, id: int, **kwargs) -> json:
-        url = f"/urlFilteringRules/{str(id)}"
+        url = f"/urlFilteringRules/{id}"
         payload = kwargs
-        response = self.hp_http.post_call(
+        response = self.hp_http.put_call(
             url,
             payload=payload,
             cookies=self.cookies,
@@ -760,6 +768,7 @@ class ZiaTalker(object):
         )
 
         return response.json()
+
     # User Management
 
     def list_departments(
@@ -2418,7 +2427,8 @@ class ZiaTalker(object):
 
     def add_rule_label(
         self,
-        payload: dict,
+        name: str,
+        description: str = ""
     ) -> json:
         """
         Adds new rule labels with the given name
@@ -2427,6 +2437,10 @@ class ZiaTalker(object):
         :param payload: (dict)
         """
         url = "/ruleLabels"
+        payload = {
+            "name": name,
+            "description": description
+        }
         response = self.hp_http.post_call(
             url,
             cookies=self.cookies,
@@ -2436,6 +2450,16 @@ class ZiaTalker(object):
         )
 
         return response.json()
+
+    def delete_rule_label(self, id: str):
+        url = f"/ruleLabels/{id}"
+        response = self.hp_http.delete_call(
+            url,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers
+        )
+        return response
 
     def update_call(
         self,
