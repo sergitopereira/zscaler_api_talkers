@@ -899,3 +899,60 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
+    def upload_idp_config_certificate(self, file: dict, **kwargs,) -> requests.Response:
+        """
+        Upload Certificate file for IDP Config
+
+        :param file: (dict) Formatted dict for file upload.
+
+        :return: (requests.Response Object)
+        """
+        result = request_(
+            method="post",
+            url=f"{self.base_uri}/idpConfig/uploadCert",
+            files=file,
+            **kwargs,
+        )
+
+        return result
+
+    def create_idp_config_bearer_token(self, **kwargs,) -> requests.Response:
+        """
+        Create Bearer Token
+
+        :return: (requests.Response Object)
+        """
+        result = request_(
+            method='post',
+            url=f"{self.base_uri}/ipdConfig/generateBearerToken",
+            **kwargs,
+        )
+
+        return result
+
+    def update_idp_config(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> json:
+        result = request_(
+            method="put",
+            url=f"{self.base_uri}/idpConfig/{data['id']}",
+            json=data,
+            **kwargs,
+        )
+        return result
+
+    def create_idp_config(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> json:
+        result = request_(
+            method="post",
+            url=f"{self.base_uri}/idpConfig",
+            json=data,
+            **kwargs,
+        )
+        return result
