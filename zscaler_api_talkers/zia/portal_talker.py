@@ -667,6 +667,25 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
+    def delete_web_application_rule(self, rule_id: int, rule_type: str, **kwargs,) -> requests.Response:
+        """
+        Delete Web Application Rule
+
+        :param rule_id: (int) ID of Web Application Rule.
+        :param rule_type: (str) Type of rule.
+
+        :return: (requests.Response object)
+        """
+        parameters = {"type": rule_type}
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/webApplicationRules/{rule_id}",
+            params=parameters,
+            **kwargs,
+        )
+
+        return result
+
     def delete_admin_user(
         self,
         user_id: int,
