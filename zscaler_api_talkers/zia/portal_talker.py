@@ -1,11 +1,11 @@
 import json
+from http.cookies import SimpleCookie
 
 import requests
 
 from zscaler_api_talkers.helpers import HttpCalls, request_, setup_logger
 
 from .helpers import _get_seed, _obfuscate_api_key
-from http.cookies import SimpleCookie
 
 logger = setup_logger(name=__name__)
 
@@ -30,7 +30,9 @@ class ZiaPortalTalker(object):
         :param username: (str) Client ID
         :param password: (str) Secret Key
         """
-        logger.warning("These API endpoints are unsupported and Zscaler can change at will and without notice.")
+        logger.warning(
+            "These API endpoints are unsupported and Zscaler can change at will and without notice."
+        )
         self.cloud_name = cloud_name
         self.base_uri = f"https://admin.{cloud_name}/zsapi/v1"
         self.hp_http = HttpCalls(
@@ -48,11 +50,11 @@ class ZiaPortalTalker(object):
             )
 
     def authenticate(
-            self,
-            username: str = "",
-            password: str = "",
-            zsui_cookie: str = "",
-            zsui_custom_code: str = ""
+        self,
+        username: str = "",
+        password: str = "",
+        zsui_cookie: str = "",
+        zsui_custom_code: str = "",
     ):
         """
         Method to authenticate.
@@ -69,8 +71,8 @@ class ZiaPortalTalker(object):
                 "Content-Type": "application/json",
                 "Zs_custom_code": zsui_custom_code,
             }
-            self.j_session_id = cookie['JSESSIONID'].value
-            self.zs_session_code = cookie['ZS_SESSION_CODE'].value
+            self.j_session_id = cookie["JSESSIONID"].value
+            self.zs_session_code = cookie["ZS_SESSION_CODE"].value
         else:
             timestamp, key = _obfuscate_api_key(
                 _get_seed(url=f"https://admin.{self.cloud_name}")
@@ -272,7 +274,11 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def update_virus_spyware_settings(self, data: dict, **kwargs,) -> requests.Response:
+    def update_virus_spyware_settings(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
         """
         Update Virus Spyware Settings
 
@@ -474,7 +480,11 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def update_saml_admin_settings(self, data: dict, **kwargs,) -> requests.Response:
+    def update_saml_admin_settings(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
         """
         Update SAML Admin Settings
 
@@ -491,7 +501,9 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def upload_saml_admin_settings_certificate(self, filename: str, certificate: str, **kwargs) -> requests.Response:
+    def upload_saml_admin_settings_certificate(
+        self, filename: str, certificate: str, **kwargs
+    ) -> requests.Response:
         """
         Upload Certificate for SAML Admin
 
@@ -892,7 +904,7 @@ class ZiaPortalTalker(object):
                 "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
-            payload=payload
+            payload=payload,
         )
 
         return response.json()
@@ -912,7 +924,7 @@ class ZiaPortalTalker(object):
                 "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
-            payload=payload
+            payload=payload,
         )
 
         return response.json()
@@ -932,7 +944,7 @@ class ZiaPortalTalker(object):
                 "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
-            payload=payload
+            payload=payload,
         )
 
         return response.json()
@@ -950,7 +962,7 @@ class ZiaPortalTalker(object):
             cookies={
                 "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
-            }
+            },
         )
 
         return response.json()
@@ -968,12 +980,17 @@ class ZiaPortalTalker(object):
             cookies={
                 "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
-            }
+            },
         )
 
         return response.json()
 
-    def delete_web_application_rule(self, rule_id: int, rule_type: str, **kwargs,) -> requests.Response:
+    def delete_web_application_rule(
+        self,
+        rule_id: int,
+        rule_type: str,
+        **kwargs,
+    ) -> requests.Response:
         """
         Delete Web Application Rule
 
@@ -1196,24 +1213,28 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def list_file_type_rule(self,
-                            **kwargs,) -> requests.Response:
+    def list_file_type_rule(
+        self,
+        **kwargs,
+    ) -> requests.Response:
         """
         List the configured File Type Rules
 
         :return: (requests.Response object)
         """
         result = request_(
-            method='get',
+            method="get",
             url=f"{self.base_uri}/fileTypeRules",
             **kwargs,
         )
 
         return result
 
-    def delete_file_type_rule(self,
-                              rule_id: int,
-                              **kwargs,) -> requests.Response:
+    def delete_file_type_rule(
+        self,
+        rule_id: int,
+        **kwargs,
+    ) -> requests.Response:
         """
         Delete File Type Rule
 
@@ -1222,28 +1243,35 @@ class ZiaPortalTalker(object):
         :return: (requests.Response object)
         """
         result = request_(
-            method='delete',
+            method="delete",
             url=f"{self.base_uri}/fileTypeRules/{rule_id}",
             **kwargs,
         )
 
         return result
 
-    def list_firewall_dns_rule(self, **kwargs,) -> requests.Response:
+    def list_firewall_dns_rule(
+        self,
+        **kwargs,
+    ) -> requests.Response:
         """
         List the configured Firewall DNS Rules
 
         :return: (requests.Response object)
         """
         result = request_(
-            method='get',
+            method="get",
             url=f"{self.base_uri}/firewallDnsRules",
             **kwargs,
         )
 
         return result
 
-    def delete_firewall_dns_rule(self, rule_id: int, **kwargs,) -> requests.Response:
+    def delete_firewall_dns_rule(
+        self,
+        rule_id: int,
+        **kwargs,
+    ) -> requests.Response:
         """
         Delete Firewall DNS Rule
 
@@ -1252,28 +1280,35 @@ class ZiaPortalTalker(object):
         :return: (requests.Response object)
         """
         result = request_(
-            method='delete',
+            method="delete",
             url=f"{self.base_uri}/firewallDnsRules/{rule_id}",
             **kwargs,
         )
 
         return result
 
-    def list_firewall_ips_rule(self, **kwargs,) -> requests.Response:
+    def list_firewall_ips_rule(
+        self,
+        **kwargs,
+    ) -> requests.Response:
         """
         List the configured Firewall IPS Rules
 
         :return: (requests.Response object)
         """
         result = request_(
-            method='get',
+            method="get",
             url=f"{self.base_uri}/firewallIpsRules",
             **kwargs,
         )
 
         return result
 
-    def delete_firewall_ips_rule(self, rule_id: int, **kwargs,) -> requests.Response:
+    def delete_firewall_ips_rule(
+        self,
+        rule_id: int,
+        **kwargs,
+    ) -> requests.Response:
         """
         Delete Firewall IPS Rule
 
@@ -1282,14 +1317,18 @@ class ZiaPortalTalker(object):
         :return: (requests.Response object)
         """
         result = request_(
-            method='delete',
+            method="delete",
             url=f"{self.base_uri}/firewallIpsRules/{rule_id}",
             **kwargs,
         )
 
         return result
 
-    def upload_idp_config_certificate(self, file: dict, **kwargs,) -> requests.Response:
+    def upload_idp_config_certificate(
+        self,
+        file: dict,
+        **kwargs,
+    ) -> requests.Response:
         """
         Upload Certificate file for IDP Config
 
@@ -1306,14 +1345,17 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def create_idp_config_bearer_token(self, **kwargs,) -> requests.Response:
+    def create_idp_config_bearer_token(
+        self,
+        **kwargs,
+    ) -> requests.Response:
         """
         Create Bearer Token
 
         :return: (requests.Response Object)
         """
         result = request_(
-            method='post',
+            method="post",
             url=f"{self.base_uri}/ipdConfig/generateBearerToken",
             **kwargs,
         )
@@ -1353,7 +1395,11 @@ class ZiaPortalTalker(object):
         )
         return result
 
-    def update_malware_policy(self, data: dict, **kwargs,) -> requests.Response:
+    def update_malware_policy(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
         """
         Update Malware Policy
 
@@ -1370,7 +1416,11 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def update_remote_assistance(self, data: dict, **kwargs,) -> requests.Response:
+    def update_remote_assistance(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
         """
         Update Remote Assistance
 
@@ -1387,21 +1437,28 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def list_ssl_inspection_rule(self, **kwargs,) -> requests.Response:
+    def list_ssl_inspection_rule(
+        self,
+        **kwargs,
+    ) -> requests.Response:
         """
         List the configured SSL Inspection Rules
 
         :return: (requests.Response object)
         """
         result = request_(
-            method='get',
+            method="get",
             url=f"{self.base_uri}/sslInspectionRules",
             **kwargs,
         )
 
         return result
 
-    def delete_ssl_inspection_rule(self, rule_id: int, **kwargs,) -> requests.Response:
+    def delete_ssl_inspection_rule(
+        self,
+        rule_id: int,
+        **kwargs,
+    ) -> requests.Response:
         """
         Delete SSL Inspection Rule
 
@@ -1410,7 +1467,7 @@ class ZiaPortalTalker(object):
         :return: (requests.Response object)
         """
         result = request_(
-            method='delete',
+            method="delete",
             url=f"{self.base_uri}/sslInspectionRules/{rule_id}",
             **kwargs,
         )
