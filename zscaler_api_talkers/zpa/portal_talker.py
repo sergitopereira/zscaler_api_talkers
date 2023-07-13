@@ -434,3 +434,40 @@ class ZpaPortalTalker(object):
         )
 
         return result
+
+    def list_server(
+        self,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        List Servers
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/server",
+            **kwargs,
+        )
+
+        return result
+
+    def delete_server(
+        self,
+        server_id: str,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete a Server
+
+        :param server_id: (int) ID of the Server
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/server/{server_id}",
+            **kwargs,
+        )
+
+        return result
