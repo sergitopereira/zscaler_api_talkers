@@ -745,3 +745,17 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
+    def update_auth_settings(
+            self,
+            data: dict,
+            **kwargs,
+    ) -> requests.Response:
+        result = request_(
+            method="put",
+            url=f"{self.base_uri}/authSettings",
+            json=data,
+            **kwargs,
+        )
+
+        return result
