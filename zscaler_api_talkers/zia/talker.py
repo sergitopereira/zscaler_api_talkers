@@ -3,6 +3,8 @@ import pdb  # noqa
 import time
 
 import requests
+from requests import Response
+
 from zscaler_api_talkers.zia.models import (super_categories, valid_category_ids, valid_countries)
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
 
@@ -285,18 +287,18 @@ class ZiaTalker(object):
 
         return self._obtain_all(url)
 
-    def add_adminUsers(self, loginName, userName, email, password, role, comments='',
-                       adminScope={},
-                       isNonEditable=False,
-                       disabled=False,
-                       isAuditor=False,
-                       isPasswordLoginAllowed=False,
-                       isSecurityReportCommEnabled=False,
-                       isServiceUpdateCommEnabled=False,
-                       isProductUpdateCommEnabled=False,
-                       isPasswordExpired=False,
-                       isExecMobileAppEnabled=False,
-                       execMobileAppTokens=[]):
+    def add_adminUsers(self, loginName: object, userName: object, email: object, password: object, role: object, comments: object = '',
+                       adminScope: object = {},
+                       isNonEditable: object = False,
+                       disabled: object = False,
+                       isAuditor: object = False,
+                       isPasswordLoginAllowed: object = False,
+                       isSecurityReportCommEnabled: object = False,
+                       isServiceUpdateCommEnabled: object = False,
+                       isProductUpdateCommEnabled: object = False,
+                       isPasswordExpired: object = False,
+                       isExecMobileAppEnabled: object = False,
+                       execMobileAppTokens: object = []) -> object:
         """
         Adds a new Admininstrator.
                :param loginName: string. Admin or auditor's login name. loginName is in email format
@@ -338,7 +340,7 @@ class ZiaTalker(object):
             "isExecMobileAppEnabled": isExecMobileAppEnabled,
             "execMobileAppTokens": execMobileAppTokens
         }
-        response = self.hp_http.post_call(
+        response: Response = self.hp_http.post_call(
             url,
             payload=payload,
             cookies=self.cookies,
