@@ -463,7 +463,7 @@ class ZpaPortalTalker(object):
         """
         Delete a Server Group
 
-        :param group_id: (int) ID of the Server Gropu
+        :param group_id: (int) ID of the Server Group
 
         :return: (requests.Response object)
         """
@@ -490,6 +490,70 @@ class ZpaPortalTalker(object):
         result = request_(
             method="post",
             url=f"{self.base_uri}/ancestorPolicy",
+            json=data,
+            **kwargs,
+        )
+
+        return result
+
+    def delete_admin_user(
+        self,
+        user_id: str,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete an Admin User
+
+        :param user_id: (int) ID of the Admin User
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/users/{user_id}",
+            **kwargs,
+        )
+
+        return result
+
+    def create_admin_user(
+        self,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Create an Admin User
+
+        :param data: (dict) Dict of Admin User configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="post",
+            url=f"{self.base_uri}/users",
+            json=data,
+            **kwargs,
+        )
+
+        return result
+
+    def update_admin_user(
+        self,
+        user_id: int,
+        data: dict,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Update an Admin User
+
+        :param user_id: (int) ID of user.
+        :param data: (dict) Dict of Admin User configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="put",
+            url=f"{self.base_uri}/users/{user_id}",
             json=data,
             **kwargs,
         )
