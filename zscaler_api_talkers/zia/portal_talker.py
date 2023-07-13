@@ -600,3 +600,67 @@ class ZiaPortalTalker(object):
         )
 
         return response.json()
+
+    def delete_admin_user(
+        self,
+        user_id: int,
+        **kwargs,
+    ) -> requests.Response:
+        """
+        Delete Admin User
+
+        :param user_id: (int) ID of user.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="delete",
+            url=f"{self.base_uri}/adminUsers/{user_id}",
+            **kwargs,
+        )
+
+        return result
+
+    def create_admin_user(
+            self,
+            data: dict,
+            **kwargs,
+    ) -> requests.Response:
+        """
+        Create an Admin User
+
+        :param data: (dict) Dict of Admin User configuration.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="post",
+            url=f"{self.base_uri}/adminUsers",
+            json=data,
+            **kwargs,
+        )
+
+        return result
+
+    def update_admin_user(
+            self,
+            data: dict,
+            user_id: int,
+            **kwargs,
+    ) -> requests.Response:
+        """
+        Update an Admin User
+
+        :param data: (dict) Dict of Admin Role configuration.
+        :param user_id: (int)  ID of user.
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="put",
+            url=f"{self.base_uri}/AdminUsers/{user_id}",
+            json=data,
+            **kwargs,
+        )
+
+        return result
