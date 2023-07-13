@@ -356,13 +356,14 @@ class ZiaTalker(object):
         name: str,
         super_category: str,
         type_list: list = None,
-        urls: list = None,
+        urls: str = None,
         db_categorized_urls: list = None,
         keywords_retaining_parent_category: list = None,
         keywords: list = None,
         custom_category: bool = False,
         ip_ranges: list = None,
         ip_ranges_retaining_parent_category: list = None,
+        description: str =None
     ) -> json:
         """
          Adds a new custom URL category.
@@ -383,7 +384,7 @@ class ZiaTalker(object):
         :return:  json
         """
         if not type_list:
-            type_list = ["URL_CATEGORY"]
+            type_list = "URL_CATEGORY"
 
         if keywords_retaining_parent_category is None:
             keywords_retaining_parent_category = []
@@ -404,6 +405,7 @@ class ZiaTalker(object):
             "ipRanges": ip_ranges,
             "ipRangesRetainingParentCategory": ip_ranges_retaining_parent_category,
             "type": type_list,
+            "description":description
         }
         response = self.hp_http.post_call(
             url,
@@ -644,12 +646,12 @@ class ZiaTalker(object):
         self,
         name: str,
         order: int,
-        protocols: str,
+        protocols: list,
         state: str,
         action: str,
         url_categories: list = None,
         request_methods: list = None,
-        description=None,
+        description: str = None,
         groups: list = None,
         locations: list = None,
         departments: list = None,
