@@ -3,8 +3,6 @@ import pdb  # noqa
 import time
 
 import requests
-from requests import Response
-
 from zscaler_api_talkers.zia.models import (super_categories, valid_category_ids, valid_countries)
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
 
