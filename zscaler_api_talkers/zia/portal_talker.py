@@ -804,3 +804,18 @@ class ZiaPortalTalker(object):
         )
 
         return response.json()
+
+    def generic_post(self, url, **kwargs) -> json:
+        url = url
+        payload = kwargs
+        response = self.hp_http.post_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+            payload=payload
+        )
+
+        return response.json()
