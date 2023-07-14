@@ -6,6 +6,8 @@ import requests
 from zscaler_api_talkers.zia.models import (super_categories, valid_category_ids, valid_countries)
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
 
+from .helpers import _obfuscate_api_key
+
 logger = setup_logger(name=__name__)
 
 
@@ -303,6 +305,7 @@ class ZiaTalker(object):
                and uses the domain name associated to the Zscaler account.
                :param userName: string. UserName.
                :param email: string. Email Address.
+               :param password: string. Password for administrator. If admin single sign-on (SSO) is disabled, then this field is mandatory
                :param role : Role of the Admin
                :param comments: string. Comments.
                :param adminScopeType: string. Scope of the admin.
@@ -311,7 +314,6 @@ class ZiaTalker(object):
                :param isNonEditable: boolean. Indicates whether or not the admin can be edited or deleted. default: False.
                :param disabled: boolean. If admin accounts is disabled. default: False.
                :param isAuditor:boolean. Indicates if user is auditor. default: False.
-               :param password: string. Password for administrator. If admin single sign-on (SSO) is disabled, then this field is mandatory
                :param isPasswordLoginAllowed: boolean. If password login is allowed. default: False.
                :param isSecurityReportCommEnabled: boolean. Communication for Security Report is enabled. default: False.
                :param isServiceUpdateCommEnabled: boolean. Communication setting for Service Update. default: False.
