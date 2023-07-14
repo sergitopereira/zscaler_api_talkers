@@ -618,7 +618,7 @@ class ZiaTalker(object):
         # Verify urls format
         list(set(url_list))
         # Rate limit 1/sec  and 400 hr and 100 URLs per call
-        list_of_lists = [url_list[i : i + 100] for i in range(0, len(url_list), 100)]
+        list_of_lists = [url_list[i: i + 100] for i in range(0, len(url_list), 100)]
         for item in list_of_lists:
             response = self.hp_http.post_call(
                 url,
@@ -2082,7 +2082,6 @@ class ZiaTalker(object):
         labels=None,
         nw_services: list = None,
         rank: int = 0,
-        **kwargs,
     ) -> requests.Response:
         """
         :param name: (str) Name of the Firewall Filtering policy rule ["String"]
@@ -2464,7 +2463,8 @@ class ZiaTalker(object):
         :param payload: (dict)
         """
         url = "/ruleLabels"
-        payload = {"name": name, "description": description}
+        if not payload:
+            payload = {"name": name, "description": description}
         response = self.hp_http.post_call(
             url,
             cookies=self.cookies,
