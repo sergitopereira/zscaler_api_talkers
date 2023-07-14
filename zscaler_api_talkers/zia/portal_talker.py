@@ -527,6 +527,11 @@ class ZiaPortalTalker(object):
             method="post",
             url=f"{self.base_uri}/samlAdminSettings/uploadCert/text",
             files=file,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -648,6 +653,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/adminRoles/{role_id}",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -669,6 +679,11 @@ class ZiaPortalTalker(object):
             method="post",
             url=f"{self.base_uri}/adminRoles",
             json=data,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1024,6 +1039,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/adminUsers/{user_id}",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1045,6 +1065,11 @@ class ZiaPortalTalker(object):
             method="post",
             url=f"{self.base_uri}/adminUsers",
             json=data,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1068,6 +1093,11 @@ class ZiaPortalTalker(object):
             method="put",
             url=f"{self.base_uri}/AdminUsers/{user_id}",
             json=data,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1089,6 +1119,11 @@ class ZiaPortalTalker(object):
             method="put",
             url=f"{self.base_uri}/advancedThreatSettings",
             json=data,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1106,6 +1141,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="post",
             url=f"{self.base_uri}/apiKeys/generate",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1129,6 +1169,11 @@ class ZiaPortalTalker(object):
             method="put",
             url=f"{self.base_uri}/apiKeys/{api_key_id}",
             json=data,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1149,6 +1194,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/apiKeys/{api_key_id}",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1170,6 +1220,11 @@ class ZiaPortalTalker(object):
             method="put",
             url=f"{self.base_uri}/authSettings",
             json=data,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1187,6 +1242,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/eusaStatus/latest",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1208,6 +1268,11 @@ class ZiaPortalTalker(object):
             method="get",
             url=f"{self.base_uri}/eusaStatus",
             json=data,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1225,6 +1290,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/fileTypeRules",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1245,6 +1315,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/fileTypeRules/{rule_id}",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1262,6 +1337,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/firewallDnsRules",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1282,6 +1362,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/firewallDnsRules/{rule_id}",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1299,6 +1384,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/firewallIpsRules",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1319,6 +1409,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/firewallIpsRules/{rule_id}",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1340,6 +1435,11 @@ class ZiaPortalTalker(object):
             method="post",
             url=f"{self.base_uri}/idpConfig/uploadCert",
             files=file,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1357,6 +1457,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="post",
             url=f"{self.base_uri}/ipdConfig/generateBearerToken",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1378,6 +1483,11 @@ class ZiaPortalTalker(object):
             method="put",
             url=f"{self.base_uri}/idpConfig/{data['id']}",
             json=data,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
         return result
@@ -1391,6 +1501,11 @@ class ZiaPortalTalker(object):
             method="post",
             url=f"{self.base_uri}/idpConfig",
             json=data,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
         return result
@@ -1411,6 +1526,11 @@ class ZiaPortalTalker(object):
             method="put",
             url=f"{self.base_uri}/malwarePolicy",
             json=data,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1432,6 +1552,11 @@ class ZiaPortalTalker(object):
             method="put",
             url=f"{self.base_uri}/remoteAssistance",
             json=data,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1449,6 +1574,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/sslInspectionRules",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
@@ -1469,6 +1599,11 @@ class ZiaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/sslInspectionRules/{rule_id}",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
             **kwargs,
         )
 
