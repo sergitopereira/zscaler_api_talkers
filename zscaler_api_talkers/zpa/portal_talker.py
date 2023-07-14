@@ -1,5 +1,3 @@
-import json
-
 import requests
 
 from zscaler_api_talkers.helpers import HttpCalls, request_, setup_logger
@@ -147,6 +145,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/clientCredentials",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -167,6 +166,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="post",
             url=f"{self.base_uri}/clientCredentials",
+            helpers=self.headers,
             json=data,
             **kwargs,
         )
@@ -188,6 +188,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="put",
             url=f"{self.base_uri}/clientCredentials/{data.get('id')}",
+            helpers=self.headers,
             json=data,
             **kwargs,
         )
@@ -209,6 +210,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/clientCredentials/{key_id}",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -226,6 +228,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/v2/application",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -246,6 +249,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/v2/application/{application_id}",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -263,6 +267,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/applicationGroup",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -283,6 +288,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/applicationGroup/{group_id}",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -300,6 +306,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/assistantGroup",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -320,6 +327,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/assistantGroup/{group_id}",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -337,6 +345,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/clientlessCertificate",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -357,6 +366,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/clientlessCertificate/{cert_id}",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -374,6 +384,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/roles",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -394,6 +405,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/roles/{role_id}",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -415,6 +427,7 @@ class ZpaPortalTalker(object):
             method="post",
             url=f"{self.base_uri}/roles",
             json=data,
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -436,6 +449,7 @@ class ZpaPortalTalker(object):
             method="post",
             url=f"{self.base_uri}/v2/associationtype/SEARCH_SUFFIX/domains",
             json=data,
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -456,6 +470,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/server/{server_id}",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -476,6 +491,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/serverGroup/{group_id}",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -497,6 +513,7 @@ class ZpaPortalTalker(object):
             method="post",
             url=f"{self.base_uri}/ancestorPolicy",
             json=data,
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -517,6 +534,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/users/{user_id}",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -538,6 +556,7 @@ class ZpaPortalTalker(object):
             method="post",
             url=f"{self.base_uri}/users",
             json=data,
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -561,6 +580,7 @@ class ZpaPortalTalker(object):
             method="put",
             url=f"{self.base_uri}/users/{user_id}",
             json=data,
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -578,6 +598,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="get",
             url=f"{self.base_uri}/userPortal",
+            helpers=self.headers,
             **kwargs,
         )
 
@@ -598,6 +619,7 @@ class ZpaPortalTalker(object):
         result = request_(
             method="delete",
             url=f"{self.base_uri}/userPortal/{portal_id}",
+            helpers=self.headers,
             **kwargs,
         )
 
