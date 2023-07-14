@@ -1,9 +1,6 @@
 import json
-from typing import Dict, Any
 
 import requests
-from requests import Response
-
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
 
 logger = setup_logger(name=__name__)
