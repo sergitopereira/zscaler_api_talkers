@@ -364,6 +364,27 @@ class ZpaTalker(object):
 
         return response.json()
 
+    def delete_segment_group(self, segmentGroupId: int) -> json:
+        """
+        Deletes specified Segment Group.
+        :param segmentGroupId: The unique identifier of the Segment Group.
+        return: response
+        """
+        url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{segmentGroupId}'
+        response = self.hp_http.delete_call(url=url, error_handling=True)
+        return response
+
+    def update_segment_group(self, segmentGroupId: int, payload: object) -> json:
+        """
+        Update Segment Group
+        :param segmentGroupId: type int. The unique identifier of the Segment Group.
+        :param payload: type dict. Segment Group details to be updated.
+        :return: Json
+        """
+        url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{segmentGroupId}'
+        response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
+        return response
+
     # connector-controller
     def list_connector(
         self,
@@ -436,6 +457,74 @@ class ZpaTalker(object):
 
         return response
 
+    def add_connector_group(self, name: str, description: str, latitude: str, longitude: str, location: str, upgradeDay: str = 'SUNDAY',
+                            enabled: bool = True,
+                            dnsQueryType: str = 'IPV4_IPV6', upgradeTimeInSecs: int = 66600,
+                            overrideVersionProfile: bool = False, versionProfileId: int = None, tcpQuickAckApp: bool = False,
+                            tcpQuickAckAssistant: bool = False, tcpQuickAckReadAssistant: bool = False, cityCountry: str = "",
+                            countryCode: str = "", connectors: list = [], serverGroups: list = [], lssAppConnectorGroup: bool = False) -> json:
+        """
+        :param name: type string. Name of App Connector Group
+        :param description: type string. Description
+        :param latitude: type string. Latitude of App Connector Group
+        :param longitude: type string. Longitude of App Connector Group
+        :param location: type string. Location of the App Connector Group
+        :param upgradeDay: type string. App Connectors in this group attempt to update to a newer version of the software during this specified day
+        :param upgradeTimeInSecs: type int. App Connectors in this group attempt to update to a newer version of the software during this specified time
+        :param overrideVersionProfile: type boolean. Whether the default version profile of the App Connector Group is applied or overridden
+        :param versionProfileId: type int. ID of the version profile
+        :param tcpQuickAckApp: type boolean. Whether TCP Quick Acknowledgement is enabled or disabled for the application. The tcpQuickAckApp, tcpQuickAckAssistant, and tcpQuickAckReadAssistant fields must all share the same value.
+        :param tcpQuickAckAssistant: type boolean. Whether TCP Quick Acknowledgement is enabled or disabled for the application
+        :param tcpQuickAckReadAssistant: type boolean. Whether TCP Quick Acknowledgement is enabled or disabled for the application
+        :param connectors: type dict. App Connector Id's part of the App Connector Group.
+        :param serverGroups: type dict. Server Groups part of App Connector Group
+        :param lssAppConnectorGroup: type boolean. Is App Connector Group reserved for LSS
+        """
+        url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup'
+        payload: dict[str | Any, object | Any] = {
+            "name": name,
+            "description": description,
+            "latitude": latitude,
+            "longitude": longitude,
+            "location": location,
+            "upgradeDay": upgradeDay,
+            "enabled": enabled,
+            "dnsQueryType": dnsQueryType,
+            "upgradeTimeInSecs": upgradeTimeInSecs,
+            "overrideVersionProfile": overrideVersionProfile,
+            "versionProfileId": versionProfileId,
+            "tcpQuickAckApp": tcpQuickAckApp,
+            "tcpQuickAckAssistant": tcpQuickAckAssistant,
+            "tcpQuickAckReadAssistant": tcpQuickAckReadAssistant,
+            "cityCountry": cityCountry,
+            "countryCode": countryCode,
+            "connectors": connectors,
+            "serverGroups": serverGroups,
+            "lssAppConnectorGroup": lssAppConnectorGroup
+        }
+        response = self.hp_http.post_call(url, headers=self.header, error_handling=True, payload=payload)
+        return response.json()
+
+    def update_connector_group(self, appConnectorGroupId: int, payload: dict) -> json:
+        """
+        Update configured App Connector Groups for a ZPA tenant.
+        :param appConnectorGroupId: type int. The unique identifier of the Connector Group
+        :param payload: type dict. Details of App Connector group to be updated
+        return response
+        """
+        url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}'
+        response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
+        return response
+
+    def delete_connector_group(self, appConnectorGroupId: int) -> json:
+        """
+            Delete specified App Connector Group
+            :param appConnectorGroupId: type int. The unique identifier of the Connector Group
+            return response
+        """
+        url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}'
+        response = self.hp_http.delete_call(url, error_handling=True)
+        return response
     # ba-certificate-controller-v-2
 
     def list_browser_access_certificates(

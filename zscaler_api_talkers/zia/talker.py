@@ -11,7 +11,7 @@ from zscaler_api_talkers.zia.models import (
     valid_countries,
 )
 
-from .helpers import _obfuscate_api_key
+from zscaler_api_talkers.zia.helpers import _obfuscate_api_key
 
 logger = setup_logger(name=__name__)
 
@@ -290,6 +290,73 @@ class ZiaTalker(object):
 
         return self._obtain_all(url)
 
+    def add_admin_users(self, loginName: str, userName: str, email: str, password: str, role: dict, comments: str = '',
+                       adminScopeType: str ='ORGANIZATION',
+                       adminScopeScopeEntities: list =[],
+                       adminScopescopeGroupMemberEntities: list =[],
+                       isNonEditable: bool = False,
+                       disabled: bool = False,
+                       isAuditor: bool = False,
+                       isPasswordLoginAllowed: object = False,
+                       isSecurityReportCommEnabled: object = False,
+                       isServiceUpdateCommEnabled: object = False,
+                       isProductUpdateCommEnabled: object = False,
+                       isPasswordExpired: object = False,
+                       isExecMobileAppEnabled: object = False,
+                       execMobileAppTokens: object = []) -> json:
+        """
+        Adds a new Admininstrator.
+               :param loginName: string. Admin or auditor's login name. loginName is in email format
+               and uses the domain name associated to the Zscaler account.
+               :param userName: string. UserName.
+               :param email: string. Email Address.
+               :param password: string. Password for administrator. If admin single sign-on (SSO) is disabled, then this field is mandatory
+               :param role : Role of the Admin
+               :param comments: string. Comments.
+               :param adminScopeType: string. Scope of the admin.
+               :param adminScopeScopeEntities: list: Department or Location when adminScopeType is set to Deportment or Location.
+               :param adminScopescopeGroupMemberEntities: list. Location Groups when adminScopeType is set to Location Group.
+               :param isNonEditable: boolean. Indicates whether or not the admin can be edited or deleted. default: False.
+               :param disabled: boolean. If admin accounts is disabled. default: False.
+               :param isAuditor:boolean. Indicates if user is auditor. default: False.
+               :param isPasswordLoginAllowed: boolean. If password login is allowed. default: False.
+               :param isSecurityReportCommEnabled: boolean. Communication for Security Report is enabled. default: False.
+               :param isServiceUpdateCommEnabled: boolean. Communication setting for Service Update. default: False.
+               :param isProductUpdateCommEnabled: boolean. Communication setting for Product Update. default: False.
+               :param isPasswordExpired: boolean. Expire password to force user to change password on logon. default: False.
+               :param isExecMobileAppEnabled: boolean. Indicates whether or not Executive Insights App access is enabled for the admin. default: False.
+               :return:json()
+               """
+        url = "/adminUsers"
+        payload = {
+            "loginName": loginName,
+            "userName": userName,
+            "email": email,
+            "password": password,
+            "role": role,
+            "comments": comments,
+            "adminScopeType": adminScopeType,
+            "adminScopeScopeEntities": adminScopeScopeEntities,
+            "adminScopescopeGroupMemberEntities": adminScopescopeGroupMemberEntities,
+            "isNonEditable": isNonEditable,
+            "disabled": disabled,
+            "isAuditor": isAuditor,
+            "isPasswordLoginAllowed": isPasswordLoginAllowed,
+            "isSecurityReportCommEnabled": isSecurityReportCommEnabled,
+            "isServiceUpdateCommEnabled": isServiceUpdateCommEnabled,
+            "isProductUpdateCommEnabled": isProductUpdateCommEnabled,
+            "isPasswordExpired": isPasswordExpired,
+            "isExecMobileAppEnabled": isExecMobileAppEnabled,
+            "execMobileAppTokens": execMobileAppTokens
+        }
+        response = self.hp_http.post_call(
+            url,
+            payload=payload,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+        return response.json()
     def list_admin_roles(
         self,
         query: str = None,
