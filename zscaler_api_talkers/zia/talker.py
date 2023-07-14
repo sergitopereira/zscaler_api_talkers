@@ -5,9 +5,11 @@ import time
 import requests
 
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
-from zscaler_api_talkers.zia.models import (super_categories,
-                                            valid_category_ids,
-                                            valid_countries)
+from zscaler_api_talkers.zia.models import (
+    super_categories,
+    valid_category_ids,
+    valid_countries,
+)
 
 from .helpers import _obfuscate_api_key
 
@@ -618,7 +620,7 @@ class ZiaTalker(object):
         # Verify urls format
         list(set(url_list))
         # Rate limit 1/sec  and 400 hr and 100 URLs per call
-        list_of_lists = [url_list[i: i + 100] for i in range(0, len(url_list), 100)]
+        list_of_lists = [url_list[i : i + 100] for i in range(0, len(url_list), 100)]
         for item in list_of_lists:
             response = self.hp_http.post_call(
                 url,
