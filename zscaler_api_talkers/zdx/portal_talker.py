@@ -1,8 +1,9 @@
+import json
 import urllib
 
-import json
 import requests
-from zscaler_api_talkers.helpers import request_, get_user_agent, setup_logger
+
+from zscaler_api_talkers.helpers import get_user_agent, request_, setup_logger
 
 logger = setup_logger(name=__name__)
 
@@ -20,7 +21,9 @@ class ZdxPortalTalker:
         :param password: (str) Admin password
         :param zia_cloud: (str) ZIA Portal associated with this ZDX tenant. Example: "zscalerthree.net"
         """
-        logger.warning("These API endpoints are unsupported and Zscaler can change at will and without notice.")
+        logger.warning(
+            "These API endpoints are unsupported and Zscaler can change at will and without notice."
+        )
         self.username = username
         self.password = password
         self.base_url = "https://admin.zdxcloud.net"
@@ -274,8 +277,10 @@ class ZdxPortalTalker:
         **kwargs,
     ):
         """Cross authentication into ZIA to work on user and roles."""
-        logger.warning("Regular ZDX methods will no longer work after ZIA auth.  Create a new ZdxPortalTalker object "
-                       "if further access is needed.")
+        logger.warning(
+            "Regular ZDX methods will no longer work after ZIA auth.  Create a new ZdxPortalTalker object "
+            "if further access is needed."
+        )
         result = request_(
             method="post",
             url=f"{self.api_base_url}/auth/token",

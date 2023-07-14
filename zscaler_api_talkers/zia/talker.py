@@ -3,8 +3,11 @@ import pdb  # noqa
 import time
 
 import requests
-from zscaler_api_talkers.zia.models import (super_categories, valid_category_ids, valid_countries)
+
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
+from zscaler_api_talkers.zia.models import (super_categories,
+                                            valid_category_ids,
+                                            valid_countries)
 
 from .helpers import _obfuscate_api_key
 
@@ -363,7 +366,7 @@ class ZiaTalker(object):
         custom_category: bool = False,
         ip_ranges: list = None,
         ip_ranges_retaining_parent_category: list = None,
-        description: str = None
+        description: str = None,
     ) -> json:
         """
          Adds a new custom URL category.
@@ -380,6 +383,7 @@ class ZiaTalker(object):
         :param ip_ranges: (list) Custom IP address ranges associated to a URL category
         :param ip_ranges_retaining_parent_category: (list) The retaining parent custom IP address ranges associated to a
         URL category.
+        :param description: (str) Description or notes
 
         :return:  json
         """
@@ -392,7 +396,7 @@ class ZiaTalker(object):
         if super_category not in super_categories:
             logger.error(f"Invalid Super Category: {super_categories}")
             raise ValueError("Invalid super category")
-        
+
         if keywords is None:
             keywords = []
 
@@ -411,7 +415,7 @@ class ZiaTalker(object):
             "ipRanges": ip_ranges,
             "ipRangesRetainingParentCategory": ip_ranges_retaining_parent_category,
             "type": type_list,
-            "description": description
+            "description": description,
         }
         response = self.hp_http.post_call(
             url,
@@ -606,6 +610,7 @@ class ZiaTalker(object):
         Method to look up the categorization of the given list of URLs, ["abc.com","zyz.com"]
 
         :param url_list: (list) List of urls
+
         :return: (list)
         """
         result = []
@@ -613,7 +618,7 @@ class ZiaTalker(object):
         # Verify urls format
         list(set(url_list))
         # Rate limit 1/sec  and 400 hr and 100 URLs per call
-        list_of_lists = [url_list[i : i + 100] for i in range(0, len(url_list), 100)]
+        list_of_lists = [url_list[i: i + 100] for i in range(0, len(url_list), 100)]
         for item in list_of_lists:
             response = self.hp_http.post_call(
                 url,
@@ -670,7 +675,7 @@ class ZiaTalker(object):
         validity_time_zone_id=None,
         cbi_profile_id: int = 0,
         block_override: bool = False,
-        **kwargs
+        **kwargs,
     ) -> json:
         """
          Adds a URL Filtering Policy rule. If you are using the Rank feature, refer to About Admin Rank to
@@ -756,8 +761,12 @@ class ZiaTalker(object):
 
         return response.json()
 
-    def update_url_filtering_rules(self, id: int, **kwargs) -> json:
-        url = f"/urlFilteringRules/{id}"
+    def update_url_filtering_rules(
+        self,
+        rule_id: int,
+        **kwargs,
+    ) -> json:
+        url = f"/urlFilteringRules/{rule_id}"
         payload = kwargs
         response = self.hp_http.put_call(
             url,
@@ -1527,7 +1536,7 @@ class ZiaTalker(object):
         :return: (json)
         """
         url = "/security/advanced/blacklistUrls"
-        parameters = {"action" "REMOVE_FROM_LIST"}
+        parameters = {"action": "REMOVE_FROM_LIST"}
         payload = {"blacklistUrls": urls}
         response = self.hp_http.post_call(
             url,
@@ -1921,6 +1930,23 @@ class ZiaTalker(object):
 
     # Firewall Policies
 
+    def list_network_services_lite(
+        self,
+    ) -> json:
+        """
+        Gets a summary list of all network service groups.
+
+        :return: (json)
+        """
+        response = self.hp_http.get_call(
+            "/networkServices/lite",
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+
+        return response.json()
+
     def list_network_services(
         self,
         service_id: int = None,
@@ -2056,7 +2082,6 @@ class ZiaTalker(object):
         labels=None,
         nw_services: list = None,
         rank: int = 0,
-        **kwargs,
     ) -> requests.Response:
         """
         :param name: (str) Name of the Firewall Filtering policy rule ["String"]
@@ -2114,7 +2139,7 @@ class ZiaTalker(object):
 
         return response
 
-    def delete_firewall_f_iltering_rules(
+    def delete_firewall_filtering_rules(
         self,
         rule_id: int,
     ) -> requests.Response:
@@ -2428,7 +2453,8 @@ class ZiaTalker(object):
     def add_rule_label(
         self,
         name: str,
-        description: str = ""
+        description: str = "",
+        payload: dict = None,
     ) -> json:
         """
         Adds new rule labels with the given name
@@ -2437,10 +2463,8 @@ class ZiaTalker(object):
         :param payload: (dict)
         """
         url = "/ruleLabels"
-        payload = {
-            "name": name,
-            "description": description
-        }
+        if not payload:
+            payload = {"name": name, "description": description}
         response = self.hp_http.post_call(
             url,
             cookies=self.cookies,
@@ -2451,13 +2475,13 @@ class ZiaTalker(object):
 
         return response.json()
 
-    def delete_rule_label(self, id: str):
-        url = f"/ruleLabels/{id}"
+    def delete_rule_label(self, rule_id: str):
+        url = f"/ruleLabels/{rule_id}"
         response = self.hp_http.delete_call(
             url,
             cookies=self.cookies,
             error_handling=True,
-            headers=self.headers
+            headers=self.headers,
         )
         return response
 
