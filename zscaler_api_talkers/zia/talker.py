@@ -11,7 +11,7 @@ from zscaler_api_talkers.zia.models import (
     valid_countries,
 )
 
-from .helpers import _obfuscate_api_key
+from zscaler_api_talkers.zia.helpers import _obfuscate_api_key
 
 logger = setup_logger(name=__name__)
 
@@ -290,7 +290,7 @@ class ZiaTalker(object):
 
         return self._obtain_all(url)
 
-    def add_adminUsers(self, loginName: str, userName: str, email: str, password: str, role: dict, comments: str = '',
+    def add_admin_users(self, loginName: str, userName: str, email: str, password: str, role: dict, comments: str = '',
                        adminScopeType: str ='ORGANIZATION',
                        adminScopeScopeEntities: list =[],
                        adminScopescopeGroupMemberEntities: list =[],
@@ -349,7 +349,7 @@ class ZiaTalker(object):
             "isExecMobileAppEnabled": isExecMobileAppEnabled,
             "execMobileAppTokens": execMobileAppTokens
         }
-        response: Response = self.hp_http.post_call(
+        response = self.hp_http.post_call(
             url,
             payload=payload,
             cookies=self.cookies,

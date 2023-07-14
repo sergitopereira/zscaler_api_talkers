@@ -371,7 +371,7 @@ class ZpaTalker(object):
         return: response
         """
         url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{segmentGroupId}'
-        response: Response = self.hp_http.delete_call(url=url, error_handling=True)
+        response = self.hp_http.delete_call(url=url, error_handling=True)
         return response
 
     def update_segment_group(self, segmentGroupId: int, payload: object) -> json:
@@ -382,7 +382,7 @@ class ZpaTalker(object):
         :return: Json
         """
         url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{segmentGroupId}'
-        response: Response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
+        response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
         return response
 
     # connector-controller
@@ -502,7 +502,7 @@ class ZpaTalker(object):
             "serverGroups": serverGroups,
             "lssAppConnectorGroup": lssAppConnectorGroup
         }
-        response: Response = self.hp_http.post_call(url, headers=self.header, error_handling=True, payload=payload)
+        response = self.hp_http.post_call(url, headers=self.header, error_handling=True, payload=payload)
         return response.json()
 
     def update_connector_group(self, appConnectorGroupId: int, payload: dict) -> json:
@@ -513,7 +513,7 @@ class ZpaTalker(object):
         return response
         """
         url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}'
-        response: Response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
+        response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
         return response
 
     def delete_connector_group(self, appConnectorGroupId: int) -> json:
@@ -523,7 +523,7 @@ class ZpaTalker(object):
             return response
         """
         url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}'
-        response: Response = self.hp_http.delete_call(url, error_handling=True)
+        response = self.hp_http.delete_call(url, error_handling=True)
         return response
     # ba-certificate-controller-v-2
 
