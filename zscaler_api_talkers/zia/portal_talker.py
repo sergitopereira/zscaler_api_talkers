@@ -502,7 +502,10 @@ class ZiaPortalTalker(object):
         return result
 
     def upload_saml_admin_settings_certificate(
-        self, filename: str, certificate: str, **kwargs
+        self,
+        filename: str,
+        certificate: str,
+        **kwargs,
     ) -> requests.Response:
         """
         Upload Certificate for SAML Admin
@@ -905,7 +908,10 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def update_eun(self, **kwargs) -> json:
+    def update_eun(
+        self,
+        **kwargs,
+    ) -> json:
         """
         Method to update the EUN settings for a ZIA Tenant
 
@@ -925,7 +931,11 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def generic_post(self, url, **kwargs) -> json:
+    def generic_post(
+        self,
+        url,
+        **kwargs,
+    ) -> json:
         """
         Generic POST method
 
@@ -945,7 +955,11 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def generic_put(self, url, **kwargs) -> json:
+    def generic_put(
+        self,
+        url,
+        **kwargs,
+    ) -> json:
         """
         Generic PUT method
 
@@ -965,7 +979,10 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def generic_get(self, url) -> json:
+    def generic_get(
+        self,
+        url,
+    ) -> json:
         """
         Generic GET method
 
@@ -983,7 +1000,10 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def generic_delete(self, url) -> json:
+    def generic_delete(
+        self,
+        url,
+    ) -> json:
         """
         Generic DELETE method
 
@@ -1611,4 +1631,3 @@ class ZiaPortalTalker(object):
         )
 
         return result
-

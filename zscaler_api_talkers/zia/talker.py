@@ -383,6 +383,7 @@ class ZiaTalker(object):
         :param ip_ranges: (list) Custom IP address ranges associated to a URL category
         :param ip_ranges_retaining_parent_category: (list) The retaining parent custom IP address ranges associated to a
         URL category.
+        :param description: (str) Description or notes
 
         :return:  json
         """
@@ -609,6 +610,7 @@ class ZiaTalker(object):
         Method to look up the categorization of the given list of URLs, ["abc.com","zyz.com"]
 
         :param url_list: (list) List of urls
+
         :return: (list)
         """
         result = []
@@ -759,8 +761,12 @@ class ZiaTalker(object):
 
         return response.json()
 
-    def update_url_filtering_rules(self, id: int, **kwargs) -> json:
-        url = f"/urlFilteringRules/{id}"
+    def update_url_filtering_rules(
+        self,
+        rule_id: int,
+        **kwargs,
+    ) -> json:
+        url = f"/urlFilteringRules/{rule_id}"
         payload = kwargs
         response = self.hp_http.put_call(
             url,
@@ -1530,7 +1536,7 @@ class ZiaTalker(object):
         :return: (json)
         """
         url = "/security/advanced/blacklistUrls"
-        parameters = {"action" "REMOVE_FROM_LIST"}
+        parameters = {"action": "REMOVE_FROM_LIST"}
         payload = {"blacklistUrls": urls}
         response = self.hp_http.post_call(
             url,
@@ -2445,7 +2451,12 @@ class ZiaTalker(object):
 
         return response.json()
 
-    def add_rule_label(self, name: str, description: str = "") -> json:
+    def add_rule_label(
+        self,
+        name: str,
+        description: str = "",
+        payload: dict = None,
+    ) -> json:
         """
         Adds new rule labels with the given name
         :param name: (str) name  # FIXME: Not in passed attributes.
@@ -2464,10 +2475,13 @@ class ZiaTalker(object):
 
         return response.json()
 
-    def delete_rule_label(self, id: str):
-        url = f"/ruleLabels/{id}"
+    def delete_rule_label(self, rule_id: str):
+        url = f"/ruleLabels/{rule_id}"
         response = self.hp_http.delete_call(
-            url, cookies=self.cookies, error_handling=True, headers=self.headers
+            url,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
         )
         return response
 

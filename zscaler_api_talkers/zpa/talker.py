@@ -807,7 +807,7 @@ class ZpaTalker(object):
         query: str = False,
     ) -> list:
         """
-        Method to Get all the privleged_remote_consoles for a ZPA tenant
+        Method to Get all the privileged_remote_consoles for a ZPA tenant
 
         :param query: (str) HTTP query
 
