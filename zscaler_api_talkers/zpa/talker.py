@@ -363,7 +363,7 @@ class ZpaTalker(object):
 
         return response.json()
 
-    def delete_segment_group(self, segmentGroupId: object) -> object:
+    def delete_segment_group(self, segmentGroupId: int) -> json:
         """
         Deletes specified Segment Group.
         :param segmentGroupId: The unique identifier of the Segment Group.
@@ -373,7 +373,7 @@ class ZpaTalker(object):
         response: Response = self.hp_http.delete_call(url=url, error_handling=True)
         return response
 
-    def update_segment_group(self, segmentGroupId: object, payload: object) -> object:
+    def update_segment_group(self, segmentGroupId: int, payload: object) -> json:
         """
         Update Segment Group
         :param segmentGroupId: type int. The unique identifier of the Segment Group.
@@ -456,12 +456,12 @@ class ZpaTalker(object):
 
         return response
 
-    def add_connector_group(self, name: object, description: object, latitude: object, longitude: object, location: object, upgradeDay: object = 'SUNDAY',
-                            enabled: object = True,
-                            dnsQueryType: object = 'IPV4_IPV6', upgradeTimeInSecs: object = 66600,
-                            overrideVersionProfile: object = False, versionProfileId: object = None, tcpQuickAckApp: object = False,
-                            tcpQuickAckAssistant: object = False, tcpQuickAckReadAssistant: object = False, cityCountry: object = "",
-                            countryCode: object = "", connectors: object = [], serverGroups: object = [], lssAppConnectorGroup: object = False) -> object:
+    def add_connector_group(self, name: str, description: str, latitude: str, longitude: str, location: str, upgradeDay: str = 'SUNDAY',
+                            enabled: bool = True,
+                            dnsQueryType: str = 'IPV4_IPV6', upgradeTimeInSecs: int = 66600,
+                            overrideVersionProfile: bool = False, versionProfileId: int = None, tcpQuickAckApp: bool = False,
+                            tcpQuickAckAssistant: bool = False, tcpQuickAckReadAssistant: bool = False, cityCountry: str = "",
+                            countryCode: str = "", connectors: list = [], serverGroups: list = [], lssAppConnectorGroup: bool = False) -> json:
         """
         :param name: type string. Name of App Connector Group
         :param description: type string. Description
@@ -504,7 +504,7 @@ class ZpaTalker(object):
         response: Response = self.hp_http.post_call(url, headers=self.header, error_handling=True, payload=payload)
         return response.json()
 
-    def update_connector_group(self, appConnectorGroupId: object, payload: object) -> object:
+    def update_connector_group(self, appConnectorGroupId: int, payload: dict) -> json:
         """
         Update configured App Connector Groups for a ZPA tenant.
         :param appConnectorGroupId: type int. The unique identifier of the Connector Group
@@ -515,7 +515,7 @@ class ZpaTalker(object):
         response: Response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
         return response
 
-    def delete_connector_group(self, appConnectorGroupId: object) -> object:
+    def delete_connector_group(self, appConnectorGroupId: int) -> json:
         """
             Delete specified App Connector Group
             :param appConnectorGroupId: type int. The unique identifier of the Connector Group

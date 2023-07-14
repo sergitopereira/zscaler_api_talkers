@@ -6,8 +6,6 @@ import requests
 from zscaler_api_talkers.zia.models import (super_categories, valid_category_ids, valid_countries)
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
 
-from .helpers import _obfuscate_api_key
-
 logger = setup_logger(name=__name__)
 
 
@@ -285,18 +283,20 @@ class ZiaTalker(object):
 
         return self._obtain_all(url)
 
-    def add_adminUsers(self, loginName: object, userName: object, email: object, password: object, role: object, comments: object = '',
-                       adminScope: object = {},
-                       isNonEditable: object = False,
-                       disabled: object = False,
-                       isAuditor: object = False,
+    def add_adminUsers(self, loginName: str, userName: str, email: str, password: str, role: dict, comments: str = '',
+                       adminScopeType: str ='ORGANIZATION',
+                       adminScopeScopeEntities: list =[],
+                       adminScopescopeGroupMemberEntities: list =[],
+                       isNonEditable: bool = False,
+                       disabled: bool = False,
+                       isAuditor: bool = False,
                        isPasswordLoginAllowed: object = False,
                        isSecurityReportCommEnabled: object = False,
                        isServiceUpdateCommEnabled: object = False,
                        isProductUpdateCommEnabled: object = False,
                        isPasswordExpired: object = False,
                        isExecMobileAppEnabled: object = False,
-                       execMobileAppTokens: object = []) -> object:
+                       execMobileAppTokens: object = []) -> json:
         """
         Adds a new Admininstrator.
                :param loginName: string. Admin or auditor's login name. loginName is in email format
@@ -305,7 +305,9 @@ class ZiaTalker(object):
                :param email: string. Email Address.
                :param role : Role of the Admin
                :param comments: string. Comments.
-               :param adminScope: Scope of the admin.
+               :param adminScopeType: string. Scope of the admin.
+               :param adminScopeScopeEntities: list: Department or Location when adminScopeType is set to Deportment or Location.
+               :param adminScopescopeGroupMemberEntities: list. Location Groups when adminScopeType is set to Location Group.
                :param isNonEditable: boolean. Indicates whether or not the admin can be edited or deleted. default: False.
                :param disabled: boolean. If admin accounts is disabled. default: False.
                :param isAuditor:boolean. Indicates if user is auditor. default: False.
@@ -326,7 +328,9 @@ class ZiaTalker(object):
             "password": password,
             "role": role,
             "comments": comments,
-            "adminScope": adminScope,
+            "adminScopeType": adminScopeType,
+            "adminScopeScopeEntities": adminScopeScopeEntities,
+            "adminScopescopeGroupMemberEntities": adminScopescopeGroupMemberEntities,
             "isNonEditable": isNonEditable,
             "disabled": disabled,
             "isAuditor": isAuditor,
