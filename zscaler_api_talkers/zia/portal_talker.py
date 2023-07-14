@@ -667,7 +667,7 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def create_admin_role(
+    def add_admin_role(
         self,
         data: dict,
         **kwargs,
@@ -1070,7 +1070,7 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def create_admin_user(
+    def add_admin_user(
         self,
         data: dict,
         **kwargs,
@@ -1150,7 +1150,7 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def create_api_key(
+    def add_api_key(
         self,
         **kwargs,
     ) -> requests.Response:
@@ -1273,7 +1273,7 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def create_eusa_status(
+    def add_eusa_status(
         self,
         data: dict,
         **kwargs,
@@ -1468,7 +1468,7 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def create_idp_config_bearer_token(
+    def add_idp_config_bearer_token(
         self,
         **kwargs,
     ) -> requests.Response:
@@ -1515,7 +1515,7 @@ class ZiaPortalTalker(object):
         )
         return result
 
-    def create_idp_config(
+    def add_idp_config(
         self,
         data: dict,
         **kwargs,

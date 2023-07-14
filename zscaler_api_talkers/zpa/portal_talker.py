@@ -151,7 +151,7 @@ class ZpaPortalTalker(object):
 
         return result
 
-    def create_api_key(
+    def add_api_key(
         self,
         data: dict,
         **kwargs,
@@ -411,7 +411,7 @@ class ZpaPortalTalker(object):
 
         return result
 
-    def create_role(
+    def add_role(
         self,
         data: dict,
         **kwargs,
@@ -433,7 +433,7 @@ class ZpaPortalTalker(object):
 
         return result
 
-    def create_search_suffix(
+    def add_search_suffix(
         self,
         data: dict,
         **kwargs,
@@ -497,7 +497,7 @@ class ZpaPortalTalker(object):
 
         return result
 
-    def create_support_access(
+    def add_support_access(
         self,
         data: dict,
         **kwargs,
@@ -540,7 +540,7 @@ class ZpaPortalTalker(object):
 
         return result
 
-    def create_admin_user(
+    def add_admin_user(
         self,
         data: dict,
         **kwargs,
