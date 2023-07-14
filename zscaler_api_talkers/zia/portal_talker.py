@@ -522,12 +522,13 @@ class ZiaPortalTalker(object):
                 ),
             )
         ]
-
+        headers = self.headers
+        headers.pop("Content-Type")
         result = request_(
             method="post",
             url=f"{self.base_uri}/samlAdminSettings/uploadCert/text",
             files=file,
-            headers=self.headers,
+            headers=headers,
             cookies={
                 "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
@@ -1431,11 +1432,13 @@ class ZiaPortalTalker(object):
 
         :return: (requests.Response Object)
         """
+        headers = self.headers
+        headers.pop("Content-Type")
         result = request_(
             method="post",
             url=f"{self.base_uri}/idpConfig/uploadCert",
             files=file,
-            headers=self.headers,
+            headers=headers,
             cookies={
                 "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
