@@ -68,8 +68,10 @@ Feat: Add delete_rule_label method for ZiaTalker (by `Ryan Ulrick <mailto: rulri
 Feat: Add generic PUT, POST, GET, DELETE calls for ZiaPortalTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
 Fix: Remove json method from Generic DELETE call in ZiaPortalTalker (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
 Fix: Correct typehinting for delete_url_category method arguments (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
-Added: ZIATalker method add_adminUsers to add Administrator.(by`BrijeshShingadia<mailto:bshingadia@zscaler.com>`_)
-Added: update_segment_group,update_connector_group,delete_connector_group,add_connector_group methods to ZPATalker.(by`BrijeshShingadia<mailto:bshingadia@zscaler.com>`_)
+Feat: ZIATalker method add_adminUsers to add Administrator.(by`BrijeshShingadia<mailto:bshingadia@zscaler.com>`_)
+Feat: update_segment_group,update_connector_group,delete_connector_group,add_connector_group methods to ZPATalker.(by`BrijeshShingadia<mailto:bshingadia@zscaler.com>`_)
+Fix: ZpaTalker authenticate method prints the auth-token in the terminal which is a security concern (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
 v4.1.1 ( July 2023 )
 =========================
 Fix: init_py updated to include missing zscaler_api_talker from the import statements (by 'Gurnaib Brar <mailto: gbrar@zscaler.com>'_)
