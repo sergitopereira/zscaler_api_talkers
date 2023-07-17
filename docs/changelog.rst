@@ -71,6 +71,7 @@ Fix: Correct typehinting for delete_url_category method arguments (by `Ryan Ulri
 Feat: ZIATalker method add_adminUsers to add Administrator.(by`BrijeshShingadia<mailto:bshingadia@zscaler.com>`_)
 Feat: update_segment_group,update_connector_group,delete_connector_group,add_connector_group methods to ZPATalker.(by`BrijeshShingadia<mailto:bshingadia@zscaler.com>`_)
 Fix: ZpaTalker authenticate method prints the auth-token in the terminal which is a security concern (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Fix: ClientConnectorTalker ldownload_service_status method renamed to list_download_service_status  and fixed response type return by api (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v4.1.1 ( July 2023 )
 =========================

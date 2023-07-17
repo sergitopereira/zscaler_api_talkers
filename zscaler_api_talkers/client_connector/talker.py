@@ -247,7 +247,7 @@ class ClientConnectorTalker(object):
 
         return response.json()
 
-    def download_service_status(
+    def list_download_service_status(
         self,
         company_id: int,
     ):
