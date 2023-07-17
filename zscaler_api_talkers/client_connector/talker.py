@@ -1,6 +1,7 @@
 import json
+import pdb
 import time
-
+import requests
 from zscaler_api_talkers.helpers.http_calls import HttpCalls
 from zscaler_api_talkers.helpers.logger import setup_logger
 
@@ -15,10 +16,10 @@ class ClientConnectorTalker(object):
     """
 
     def __init__(
-        self,
-        cloud: str,
-        client_id: str = "",
-        secret_key: str = "",
+            self,
+            cloud: str,
+            client_id: str = "",
+            secret_key: str = "",
     ):
         """
         :param cloud: (str) Top Level Domain (TLD) of the Zscaler cloud where tenant resides.
@@ -40,9 +41,9 @@ class ClientConnectorTalker(object):
             )
 
     def authenticate(
-        self,
-        client_id: str,
-        secret_key: str,
+            self,
+            client_id: str,
+            secret_key: str,
     ):
         """
         Method to authenticate.
@@ -63,11 +64,11 @@ class ClientConnectorTalker(object):
         self.header = {"auth-token": response.json()["jwtToken"]}
 
     def _obtain_all(
-        self,
-        url: str,
-        cookies: dict = None,
-        params: dict = None,
-        headers: dict = None,
+            self,
+            url: str,
+            cookies: dict = None,
+            params: dict = None,
+            headers: dict = None,
     ) -> json:
         """
         Internal method that queries all pages
@@ -99,55 +100,41 @@ class ClientConnectorTalker(object):
         return result
 
     def list_devices(
-        self,
-        company_id: int,
-        username: str = None,
-        os_type: str = None,
+            self,
+            username: str = None,
+            os_type: str = None,
     ) -> json:
         """
-        Method to authenticate.
-
-        :param company_id: (int) ORG ID
+        Gets the list of all enrolled devices of your organization and their basic details.
         :param username: (str) Username in email format
-        :param os_type: (str)
-
+        :param os_type: (str)  1 - iOS, 2 - Android, 3 - Windows, 4 - macOS, 5 - Linux
         :return: (json) JSON of results
         """
-        url = "/public/v1/getDevices"
-        parameters = {
-            "companyId": company_id,
-        }
+        url = "/public/v1/getDevices?pageSize=500"
         if username:
-            parameters.update({"username": username})
-        elif os_type:
-            parameters.update({"osType": os_type})
-        else:
-            parameters.update({"pagesize": 100})
+            url +=f'&username={username}'
+        if os_type:
+            url +=f'&osType={os_type}'
+
         response = self._obtain_all(
             url=url,
-            params=parameters,
             headers=self.header,
         )
 
         return response
 
     def list_otp(
-        self,
-        company_id: int,
-        ud_id: int,
+            self,
+            ud_id: int,
     ) -> json:
         """
         Method to fetch the One Time Password for a specific device. These passwords are unique and tied to a device
         UDID.
-
-        :param company_id: (int) ORG ID
         :param ud_id: (int) User device ID
-
         :return: (json) JSON of results
         """
         url = f"/public/v1/getOtp"
         parameters = {
-            "companyId": company_id,
             "udid": ud_id,
         }
         response = self.hp_http.get_call(
@@ -159,9 +146,9 @@ class ClientConnectorTalker(object):
         return response.json()
 
     def list_passwords(
-        self,
-        company_id: int,
-        ud_id: int,
+            self,
+            company_id: int,
+            ud_id: int,
     ):
         """
         Method to fetch the One Time Password for a specific device. These passwords are unique and tied to a device UDID
@@ -185,10 +172,10 @@ class ClientConnectorTalker(object):
         return response.json()
 
     def remove_devices(
-        self,
-        company_id: int,
-        ud_ids: list,
-        os_type: int = 0,
+            self,
+            company_id: int,
+            ud_ids: list,
+            os_type: int = 0,
     ) -> json:
         """
         Method to  mark the device for removal (Device Removal Pending).
@@ -215,17 +202,15 @@ class ClientConnectorTalker(object):
         return response.json()
 
     def force_remove_devices(
-        self,
-        company_id: int,
-        ud_ids: list = None,
-        os_type: int = 0,
+            self,
+            ud_ids: list = None,
+            os_type: int = 0,
     ) -> json:
         """
         Force Remove, has the same effect as Remove, though it additionally moves the device straight to Removed and also
         signals the cloud to invalidate the user’s session.
         API currently can remove up to 30 devices per call
 
-        :param company_id: (int) ORG ID
         :param ud_ids: (list) List of user devices ids
         :param os_type: (int) 0 ALL OS types, 1 IOS, 2 Android, 3 Windows, 4 macOS, 5 Linux
 
@@ -235,7 +220,6 @@ class ClientConnectorTalker(object):
             ud_ids = []
         url = f"/public/v1/forceRemoveDevices"
         payload = {
-            "companyId": company_id,
             "udids": ud_ids,
             "osType": os_type,
         }
@@ -248,9 +232,9 @@ class ClientConnectorTalker(object):
         return response.json()
 
     def list_download_service_status(
-        self,
-        company_id: int,
-    ):
+            self,
+            company_id: int,
+    ) -> requests.Response.content:
         """
         Method to download Service Status
 
@@ -273,10 +257,10 @@ class ClientConnectorTalker(object):
 
 class ZccTalker(ClientConnectorTalker):
     def __init__(
-        self,
-        cloud: str,
-        client_id: str = "",
-        secret_key: str = "",
+            self,
+            cloud: str,
+            client_id: str = "",
+            secret_key: str = "",
     ):
         logger.warning(
             "Deprecating ZccTalker. Start using ClientConnectorTalker instead."
