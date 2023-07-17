@@ -83,7 +83,7 @@ class ZpaTalker(object):
         self,
         client_id: str,
         client_secret: str,
-    ) -> json:
+    ) -> None:
         """
         Method to obtain the Bearer Token. Refer to https://help.zscaler.com/zpa/adding-api-keys
         :param client_id: (str) client id
@@ -108,7 +108,7 @@ class ZpaTalker(object):
             "Authorization": f"{response.json()['token_type']} {response.json()['access_token']}"
         }
 
-        return response.json()
+        return
 
     # app-server-controller
 
