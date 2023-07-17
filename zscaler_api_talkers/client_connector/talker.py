@@ -250,7 +250,7 @@ class ClientConnectorTalker(object):
     def download_service_status(
         self,
         company_id: int,
-    ) -> json:
+    ):
         """
         Method to download Service Status
 
@@ -268,7 +268,7 @@ class ClientConnectorTalker(object):
             headers=self.header,
         )
 
-        return response.json()
+        return response.content
 
 
 class ZccTalker(ClientConnectorTalker):
