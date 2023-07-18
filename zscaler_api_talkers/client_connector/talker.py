@@ -172,10 +172,11 @@ class ClientConnectorTalker(object):
         return response.json()
 
     def remove_devices(
-            self,
-            company_id: int,
-            ud_ids: list,
-            os_type: int = 0,
+        self,
+        userName: str = None,
+        clientConnectorVersion: str = None,
+        ud_ids: list = None,
+        os_type: int = 0,
     ) -> json:
         """
         Method to  mark the device for removal (Device Removal Pending).
@@ -189,7 +190,8 @@ class ClientConnectorTalker(object):
         """
         url = f"/public/v1/removeDevices"
         payload = {
-            "companyId": company_id,
+            "userName": userName,
+            "clientConnectorVersion": clientConnectorVersion,
             "udids": ud_ids,
             "osType": os_type,
         }
@@ -202,17 +204,21 @@ class ClientConnectorTalker(object):
         return response.json()
 
     def force_remove_devices(
-            self,
-            ud_ids: list = None,
-            os_type: int = 0,
+        self,
+        userName: str = None,
+        clientConnectorVersion: str = None,
+        ud_ids: list = None,
+        os_type: int = 0,
     ) -> json:
         """
         Force Remove, has the same effect as Remove, though it additionally moves the device straight to Removed and also
         signals the cloud to invalidate the user’s session.
         API currently can remove up to 30 devices per call
 
+        :param clientConnectorVersion: (str) ZCC version
         :param ud_ids: (list) List of user devices ids
         :param os_type: (int) 0 ALL OS types, 1 IOS, 2 Android, 3 Windows, 4 macOS, 5 Linux
+        :param userName:(str) Username
 
         :return: (json) JSON of results
         """
@@ -220,8 +226,10 @@ class ClientConnectorTalker(object):
             ud_ids = []
         url = f"/public/v1/forceRemoveDevices"
         payload = {
+            "clientConnectorVersion": clientConnectorVersion,
             "udids": ud_ids,
             "osType": os_type,
+            "userName": userName
         }
         response = self.hp_http.post_call(
             url=url,
