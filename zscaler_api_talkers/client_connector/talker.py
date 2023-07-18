@@ -112,9 +112,9 @@ class ClientConnectorTalker(object):
         """
         url = "/public/v1/getDevices?pageSize=500"
         if username:
-            url +=f'&username={username}'
+            url += f'&username={username}'
         if os_type:
-            url +=f'&osType={os_type}'
+            url += f'&osType={os_type}'
 
         response = self._obtain_all(
             url=url,
@@ -147,20 +147,16 @@ class ClientConnectorTalker(object):
 
     def list_passwords(
             self,
-            company_id: int,
             ud_id: int,
     ):
         """
         Method to fetch the One Time Password for a specific device. These passwords are unique and tied to a device UDID
 
-        :param company_id: (int) ORG ID
         :param ud_id: (int) User device ID
-
         :return: (json) JSON of results
         """
         url = f"/public/v1/getOtp"
         parameters = {
-            "companyId": company_id,
             "udid": ud_id,
         }
         response = self.hp_http.get_call(
@@ -172,26 +168,25 @@ class ClientConnectorTalker(object):
         return response.json()
 
     def remove_devices(
-        self,
-        userName: str = None,
-        clientConnectorVersion: str = None,
-        ud_ids: list = None,
-        os_type: int = 0,
+            self,
+            username: str = None,
+            client_connector_version: str = None,
+            ud_ids: list = None,
+            os_type: int = 0,
     ) -> json:
         """
         Method to  mark the device for removal (Device Removal Pending).
         API currently can remove up to 30 devices per call
-
-        :param company_id: type int. ORG ID
+        :param username: type str. Userna,e
         :param ud_ids: type list. List of user devices ids
         :param os_type: 0 ALL OS types, 1 IOS, 2 Android, 3 Windows, 4 macOS, 5 Linux
-
+        :param client_connector_version: Client connector version
         :return: (json) JSON of results
         """
         url = f"/public/v1/removeDevices"
         payload = {
-            "userName": userName,
-            "clientConnectorVersion": clientConnectorVersion,
+            "userName": username,
+            "clientConnectorVersion": client_connector_version,
             "udids": ud_ids,
             "osType": os_type,
         }
@@ -204,21 +199,21 @@ class ClientConnectorTalker(object):
         return response.json()
 
     def force_remove_devices(
-        self,
-        userName: str = None,
-        clientConnectorVersion: str = None,
-        ud_ids: list = None,
-        os_type: int = 0,
+            self,
+            username: str = None,
+            client_connector_version: str = None,
+            ud_ids: list = None,
+            os_type: int = 0,
     ) -> json:
         """
         Force Remove, has the same effect as Remove, though it additionally moves the device straight to Removed and also
         signals the cloud to invalidate the user’s session.
         API currently can remove up to 30 devices per call
 
-        :param clientConnectorVersion: (str) ZCC version
+        :param client_connector_version: (str) ZCC version
         :param ud_ids: (list) List of user devices ids
         :param os_type: (int) 0 ALL OS types, 1 IOS, 2 Android, 3 Windows, 4 macOS, 5 Linux
-        :param userName:(str) Username
+        :param username:(str) Username
 
         :return: (json) JSON of results
         """
@@ -226,10 +221,10 @@ class ClientConnectorTalker(object):
             ud_ids = []
         url = f"/public/v1/forceRemoveDevices"
         payload = {
-            "clientConnectorVersion": clientConnectorVersion,
+            "clientConnectorVersion": client_connector_version,
             "udids": ud_ids,
             "osType": os_type,
-            "userName": userName
+            "userName": username
         }
         response = self.hp_http.post_call(
             url=url,
@@ -241,22 +236,15 @@ class ClientConnectorTalker(object):
 
     def list_download_service_status(
             self,
-            company_id: int,
     ) -> requests.Response.content:
         """
         Method to download Service Status
-
-        :param company_id: (int) ORG ID
-
         :return: (str) String of results
         """
         url = "/public/v1/downloadServiceStatus"
-        parameters = {
-            "companyId": company_id,
-        }
+
         response = self.hp_http.get_call(
             url=url,
-            params=parameters,
             headers=self.header,
         )
 

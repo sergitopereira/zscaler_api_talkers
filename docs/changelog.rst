@@ -73,6 +73,7 @@ Feat: update_segment_group,update_connector_group,delete_connector_group,add_con
 Fix: ZpaTalker authenticate method prints the auth-token in the terminal which is a security concern (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Fix: ClientConnectorTalker download_service_status method renamed to list_download_service_status  and fixed response type return by api (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Fix: ClientConnectorTalker force_remove_devices and remove_devices method to remove company_id parameter and add userName and clientConnectorVersion parameters. (by`BrijeshShingadia<mailto:bshingadia@zscaler.com>`_)
+Fix: Removed company id requirement from zscaler client connector methods (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 v4.1.1 ( July 2023 )
 =========================
 Fix: init_py updated to include missing zscaler_api_talker from the import statements (by 'Gurnaib Brar <mailto: gbrar@zscaler.com>'_)
