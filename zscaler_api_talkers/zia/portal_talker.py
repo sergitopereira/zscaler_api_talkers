@@ -1019,7 +1019,7 @@ class ZiaPortalTalker(object):
             },
         )
 
-        return response.json()
+        return response
 
     def delete_web_application_rule(
         self,
