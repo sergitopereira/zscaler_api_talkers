@@ -1,6 +1,7 @@
 v5.0.1 (in progress)
 =========================
 Fix: Migrate Portal Talker generic_delete to return bare response (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
+Feat: Add fileTypes model to models.py for ZIA (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
 
 v5.0.0 (July 2023)
 =========================
