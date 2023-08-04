@@ -1,4 +1,9 @@
-v5.<date>.0 (in progress)
+v5.0.1 (in progress)
+=========================
+Fet: Added method to list CASB tenants Portal Talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Fix: Migrate Portal Talker generic_delete to return bare response (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
+
+v5.0.0 (July 2023)
 =========================
 Feat: Add list_api_key() (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
 Feat: Add add_api_key() (by `Dax Mickelson <mailto: dmickelson@zscaler.com>`_)
