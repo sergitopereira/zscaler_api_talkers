@@ -201,19 +201,22 @@ class ZiaPortalTalker(object):
         description: str,
         domain: str,
         pac_content: str,
+        pac_commit_message: str,
         editable: bool = True,
         pac_url_obfuscated: bool = True,
+        pac_version_status: str = "STAGE",
+        pac_verification_status: str = "VERIFY_NOERR"
     ) -> json:
         """
         Method to Add a PAC file
-
         :param name: (str) Name of the PAC
         :param description: (str) Description
         :param domain: (str) Domain
         :param pac_content: (str) PAC content
+        :param pac_commit_message: (str) PAC commit message
         :param editable: (bool) Default True
         :param pac_url_obfuscated: (bool) Default True
-
+        :param pac_version_status: (str) Default VERIFY_NOERR
         :return: (json)
         """
         payload = {
@@ -223,7 +226,10 @@ class ZiaPortalTalker(object):
             "pacUrlObfuscated": pac_url_obfuscated,
             "domain": domain,
             "description": description,
-            "pacVerificationStatus": "VERIFY_NOERR",
+            "pacCommitMessage": pac_commit_message,
+            "pacVerificationStatus": pac_verification_status,
+            "pacVersionStatus":pac_version_status,
+
         }
         url = f"/pacFiles"
         response = self.hp_http.post_call(
@@ -1415,6 +1421,27 @@ class ZiaPortalTalker(object):
 
         return result
 
+    def list_firewall_network_settings(
+        self,
+        **kwargs,
+    ) -> json:
+        """
+        List the configured Firewall IPS Rules
+
+        :return: (requests.Response object)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/firewallNetworkSettings",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+            **kwargs,
+        )
+
+        return result.json()
     def delete_firewall_ips_rule(
         self,
         rule_id: int,
@@ -1631,3 +1658,20 @@ class ZiaPortalTalker(object):
         )
 
         return result
+    def list_casb_tenat(self) -> json:
+        """
+        Method to SaaS Application Tenants
+
+        :return: (json)
+        """
+        url = f"/casbTenant?page1&pagesize=100"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
