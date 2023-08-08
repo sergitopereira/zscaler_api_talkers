@@ -5,14 +5,8 @@
 ### ZIA API Talker
 Python classes to leverage [Zscaler Internet Access API](https://help.zscaler.com/zia/api)
 
-The ZIA API talker is divided into two Class objects: **ZiaTalker** and **ZiaPortalTalker**.  ZiaTalker interacts with 
-ZIA via the published APIs; whereas ZiaPortalTalker interacts with ZIA via the URLs presented in the Portal (aka, the ZIA configuration website).
-
 ### ZPA API Talker
 Python classes to leverage [Zscaler Private Access API](https://help.zscaler.com/zpa/api-reference)
-
-The ZPA API talker is divided into two Class objects: **ZpaTalker** and **ZpaPortalTalker**.  ZpaTalker interacts with 
-ZPA via the published APIs; whereas ZpaPortalTalker interacts with ZPA via the URLs presented in the Portal (aka, the ZPA configuration website).
 
 ### Client Connector API Talker
 A Python class to leverage Zscaler Client Connector API. (Currently in Beta status.)
