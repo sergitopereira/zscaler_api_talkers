@@ -1,4 +1,7 @@
-v5.0.1 (in progress)
+v5. (TO BE RELEASED)
+=========================
+
+v5.0.1 (August 2023)
 =========================
 Fet: Added method to list CASB tenants Portal Talker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Fix: Migrate Portal Talker generic_delete to return bare response (by `Ryan Ulrick <mailto: rulrick@zscaler.com>`_)
