@@ -76,18 +76,6 @@ def client_connector_talker_example():
     print(f"{zcc.list_devices(company_id)}")
 
 
-def zdx_portal_talker_example():
-    print("Example of using ZdxPortalTalker")
-    zdx = ZdxPortalTalker(
-        username=os.environ.get("zdx_username"),
-        password=os.environ.get("zdx_password"),
-        zia_cloud=os.environ.get("zdx_zia_cloud"),
-    )
-    print(f"ZDX Alerts: {zdx.list_alerts()}")
-    zdx.zia_authenticate()  # Cross authenticate to ZIA for user/admin/role functions.
-    print(f"Admin Roles: {zdx.zia_list_admin_roles()}")
-
-
 def zpa_talker_example():
     print("Example of using ZpaTalker")
     zpa = ZpaTalker(
@@ -98,17 +86,6 @@ def zpa_talker_example():
     print(f"{zpa.list_application_segments()=}")
 
 
-def zpa_portal_talker_example():
-    print("Example of using ZpaPortalTalker")
-    zpa_portal = ZpaPortalTalker(
-        customer_id=int(os.environ.get("zpa_customer_id")),
-        username=os.environ.get("zpa_username"),
-        password=os.environ.get("zpa_password"),
-    )
-    result = zpa_portal.list_admin_roles()
-    print(f"ZPA Admin Roles{result.json()}")
-
-
 if __name__ == "__main__":
     print(
         "Uncomment one or more of the following to test/see example of that API Talker."
@@ -116,6 +93,4 @@ if __name__ == "__main__":
     zia_talker_example()
     zia_portal_talker_example()
     # client_connector_talker_example()
-    zdx_portal_talker_example()
     zpa_talker_example()
-    zpa_portal_talker_example()
