@@ -54,16 +54,6 @@ def zia_talker_example():
     print(f"{zia.get_status()=}")
 
 
-def zia_portal_talker_example():
-    print("Example of using ZiaPortalTalker")
-    zia_portal = ZiaPortalTalker(
-        cloud_name=os.environ.get("zia_cloud"),
-        username=os.environ.get("zia_username"),
-        password=os.environ.get("zia_password"),
-    )
-    print(f"{zia_portal.list_api_keys()=}")
-
-
 def client_connector_talker_example():
     print("Example of using ClientConnectorTalker")
     zcc = ClientConnectorTalker(
@@ -74,7 +64,6 @@ def client_connector_talker_example():
 
     company_id = int(os.environ.get("zcc_company_id"))
     print(f"{zcc.list_devices(company_id)}")
-
 
 def zpa_talker_example():
     print("Example of using ZpaTalker")
@@ -91,6 +80,5 @@ if __name__ == "__main__":
         "Uncomment one or more of the following to test/see example of that API Talker."
     )
     zia_talker_example()
-    zia_portal_talker_example()
     # client_connector_talker_example()
     zpa_talker_example()
