@@ -14,11 +14,11 @@ class ZpaTalker(object):
     """
 
     def __init__(
-        self,
-        customer_id: int,
-        cloud: str = "https://config.private.zscaler.com",
-        client_id: str = None,
-        client_secret: str = "",
+            self,
+            customer_id: int,
+            cloud: str = "https://config.private.zscaler.com",
+            client_id: str = None,
+            client_secret: str = "",
     ):
         """
         :param cloud: (str) Example https://config.zpabeta.net
@@ -42,8 +42,8 @@ class ZpaTalker(object):
             )
 
     def _obtain_all_results(
-        self,
-        url: str,
+            self,
+            url: str,
     ) -> list:
         """
         API response can have multiple pages. This method return the whole response in a list
@@ -66,12 +66,12 @@ class ZpaTalker(object):
             i = 0
             while i <= int(response.json()["totalPages"]):
                 result = (
-                    result
-                    + self.hp_http.get_call(
-                        f"{url}&page={i}",
-                        headers=self.header,
-                        error_handling=True,
-                    ).json()["list"]
+                        result
+                        + self.hp_http.get_call(
+                    f"{url}&page={i}",
+                    headers=self.header,
+                    error_handling=True,
+                ).json()["list"]
                 )
                 i += 1
         else:
@@ -80,9 +80,9 @@ class ZpaTalker(object):
         return result
 
     def authenticate(
-        self,
-        client_id: str,
-        client_secret: str,
+            self,
+            client_id: str,
+            client_secret: str,
     ) -> None:
         """
         Method to obtain the Bearer Token. Refer to https://help.zscaler.com/zpa/adding-api-keys
@@ -113,9 +113,9 @@ class ZpaTalker(object):
     # app-server-controller
 
     def list_servers(
-        self,
-        query: str = False,
-        server_id: int = None,
+            self,
+            query: str = False,
+            server_id: int = None,
     ) -> json:
         """
         Method to obtain all the configured Servers.
@@ -143,8 +143,8 @@ class ZpaTalker(object):
 
     # application-controller
     def list_application_segments(
-        self,
-        application_id: int = None,
+            self,
+            application_id: int = None,
     ) -> json or list:
         """
         Method to obtain application segments
@@ -168,31 +168,31 @@ class ZpaTalker(object):
         return response
 
     def add_application_segment(
-        self,
-        name: str,
-        health_reporting: str,
-        domain_names: list,
-        segment_group_id: str,
-        server_groups: list,
-        common_apps_dto: list = None,
-        segment_group_name: str = "",
-        health_check_type: str = "DEFAULT",
-        clientless_apps: list = None,
-        inspection_apps: list = None,
-        sra_apps: list = None,
-        tcp_port_range: dict = None,
-        tcp_port_ranges: list = None,
-        udp_port_ranges: list = None,
-        udp_port_range: dict = None,
-        description: str = "",
-        enabled: bool = True,
-        icmp_access_type: str = "NONE",
-        ip_anchored: bool = False,
-        double_encrypt: bool = False,
-        bypass_type: str = "NEVER",
-        is_cname_enabled: bool = True,
-        select_connector_close_to_app: bool = False,
-        passive_health_enabled: bool = True,
+            self,
+            name: str,
+            health_reporting: str,
+            domain_names: list,
+            segment_group_id: str,
+            server_groups: list,
+            common_apps_dto: list = None,
+            segment_group_name: str = "",
+            health_check_type: str = "DEFAULT",
+            clientless_apps: list = None,
+            inspection_apps: list = None,
+            sra_apps: list = None,
+            tcp_port_range: dict = None,
+            tcp_port_ranges: list = None,
+            udp_port_ranges: list = None,
+            udp_port_range: dict = None,
+            description: str = "",
+            enabled: bool = True,
+            icmp_access_type: str = "NONE",
+            ip_anchored: bool = False,
+            double_encrypt: bool = False,
+            bypass_type: str = "NEVER",
+            is_cname_enabled: bool = True,
+            select_connector_close_to_app: bool = False,
+            passive_health_enabled: bool = True,
     ) -> json:
         """
         Adds a new Application Segment for a ZPA tenant.
@@ -264,9 +264,9 @@ class ZpaTalker(object):
         return response.json()
 
     def update_application_segment(
-        self,
-        application_id: int,
-        payload: dict,
+            self,
+            application_id: int,
+            payload: dict,
     ) -> requests.Response:
         """
         Updates the Application Segment details for the specified ID
@@ -287,8 +287,8 @@ class ZpaTalker(object):
         return response
 
     def delete_application_segment(
-        self,
-        application_id: int,
+            self,
+            application_id: int,
     ) -> requests.Response:
         """
         Updates the Application Segment details for the specified ID
@@ -308,9 +308,9 @@ class ZpaTalker(object):
     # segment-group-controller
 
     def list_segment_group(
-        self,
-        segment_group_id: int = None,
-        query: str = False,
+            self,
+            segment_group_id: int = None,
+            query: str = False,
     ) -> json or list:
         """
         Get all the configured Segment Groups. If segmentGroupId obtains the segment sroup details
@@ -336,10 +336,10 @@ class ZpaTalker(object):
         return response
 
     def add_segment_group(
-        self,
-        name: str,
-        description: str,
-        enabled: bool = True,
+            self,
+            name: str,
+            description: str,
+            enabled: bool = True,
     ) -> json:
         """
         Add a new segment group
@@ -387,8 +387,8 @@ class ZpaTalker(object):
 
     # connector-controller
     def list_connector(
-        self,
-        connector_id: int = None,
+            self,
+            connector_id: int = None,
     ) -> json or list:
         """
         Get all the configured Segment Groups. If segmentGroupId obtains the segment group details
@@ -411,8 +411,8 @@ class ZpaTalker(object):
         return response
 
     def delete_bulk_connector(
-        self,
-        ids: list,
+            self,
+            ids: list,
     ) -> json:
         """
         Get all the configured Segment Groups. If segmentGroupId obtains the segment sroup details
@@ -434,8 +434,8 @@ class ZpaTalker(object):
 
     # Connector-group-controller
     def list_connector_group(
-        self,
-        app_connector_group_id: int = None,
+            self,
+            app_connector_group_id: int = None,
     ) -> json or list:
         """
         Gets all configured App Connector Groups for a ZPA tenant.
@@ -457,12 +457,16 @@ class ZpaTalker(object):
 
         return response
 
-    def add_connector_group(self, name: str, description: str, latitude: str, longitude: str, location: str, upgradeDay: str = 'SUNDAY',
+    def add_connector_group(self, name: str, description: str, latitude: str, longitude: str, location: str,
+                            upgradeDay: str = 'SUNDAY',
                             enabled: bool = True,
                             dnsQueryType: str = 'IPV4_IPV6', upgradeTimeInSecs: int = 66600,
-                            overrideVersionProfile: bool = False, versionProfileId: int = None, tcpQuickAckApp: bool = False,
-                            tcpQuickAckAssistant: bool = False, tcpQuickAckReadAssistant: bool = False, cityCountry: str = "",
-                            countryCode: str = "", connectors: list = [], serverGroups: list = [], lssAppConnectorGroup: bool = False) -> json:
+                            overrideVersionProfile: bool = False, versionProfileId: int = None,
+                            tcpQuickAckApp: bool = False,
+                            tcpQuickAckAssistant: bool = False, tcpQuickAckReadAssistant: bool = False,
+                            cityCountry: str = "",
+                            countryCode: str = "", connectors: list = [], serverGroups: list = [],
+                            lssAppConnectorGroup: bool = False) -> json:
         """
         :param name: type string. Name of App Connector Group
         :param description: type string. Description
@@ -525,10 +529,11 @@ class ZpaTalker(object):
         url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}'
         response = self.hp_http.delete_call(url, error_handling=True)
         return response
+
     # ba-certificate-controller-v-2
 
     def list_browser_access_certificates(
-        self,
+            self,
     ) -> list:  # FIXME: duplicate but URL is slightly different.
         """
         Get all Browser issued certificates
@@ -554,7 +559,7 @@ class ZpaTalker(object):
         return response
 
     def list_v1_browser_access_certificates(
-        self,
+            self,
     ) -> list:
         """
         Get all the issued certificates
@@ -571,8 +576,8 @@ class ZpaTalker(object):
     # customer-version-profile-controller
 
     def list_customer_version_profile(
-        self,
-        query: str = False,
+            self,
+            query: str = False,
     ) -> json:
         """
         Get Version Profiles visible to a customer
@@ -594,9 +599,9 @@ class ZpaTalker(object):
 
     # cloud - connector - group - controller
     def list_cloud_connector_group(
-        self,
-        group_id: int = None,
-        query: str = False,
+            self,
+            group_id: int = None,
+            query: str = False,
     ) -> json:
         """
         Get all configured Cloud Connector Groups. If id, Get the Cloud Connector Group details
@@ -623,8 +628,8 @@ class ZpaTalker(object):
 
     # idp-controller-v-2
     def list_idp(
-        self,
-        query: str = False,
+            self,
+            query: str = False,
     ) -> list:
         """
         Method to Get all the idP details for a ZPA tenant
@@ -642,8 +647,8 @@ class ZpaTalker(object):
 
     # provisioningKey-controller
     def list_provisioning_key(
-        self,
-        association_type: str = "CONNECTOR_GRP",
+            self,
+            association_type: str = "CONNECTOR_GRP",
     ) -> list:
         """
         Gets details of all the configured provisioning keys.
@@ -662,9 +667,9 @@ class ZpaTalker(object):
     # scim-attribute-header-controller
 
     def list_scim_attributes(
-        self,
-        idp_id: int,
-        query: str = False,
+            self,
+            idp_id: int,
+            query: str = False,
     ) -> json:
         """
         :param idp_id: (int) The unique identifies of the Idp
@@ -685,9 +690,9 @@ class ZpaTalker(object):
 
     # scim-group-controller
     def list_scim_groups(
-        self,
-        idp_id: int,
-        query: str = False,
+            self,
+            idp_id: int,
+            query: str = False,
     ) -> list:
         """
         Method to list all SCIM groups
@@ -719,8 +724,8 @@ class ZpaTalker(object):
     # global-policy-controller
 
     def list_policies(
-        self,
-        policy_type: str = "ACCESS_POLICY",
+            self,
+            policy_type: str = "ACCESS_POLICY",
     ) -> list:
         """list policie(s)  by policy type,
 
@@ -735,8 +740,8 @@ class ZpaTalker(object):
         return response
 
     def list_policy_set(
-        self,
-        policy_type: str = "ACCESS_POLICY",
+            self,
+            policy_type: str = "ACCESS_POLICY",
     ) -> json:
         """Gets the policy set for the specified policy type
 
@@ -755,14 +760,14 @@ class ZpaTalker(object):
         return response.json()
 
     def add_policy_set(
-        self,
-        app_operands: list,
-        rule_name: str,
-        action: str,
-        policy_set_id: int,
-        operands: list,
-        operator: str,
-        msg_string: str = None,
+            self,
+            app_operands: list,
+            rule_name: str,
+            action: str,
+            policy_set_id: int,
+            operands: list,
+            operator: str,
+            msg_string: str = None,
     ) -> json:
         """
         Method to create a new access Policy
@@ -818,8 +823,8 @@ class ZpaTalker(object):
     # Server Group Controller
 
     def list_server_groups(
-        self,
-        group_id: int = None,
+            self,
+            group_id: int = None,
     ) -> json or list:
         """
         Method to get all configured Server Groups. If groupI, get the Server Group details
@@ -842,10 +847,10 @@ class ZpaTalker(object):
         return response
 
     def add_server_groups(
-        self,
-        name: str,
-        description: str,
-        connector_group_id: list,
+            self,
+            name: str,
+            description: str,
+            connector_group_id: list,
     ) -> json:
         """
         :param name: (str) Server Group Name
@@ -874,8 +879,8 @@ class ZpaTalker(object):
         return response.json()
 
     def list_posture_profiles(
-        self,
-        query: str = False,
+            self,
+            query: str = False,
     ) -> list:
         """
         Method to Get all the idP details for a ZPA tenant
@@ -892,8 +897,8 @@ class ZpaTalker(object):
         return response
 
     def list_privileged_consoles(
-        self,
-        query: str = False,
+            self,
+            query: str = False,
     ) -> list:
         """
         Method to Get all the privileged_remote_consoles for a ZPA tenant
@@ -926,8 +931,8 @@ class ZpaTalker(object):
 
     # Certificate Controller v2
     def list_issued_certificates(
-        self,
-        query: str = None,
+            self,
+            query: str = None,
     ) -> list:
         """
         Method to get all issued certificates
@@ -940,4 +945,19 @@ class ZpaTalker(object):
         url = f"/mgmtconfig/v2/admin/customers/{self.customer_id}/certificate/issued"
         response = self._obtain_all_results(url)
 
+        return response
+
+    def delete_policies(
+            self,
+            policy_set_id: int,
+            rule_id: int
+    ) -> requests.Response:
+        """
+        Method to delete policies
+        :param policy_set_id: (int) Policy set ID
+        :param rule_id: (int) rule id
+        :return: requests.Response
+        """
+        url: str = f'/mgmtconfig/v1/admin/customers/{self.customer_id}/policySet/{policy_set_id}/rule/{rule_id}'
+        response = self.hp_http.delete_call(url, error_handling=True)
         return response

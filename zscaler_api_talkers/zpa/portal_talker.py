@@ -1,5 +1,7 @@
-import requests
+import pdb
 
+import requests
+import json
 from zscaler_api_talkers.helpers import HttpCalls, request_, setup_logger
 
 logger = setup_logger(name=__name__)
@@ -320,7 +322,7 @@ class ZpaPortalTalker(object):
         """
         Delete an Assistant Group.
 
-        :param group_id: (int) ID of the assitant group
+        :param group_id: (int) ID of the assistant group
 
         :return: (requests.Response object)
         """
@@ -624,3 +626,33 @@ class ZpaPortalTalker(object):
         )
 
         return result
+
+    def list_sso_login_options(self) -> json:
+        """
+        List SSO login options
+
+        :return: (json)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/v2/ssoLoginOptions"
+        response = self.hp_http.get_call(url=url,headers=self.headers)
+        return response.json()
+
+    def list_session_timeout(self) -> json:
+        """
+        List session timeout
+
+        :return: (json)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/v2/ssoLoginOptions"
+        response = self.hp_http.get_call(url=url,headers=self.headers)
+        return response.json()
+
+    def list_config_overrides(self) -> json:
+        """
+        List session timeout
+
+        :return: (json)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/configOverrides"
+        response = self.hp_http.get_call(url=url,headers=self.headers)
+        return response.json()
