@@ -1,5 +1,10 @@
-v5. (TO BE RELEASED)
+v6.0.1 (To be release)
 =========================
+
+
+v6.0.0 (August 2023)
+=========================
+Fix: Removed unsupported ZIA, ZPA and ZDX Portal Talkers from this SDX (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v5.0.1 (August 2023)
 =========================
