@@ -23,6 +23,11 @@ zpa_client_id = "you_client_id"
 zpa_client_secret = "you_client_secret"
 zpa_username = "you@you.com"
 zpa_password = "you_password"
+
+bac_cloud = "zscalerthree.net"
+bac_api_key = "you_api_key"
+bac_username = "you@you.com"
+bac_password = "you_password"
 """
 
 import os
@@ -32,11 +37,12 @@ from dotenv import load_dotenv
 
 from zscaler_api_talkers import (
     ClientConnectorTalker,
-    ZdxPortalTalker,
-    ZiaPortalTalker,
+    #ZdxPortalTalker,
+    #ZiaPortalTalker,
     ZiaTalker,
-    ZpaPortalTalker,
+    #ZpaPortalTalker,
     ZpaTalker,
+    CloudConnectorTalker,
 )
 
 #  Load user variables from ".env" file or from OS.
@@ -74,11 +80,22 @@ def zpa_talker_example():
     )
     print(f"{zpa.list_application_segments()=}")
 
+def cloud_connector_talker_example():
+    print("Example of using CloudConnectorTalker")
+    bac = CloudConnectorTalker(
+        cloud_name=os.environ.get("bac_cloud"),
+        api_key=os.environ.get("bac_api_key"),
+        username=os.environ.get("bac_username"),
+        password=os.environ.get("bac_password"),
+    )
+    print(f"Connector Groups: {bac.list_cloud_branch_connector_groups()}")
+
 
 if __name__ == "__main__":
     print(
         "Uncomment one or more of the following to test/see example of that API Talker."
     )
-    zia_talker_example()
+    #zia_talker_example()
     # client_connector_talker_example()
-    zpa_talker_example()
+    #zpa_talker_example()
+    cloud_connector_talker_example()
