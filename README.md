@@ -16,8 +16,14 @@ The Client Connector API talker is accessed via the Class object named: **Client
 ### ZDX API Talker
 A Python class to leverage Zscaler Digital Experience API. (Currently in development.)
 
-This class is interacts with ZDX via the URLs presented in the Portal (aka, the ZDX configuration website).  It is 
+This class interacts with ZDX via the URLs presented in the Portal (aka, the ZDX configuration website).  It is 
 named: **ZdxPortalTalker**
+
+### Cloud and Branch Connector API Talker
+A Python class to leverage Cloud and Branch Connector API. (Currently in development.)
+
+This class interacts with the Cloud and Branch Connector Portal. The class object is named **CloudConnectorTalker**
+(https://help.zscaler.com/cloud-branch-connector/about-zscaler-cloud-branch-connector-api)
 
 ## Installation
 
@@ -109,6 +115,18 @@ result = a.get_alerts()
 print(result.json())
 print(dir(a))
 ```
+
+## Zscaler Cloud & Branch Connector SDK
+
+### Usage CloudConnectorTalker
+```python
+from zscaler_api_talkers import CloudConnectorTalker
+bac=CloudConnectorTalker(cloud_name='<ZScaler Cloud Name>', api_key='API_KEY', username='USERNAME', password='PASSWORD')
+bac.list_cloud_branch_connector_groups()
+bac.delete_cloud_branch_connector_vm(group_id='GROUPID', vm_id='VMID')
+print(dir(bac))
+```
+
 
 ## Usage examples
   - https://github.com/sergitopereira/zscaler_api_talkers#usage-example

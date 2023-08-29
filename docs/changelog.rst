@@ -1,6 +1,6 @@
-v6.0.1 (To be release)
+v6.1.0 (To be release)
 =========================
-
+Feat: Added cloud_connector API Talker for Cloud and Branch Connector (by `Dominic Schimanski <mailto:dschimanski@zscaler.com>)
 
 v6.0.0 (August 2023)
 =========================
