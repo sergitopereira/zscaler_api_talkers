@@ -1612,18 +1612,18 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def list_ssl_inspection_rule(
+    def list_security_policy_audit_traffic_inspection(
         self,
         **kwargs,
-    ) -> requests.Response:
+    ) -> json:
         """
-        List the configured SSL Inspection Rules
+        List security policy audit for traffic inspection
 
         :return: (requests.Response object)
         """
         result = request_(
             method="get",
-            url=f"{self.base_uri}/sslInspectionRules",
+            url=f"{self.base_uri}/securityPolicyAudit/trafficInspection",
             headers=self.headers,
             cookies={
                 "JSESSIONID": self.j_session_id,
@@ -1632,7 +1632,7 @@ class ZiaPortalTalker(object):
             **kwargs,
         )
 
-        return result
+        return result.json()
 
     def delete_ssl_inspection_rule(
         self,
