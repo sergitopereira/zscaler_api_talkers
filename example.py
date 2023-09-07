@@ -23,6 +23,11 @@ zpa_client_id = "you_client_id"
 zpa_client_secret = "you_client_secret"
 zpa_username = "you@you.com"
 zpa_password = "you_password"
+
+bac_cloud = "zscalerthree.net"
+bac_api_key = "you_api_key"
+bac_username = "you@you.com"
+bac_password = "you_password"
 """
 
 import os
