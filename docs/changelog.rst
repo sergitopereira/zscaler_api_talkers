@@ -1,5 +1,10 @@
-v5. (TO BE RELEASED)
+v6.1.0 (To be release)
 =========================
+Feat: Added cloud_connector API Talker for Cloud and Branch Connector (by `Dominic Schimanski <mailto:dschimanski@zscaler.com>)
+
+v6.0.0 (August 2023)
+=========================
+Fix: Removed unsupported ZIA, ZPA and ZDX Portal Talkers from this SDX (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v5.0.1 (August 2023)
 =========================
