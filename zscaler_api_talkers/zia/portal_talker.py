@@ -1420,7 +1420,27 @@ class ZiaPortalTalker(object):
         )
 
         return result
+    def list_firewall_filtering_rules(
+        self,
+        **kwargs,
+    ) -> json:
+        """
+        List the configured Firewall filtering Rules
 
+        :return: (json)
+        """
+        result = request_(
+            method="get",
+            url=f"{self.base_uri}/firewallFilteringRules",
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+            **kwargs,
+        )
+
+        return result.json()
     def list_firewall_network_settings(
         self,
         **kwargs,
