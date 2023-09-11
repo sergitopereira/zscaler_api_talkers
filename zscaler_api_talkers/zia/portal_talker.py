@@ -807,7 +807,7 @@ class ZiaPortalTalker(object):
 
     def list_nss_feeds(self) -> json:
         """
-        Method to list NSS feeeds.  Administration > Nanolog Streaming Service > NSS Feeds
+        Method to list NSS feeds.  Administration > Nanolog Streaming Service > NSS Feeds
 
         :return: (json)
         """
