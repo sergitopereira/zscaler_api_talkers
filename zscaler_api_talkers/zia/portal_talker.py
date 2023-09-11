@@ -205,7 +205,7 @@ class ZiaPortalTalker(object):
         editable: bool = True,
         pac_url_obfuscated: bool = True,
         pac_version_status: str = "STAGE",
-        pac_verification_status: str = "VERIFY_NOERR"
+        pac_verification_status: str = "VERIFY_NOERR",
     ) -> json:
         """
         Method to Add a PAC file
@@ -228,8 +228,7 @@ class ZiaPortalTalker(object):
             "description": description,
             "pacCommitMessage": pac_commit_message,
             "pacVerificationStatus": pac_verification_status,
-            "pacVersionStatus":pac_version_status,
-
+            "pacVersionStatus": pac_version_status,
         }
         url = f"/pacFiles"
         response = self.hp_http.post_call(
@@ -806,6 +805,24 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
+    def list_nss_feeds(self) -> json:
+        """
+        Method to list NSS feeeds.  Administration > Nanolog Streaming Service > NSS Feeds
+
+        :return: (json)
+        """
+        url = f"/nssFeeds"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
     def list_ssl_inspection_rules(self) -> json:
         """
         Method to list SSL Inspection rules.  Policy > SSL Inspection > SSL Inspection Policy
@@ -1050,6 +1067,7 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
     def list_admin_user(self) -> json:
         url = f"/adminUsers"
         response = self.hp_http.get_call(
@@ -1432,6 +1450,7 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
     def list_firewall_filtering_rules(
         self,
         **kwargs,
@@ -1453,6 +1472,7 @@ class ZiaPortalTalker(object):
         )
 
         return result.json()
+
     def list_firewall_network_settings(
         self,
         **kwargs,
@@ -1474,6 +1494,7 @@ class ZiaPortalTalker(object):
         )
 
         return result.json()
+
     def delete_firewall_ips_rule(
         self,
         rule_id: int,
@@ -1690,6 +1711,7 @@ class ZiaPortalTalker(object):
         )
 
         return result
+
     def list_casb_tenat(self) -> json:
         """
         Method to SaaS Application Tenants

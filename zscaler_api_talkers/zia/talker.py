@@ -290,20 +290,28 @@ class ZiaTalker(object):
 
         return self._obtain_all(url)
 
-    def add_admin_users(self, loginName: str, userName: str, email: str, password: str, role: dict, comments: str = '',
-                       adminScopeType: str ='ORGANIZATION',
-                       adminScopeScopeEntities: list =[],
-                       adminScopescopeGroupMemberEntities: list =[],
-                       isNonEditable: bool = False,
-                       disabled: bool = False,
-                       isAuditor: bool = False,
-                       isPasswordLoginAllowed: object = False,
-                       isSecurityReportCommEnabled: object = False,
-                       isServiceUpdateCommEnabled: object = False,
-                       isProductUpdateCommEnabled: object = False,
-                       isPasswordExpired: object = False,
-                       isExecMobileAppEnabled: object = False,
-                       execMobileAppTokens: object = []) -> json:
+    def add_admin_users(
+        self,
+        loginName: str,
+        userName: str,
+        email: str,
+        password: str,
+        role: dict,
+        comments: str = "",
+        adminScopeType: str = "ORGANIZATION",
+        adminScopeScopeEntities: list = [],
+        adminScopescopeGroupMemberEntities: list = [],
+        isNonEditable: bool = False,
+        disabled: bool = False,
+        isAuditor: bool = False,
+        isPasswordLoginAllowed: object = False,
+        isSecurityReportCommEnabled: object = False,
+        isServiceUpdateCommEnabled: object = False,
+        isProductUpdateCommEnabled: object = False,
+        isPasswordExpired: object = False,
+        isExecMobileAppEnabled: object = False,
+        execMobileAppTokens: object = [],
+    ) -> json:
         """
         Adds a new Admininstrator.
                :param loginName: string. Admin or auditor's login name. loginName is in email format
@@ -326,7 +334,7 @@ class ZiaTalker(object):
                :param isPasswordExpired: boolean. Expire password to force user to change password on logon. default: False.
                :param isExecMobileAppEnabled: boolean. Indicates whether or not Executive Insights App access is enabled for the admin. default: False.
                :return:json()
-               """
+        """
         url = "/adminUsers"
         payload = {
             "loginName": loginName,
@@ -347,7 +355,7 @@ class ZiaTalker(object):
             "isProductUpdateCommEnabled": isProductUpdateCommEnabled,
             "isPasswordExpired": isPasswordExpired,
             "isExecMobileAppEnabled": isExecMobileAppEnabled,
-            "execMobileAppTokens": execMobileAppTokens
+            "execMobileAppTokens": execMobileAppTokens,
         }
         response = self.hp_http.post_call(
             url,
@@ -357,6 +365,7 @@ class ZiaTalker(object):
             headers=self.headers,
         )
         return response.json()
+
     def list_admin_roles(
         self,
         query: str = None,
