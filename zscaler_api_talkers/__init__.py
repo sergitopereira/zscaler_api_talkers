@@ -1,4 +1,5 @@
 from .client_connector.talker import ClientConnectorTalker, ZccTalker
+from .client_connector.portal_talker import MobilePortalTalker
 from .zdx.portal_talker import ZdxPortalTalker
 from .zia.portal_talker import ZiaPortalTalker
 from .zia.talker import ZiaTalker
@@ -13,4 +14,5 @@ __all__ = [
     "ZiaPortalTalker",
     "ZpaTalker",
     "ZpaPortalTalker",
+    "MobilePortalTalker"
 ]
