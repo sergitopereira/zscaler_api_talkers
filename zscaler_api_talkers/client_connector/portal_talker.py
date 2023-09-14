@@ -64,13 +64,11 @@ class MobilePortalTalker(object):
         api_header = jwt.decode(mobile_token, options={"verify_signature": False})[
             "apiHeader"
         ]
-        pdb.set_trace()
         self.headers = {
             "API-Id": base64.b64encode(api_header.encode("utf-8")).decode("utf-8"),
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
             "auth-token": mobile_token,
         }
-        pdb.set_trace()
 
     def list_forwarding_profile(self) -> json:
         """Method to retrieve forwarding profile"""
