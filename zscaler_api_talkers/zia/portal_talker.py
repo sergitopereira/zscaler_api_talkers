@@ -895,6 +895,7 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
+
     def list_system_audit_report_pac_file(self) -> json:
         """
         Method to list the PAC File recommendation within the System Audit Report. Analytics > System Audit Report
@@ -1719,6 +1720,34 @@ class ZiaPortalTalker(object):
         :return: (json)
         """
         url = f"/casbTenant?page1&pagesize=100"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_url_categories(self):
+        """method to list URL categories"""
+        url="/urlCategories?type=URL_CATEGORY&includeOnlyUrlKeywordCounts=true"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_browser_control(self):
+        """method to list Browser control settings"""
+        url="/browserControlSettings"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
