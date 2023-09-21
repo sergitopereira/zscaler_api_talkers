@@ -1800,3 +1800,17 @@ class ZiaPortalTalker(object):
         )
 
         return response.json()
+
+    def list_web_dlp_rules(self):
+        """method to list DLP Rules"""
+        url="/webDlpRules"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
