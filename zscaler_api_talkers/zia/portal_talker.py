@@ -17,10 +17,10 @@ class ZiaPortalTalker(object):
     """
 
     def __init__(
-        self,
-        cloud_name: str,
-        username: str = "",
-        password: str = "",
+            self,
+            cloud_name: str,
+            username: str = "",
+            password: str = "",
     ):
         """
         Method to start the class
@@ -50,11 +50,11 @@ class ZiaPortalTalker(object):
             )
 
     def authenticate(
-        self,
-        username: str = "",
-        password: str = "",
-        zsui_cookie: str = "",
-        zsui_custom_code: str = "",
+            self,
+            username: str = "",
+            password: str = "",
+            zsui_cookie: str = "",
+            zsui_custom_code: str = "",
     ):
         """
         Method to authenticate.
@@ -105,13 +105,13 @@ class ZiaPortalTalker(object):
                 raise ValueError("Invalid API key")
 
     def add_dlp_engine(
-        self,
-        payload: dict = None,
-        engine_expression: str = None,
-        name: str = None,
-        custom_dlp_engine: bool = True,
-        predefined_engine_name: bool = None,
-        description: str = None,
+            self,
+            payload: dict = None,
+            engine_expression: str = None,
+            name: str = None,
+            custom_dlp_engine: bool = True,
+            predefined_engine_name: bool = None,
+            description: str = None,
     ) -> requests.Response:
         """
         Method to create a DLP engine
@@ -152,9 +152,9 @@ class ZiaPortalTalker(object):
         return response
 
     def update_dlp_engine(
-        self,
-        payload: json,
-        dlp_id: int,
+            self,
+            payload: json,
+            dlp_id: int,
     ) -> requests.Response:
         """
         Method to update a DLP engine
@@ -196,16 +196,16 @@ class ZiaPortalTalker(object):
         return response.json()
 
     def add_pac_file(
-        self,
-        name: str,
-        description: str,
-        domain: str,
-        pac_content: str,
-        pac_commit_message: str,
-        editable: bool = True,
-        pac_url_obfuscated: bool = True,
-        pac_version_status: str = "STAGE",
-        pac_verification_status: str = "VERIFY_NOERR",
+            self,
+            name: str,
+            description: str,
+            domain: str,
+            pac_content: str,
+            pac_commit_message: str,
+            editable: bool = True,
+            pac_url_obfuscated: bool = True,
+            pac_version_status: str = "STAGE",
+            pac_verification_status: str = "VERIFY_NOERR",
     ) -> json:
         """
         Method to Add a PAC file
@@ -280,9 +280,9 @@ class ZiaPortalTalker(object):
         return response.json()
 
     def update_virus_spyware_settings(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Update Virus Spyware Settings
@@ -355,8 +355,8 @@ class ZiaPortalTalker(object):
         return response.json()
 
     def add_user_groups(
-        self,
-        group_name,
+            self,
+            group_name,
     ) -> json:
         """
         Creates user groups
@@ -486,9 +486,9 @@ class ZiaPortalTalker(object):
         return response.json()
 
     def update_saml_admin_settings(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Update SAML Admin Settings
@@ -507,10 +507,10 @@ class ZiaPortalTalker(object):
         return result
 
     def upload_saml_admin_settings_certificate(
-        self,
-        filename: str,
-        certificate: str,
-        **kwargs,
+            self,
+            filename: str,
+            certificate: str,
+            **kwargs,
     ) -> requests.Response:
         """
         Upload Certificate for SAML Admin
@@ -601,8 +601,8 @@ class ZiaPortalTalker(object):
         return response.json()
 
     def delete_group(
-        self,
-        group_id: int,
+            self,
+            group_id: int,
     ) -> requests.Response:
         """
         Method to delete a group given group id
@@ -624,8 +624,8 @@ class ZiaPortalTalker(object):
         return response
 
     def delete_department(
-        self,
-        department_id: int,
+            self,
+            department_id: int,
     ) -> requests.Response:
         """
         Method to delete a group given department
@@ -647,9 +647,9 @@ class ZiaPortalTalker(object):
         return result
 
     def delete_admin_role(
-        self,
-        role_id,
-        **kwargs,
+            self,
+            role_id,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete an Admin Role.
@@ -673,9 +673,9 @@ class ZiaPortalTalker(object):
         return result
 
     def add_admin_role(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Create an Admin Role
@@ -895,7 +895,6 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-
     def list_system_audit_report_pac_file(self) -> json:
         """
         Method to list the PAC File recommendation within the System Audit Report. Analytics > System Audit Report
@@ -933,8 +932,8 @@ class ZiaPortalTalker(object):
         return response.json()
 
     def update_eun(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> json:
         """
         Method to update the EUN settings for a ZIA Tenant
@@ -956,9 +955,9 @@ class ZiaPortalTalker(object):
         return response.json()
 
     def generic_post(
-        self,
-        url,
-        **kwargs,
+            self,
+            url,
+            **kwargs,
     ) -> json:
         """
         Generic POST method
@@ -980,9 +979,9 @@ class ZiaPortalTalker(object):
         return response.json()
 
     def generic_put(
-        self,
-        url,
-        **kwargs,
+            self,
+            url,
+            **kwargs,
     ) -> json:
         """
         Generic PUT method
@@ -1004,8 +1003,8 @@ class ZiaPortalTalker(object):
         return response.json()
 
     def generic_get(
-        self,
-        url,
+            self,
+            url,
     ) -> json:
         """
         Generic GET method
@@ -1025,8 +1024,8 @@ class ZiaPortalTalker(object):
         return response.json()
 
     def generic_delete(
-        self,
-        url,
+            self,
+            url,
     ) -> json:
         """
         Generic DELETE method
@@ -1046,10 +1045,10 @@ class ZiaPortalTalker(object):
         return response
 
     def delete_web_application_rule(
-        self,
-        rule_id: int,
-        rule_type: str,
-        **kwargs,
+            self,
+            rule_id: int,
+            rule_type: str,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete Web Application Rule
@@ -1083,9 +1082,9 @@ class ZiaPortalTalker(object):
         return response.json()
 
     def delete_admin_user(
-        self,
-        user_id: int,
-        **kwargs,
+            self,
+            user_id: int,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete Admin User
@@ -1108,9 +1107,9 @@ class ZiaPortalTalker(object):
         return result
 
     def add_admin_user(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Create an Admin User
@@ -1134,10 +1133,10 @@ class ZiaPortalTalker(object):
         return result
 
     def update_admin_user(
-        self,
-        data: dict,
-        user_id: int,
-        **kwargs,
+            self,
+            data: dict,
+            user_id: int,
+            **kwargs,
     ) -> requests.Response:
         """
         Update an Admin User
@@ -1162,9 +1161,9 @@ class ZiaPortalTalker(object):
         return result
 
     def update_advanced_threat_settings(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Update an Advanced Threat Settings
@@ -1188,8 +1187,8 @@ class ZiaPortalTalker(object):
         return result
 
     def add_api_key(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> requests.Response:
         """
         Generate an API Key
@@ -1210,10 +1209,10 @@ class ZiaPortalTalker(object):
         return result
 
     def update_api_key(
-        self,
-        data: dict,
-        api_key_id: int,
-        **kwargs,
+            self,
+            data: dict,
+            api_key_id: int,
+            **kwargs,
     ) -> requests.Response:
         """
         Update an API Key
@@ -1238,9 +1237,9 @@ class ZiaPortalTalker(object):
         return result
 
     def delete_api_key(
-        self,
-        api_key_id: int,
-        **kwargs,
+            self,
+            api_key_id: int,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete API Key
@@ -1263,9 +1262,9 @@ class ZiaPortalTalker(object):
         return result
 
     def update_auth_settings(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Update an Auth Setting
@@ -1289,8 +1288,8 @@ class ZiaPortalTalker(object):
         return result
 
     def list_eusa_status(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> requests.Response:
         """
         List the configured EUSA Status
@@ -1311,9 +1310,9 @@ class ZiaPortalTalker(object):
         return result
 
     def add_eusa_status(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Create an EUSA Status
@@ -1337,8 +1336,8 @@ class ZiaPortalTalker(object):
         return result
 
     def list_file_type_rule(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> requests.Response:
         """
         List the configured File Type Rules
@@ -1359,9 +1358,9 @@ class ZiaPortalTalker(object):
         return result
 
     def delete_file_type_rule(
-        self,
-        rule_id: int,
-        **kwargs,
+            self,
+            rule_id: int,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete File Type Rule
@@ -1384,8 +1383,8 @@ class ZiaPortalTalker(object):
         return result
 
     def list_firewall_dns_rule(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> requests.Response:
         """
         List the configured Firewall DNS Rules
@@ -1406,9 +1405,9 @@ class ZiaPortalTalker(object):
         return result
 
     def delete_firewall_dns_rule(
-        self,
-        rule_id: int,
-        **kwargs,
+            self,
+            rule_id: int,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete Firewall DNS Rule
@@ -1431,8 +1430,8 @@ class ZiaPortalTalker(object):
         return result
 
     def list_firewall_ips_rule(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> requests.Response:
         """
         List the configured Firewall IPS Rules
@@ -1453,8 +1452,8 @@ class ZiaPortalTalker(object):
         return result
 
     def list_firewall_filtering_rules(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> json:
         """
         List the configured Firewall filtering Rules
@@ -1475,8 +1474,8 @@ class ZiaPortalTalker(object):
         return result.json()
 
     def list_firewall_network_settings(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> json:
         """
         List the configured Firewall IPS Rules
@@ -1497,9 +1496,9 @@ class ZiaPortalTalker(object):
         return result.json()
 
     def delete_firewall_ips_rule(
-        self,
-        rule_id: int,
-        **kwargs,
+            self,
+            rule_id: int,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete Firewall IPS Rule
@@ -1522,9 +1521,9 @@ class ZiaPortalTalker(object):
         return result
 
     def upload_idp_config_certificate(
-        self,
-        file: dict,
-        **kwargs,
+            self,
+            file: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Upload Certificate file for IDP Config
@@ -1550,8 +1549,8 @@ class ZiaPortalTalker(object):
         return result
 
     def add_idp_config_bearer_token(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> requests.Response:
         """
         Create Bearer Token
@@ -1572,9 +1571,9 @@ class ZiaPortalTalker(object):
         return result
 
     def update_idp_config(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Update an IDP Config
@@ -1597,9 +1596,9 @@ class ZiaPortalTalker(object):
         return result
 
     def add_idp_config(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         result = request_(
             method="post",
@@ -1615,9 +1614,9 @@ class ZiaPortalTalker(object):
         return result
 
     def update_malware_policy(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Update Malware Policy
@@ -1641,9 +1640,9 @@ class ZiaPortalTalker(object):
         return result
 
     def update_remote_assistance(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Update Remote Assistance
@@ -1667,8 +1666,8 @@ class ZiaPortalTalker(object):
         return result
 
     def list_security_policy_audit_traffic_inspection(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> json:
         """
         List security policy audit for traffic inspection
@@ -1689,9 +1688,9 @@ class ZiaPortalTalker(object):
         return result.json()
 
     def delete_ssl_inspection_rule(
-        self,
-        rule_id: int,
-        **kwargs,
+            self,
+            rule_id: int,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete SSL Inspection Rule
@@ -1733,7 +1732,7 @@ class ZiaPortalTalker(object):
 
     def list_url_categories(self):
         """method to list URL categories"""
-        url="/urlCategories?type=URL_CATEGORY&includeOnlyUrlKeywordCounts=true"
+        url = "/urlCategories?type=URL_CATEGORY&includeOnlyUrlKeywordCounts=true"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
@@ -1747,7 +1746,7 @@ class ZiaPortalTalker(object):
 
     def list_browser_control(self):
         """method to list Browser control settings"""
-        url="/browserControlSettings"
+        url = "/browserControlSettings"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
@@ -1775,7 +1774,7 @@ class ZiaPortalTalker(object):
 
     def list_network_services(self):
         """method to list Network Services"""
-        url="/networkServices"
+        url = "/networkServices"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
@@ -1789,7 +1788,7 @@ class ZiaPortalTalker(object):
 
     def list_sandbox_rules(self):
         """method to list Sandbox Policy Rules"""
-        url="/behavioralAnalysisRules"
+        url = "/behavioralAnalysisRules"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
@@ -1803,7 +1802,35 @@ class ZiaPortalTalker(object):
 
     def list_web_dlp_rules(self):
         """method to list DLP Rules"""
-        url="/webDlpRules"
+        url = "/webDlpRules"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_dlp_dictionaries(self):
+        """method to list DLP Rules"""
+        url = "/dlpDictionaries"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_dlp_engines(self):
+        """method to list DLP Engines"""
+        url = "/dlpEngines"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
