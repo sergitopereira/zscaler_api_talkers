@@ -1841,3 +1841,43 @@ class ZiaPortalTalker(object):
         )
 
         return response.json()
+
+    def list_url_quota(self):
+        """Method to obtain provisioned urls and remaining urls"""
+        url = '/urlQuota'
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_url_quota(self):
+        """Method to obtain provisioned urls and remaining urls"""
+        url = '/urlCategories/urlQuota?'
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_rule_labels(self):
+        url = '/ruleLabels?page=1&pageSize=2000'
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+        return response.json()
