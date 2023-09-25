@@ -2186,7 +2186,7 @@ class ZiaPortalTalker(object):
 
     def list_forwarding_rules(self) -> json:
         """
-        Method to list URL Filtering Rules
+        Method to list Forwarding Control Rules
 
         :return: (json)
         """
@@ -2220,13 +2220,49 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def list_time_intervals(self) -> json:
+    def list_vpn_credentials(self) -> json:
         """
         Method to list VPN Credentials
 
         :return: (json)
         """
         url = f"/vpnCredentials"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_users(self) -> json:
+        """
+        Method to list Users
+
+        :return: (json)
+        """
+        url = f"/users"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_groups(self) -> json:
+        """
+        Method to list Users
+
+        :return: (json)
+        """
+        url = f"/groups"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
