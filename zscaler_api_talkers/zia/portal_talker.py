@@ -663,6 +663,40 @@ class ZiaPortalTalker(object):
         )
 
         return response.json()
+    def list_network_service_groups(self) -> json:
+        """
+        Method to list Network Service Groups
+
+        :return: (json)
+        """
+        url = f"/networkServiceGroups"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+    def list_network_application_groups(self) -> json:
+        """
+        Method to list Network ApplicationGroups
+
+        :return: (json)
+        """
+        url = f"/networkApplicationGroups"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
 
     def delete_admin_role(
             self,
@@ -1898,4 +1932,308 @@ class ZiaPortalTalker(object):
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
+        return response.json()
+
+    def list_ip_source_groups(self) -> json:
+        """
+        Method to list Source IP Groups
+
+        :return: (json)
+        """
+        url = f"/ipSourceGroups"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_locations(self) -> json:
+        """
+        Method to list Locations
+
+        :return: (json)
+        """
+        url = f"/locations"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_ip_destination_groups(self) -> json:
+        """
+        Method to list Destination IP Groups
+
+        :return: (json)
+        """
+        url = f"/ipDestinationGroups"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_gre_tunnels(self) -> json:
+        """
+        Method to list GRE Tunnels
+
+        :return: (json)
+        """
+        url = f"/greTunnels"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_network_services(self) -> json:
+        """
+        Method to list Firewall Network Services
+
+        :return: (json)
+        """
+        url = f"/networkServices"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_network_services_groups(self) -> json:
+        """
+        Method to list Firewall Network Services Groups
+
+        :return: (json)
+        """
+        url = f"/networkServiceGroups"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+    def list_network_applications(self) -> json:
+        """
+        Method to list Network Applications
+
+        :return: (json)
+        """
+        url = f"/networkApplications"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_network_application_groups(self) -> json:
+        """
+        Method to list Firewall Network Application Groups
+
+        :return: (json)
+        """
+        url = f"/networkApplicationGroups"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_bandwidth_classes(self) -> json:
+        """
+        Method to list Bandwidth Classes
+
+        :return: (json)
+        """
+        url = f"/bandwidthClasses"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_vzen_clusters(self) -> json:
+        """
+        Method to list VZEN Clusters
+
+        :return: (json)
+        """
+        url = f"/virtualZenClusters"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_alerts(self) -> json:
+        """
+        Method to list Alerts
+
+        :return: (json)
+        """
+        url = f"/alertSubscriptions"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+    def list_bandwidth_rules(self) -> json:
+        """
+        Method to list Bandwidth Control Rules
+
+        :return: (json)
+        """
+        url = f"/bandwidthControlRules"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_nat_control_rules(self) -> json:
+        """
+        Method to list NAT Control Rules
+
+        :return: (json)
+        """
+        url = f"/dnatRules"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_url_filtering_rules(self) -> json:
+        """
+        Method to list URL Filtering Rules
+
+        :return: (json)
+        """
+        url = f"/urlFilteringRules"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_forwarding_rules(self) -> json:
+        """
+        Method to list URL Filtering Rules
+
+        :return: (json)
+        """
+        url = f"/forwardingRules"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_time_intervals(self) -> json:
+        """
+        Method to list Time Intervals
+
+        :return: (json)
+        """
+        url = f"/timeIntervals"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_time_intervals(self) -> json:
+        """
+        Method to list VPN Credentials
+
+        :return: (json)
+        """
+        url = f"/vpnCredentials"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
         return response.json()
