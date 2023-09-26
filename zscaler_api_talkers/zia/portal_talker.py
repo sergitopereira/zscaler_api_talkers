@@ -2258,6 +2258,7 @@ class ZiaPortalTalker(object):
         )
 
         return response.json()
+      
     def list_data_web_insights(self, fwd_method, timestamp_now=None, timeframe=None) -> json:
         """Method to obtain web insights
         param fwd_method type string. Example ZAPP_GRE, ZAPP_IPSEC, PAC_GRE, GRE
@@ -2312,5 +2313,4 @@ class ZiaPortalTalker(object):
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
-
         return response.json()
