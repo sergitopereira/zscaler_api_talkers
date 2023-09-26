@@ -1,4 +1,5 @@
 import json
+import time
 from http.cookies import SimpleCookie
 
 import requests
@@ -2256,4 +2257,60 @@ class ZiaPortalTalker(object):
             },
         )
 
+        return response.json()
+      
+    def list_data_web_insights(self, fwd_method, timestamp_now=None, timeframe=None) -> json:
+        """Method to obtain web insights
+        param fwd_method type string. Example ZAPP_GRE, ZAPP_IPSEC, PAC_GRE, GRE
+        """
+        if not timestamp_now:
+            timestamp_now = int(round(time.time() / 10) * 10000)
+        if not timeframe:
+            timeframe = timestamp_now - (604800 * 1000000)
+        data = {
+            "startTime": timeframe,
+            "endTime": timestamp_now,
+            "pageSize": "1000",
+            "trafficForwarding": [fwd_method],
+        }
+        url = '/transactionData/webRequest'
+        response = self.hp_http.post_call(
+            url=url,
+            headers=self.headers,
+            payload=data,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+        # Verify query is completed
+        url = f"/transactionData/webRequest"
+        resp_status = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            })
+        while resp_status.json()['status'] != 'COMPLETE':
+            time.sleep(5)
+            url = f"/transactionData/webRequest?_={timestamp_now}"
+            resp_status = self.hp_http.get_call(
+                url=url,
+                headers=self.headers,
+                cookies={
+                    "JSESSIONID": self.j_session_id,
+                    "ZS_SESSION_CODE": self.zs_session_code,
+                })
+
+        # this is complete. Retrieve information
+        url = f'/transactionData/web?_{timestamp_now}'
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
         return response.json()
