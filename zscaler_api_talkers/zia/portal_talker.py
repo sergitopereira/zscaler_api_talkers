@@ -1,5 +1,4 @@
 import json
-import pdb
 import time
 from http.cookies import SimpleCookie
 
@@ -1917,8 +1916,6 @@ class ZiaPortalTalker(object):
                 "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             })
-        print(resp_status.json())
-        pdb.set_trace()
         while resp_status.json()['status'] != 'COMPLETE':
             time.sleep(5)
             url = f"/transactionData/webRequest?_={timestamp_now}"
