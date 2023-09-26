@@ -125,5 +125,5 @@ print(dir(a))
 Feel free to open an issues using [GitHub Issues](https://github.com/sergitopereira/zscaler_api_talkers)
 
 ## Author
-Sergio Pereira (Zscaler Professional Services)
-For contributors refer to changelog
+ - Sergio Pereira (Zscaler Professional Services)
+ - For contributors refer to changelog
