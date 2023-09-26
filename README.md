@@ -69,6 +69,16 @@ zia.list_users()
 # To view all methods available
 print(dir(zia))
 ```
+### Usage ZiaPortalTalker
+``` python
+from zscaler_api_talkers import ZiaPortTalker
+zia=ZiaTalker('<Zscaler Cloud Name>')
+zia.authenticate(username='USERNAME', password='PASSWORD')
+zia.list_urlcategories()
+zia.list_users()
+# To view all methods available
+print(dir(zia))
+```
 
 ### Usage ZiaTalker with OAUTH2.0
 ``` python
@@ -105,16 +115,7 @@ a.list_OTP('companyID','user device id')
 print(dir(a))
 ```
 
-## Zscaler Digital Experience SDK
 
-### Usage ZdxTalker
-``` python
-from zscaler_api_talkers import ZdxTalker
-a=ZdxTalker(username='<username>', password='<password>', zia_cloud='<zia_cloud_domain>')
-result = a.get_alerts()
-print(result.json())
-print(dir(a))
-```
 
 ## Usage examples
   - https://github.com/sergitopereira/zscaler_api_talkers#usage-example
@@ -124,4 +125,5 @@ print(dir(a))
 Feel free to open an issues using [GitHub Issues](https://github.com/sergitopereira/zscaler_api_talkers)
 
 ## Author
-Sergio Pereira: Zscaler Professional Services 
+Sergio Pereira (Zscaler Professional Services)
+For contributors refer to changelog
