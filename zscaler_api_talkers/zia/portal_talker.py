@@ -683,24 +683,6 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def list_network_application_groups(self) -> json:
-        """
-        Method to list Network ApplicationGroups
-
-        :return: (json)
-        """
-        url = f"/networkApplicationGroups"
-        response = self.hp_http.get_call(
-            url=url,
-            headers=self.headers,
-            cookies={
-                "JSESSIONID": self.j_session_id,
-                "ZS_SESSION_CODE": self.zs_session_code,
-            },
-        )
-
-        return response.json()
-
     def delete_admin_role(
         self,
         role_id,
@@ -1720,28 +1702,6 @@ class ZiaPortalTalker(object):
 
         return result
 
-    def list_security_policy_audit_traffic_inspection(
-        self,
-        **kwargs,
-    ) -> json:
-        """
-        List security policy audit for traffic inspection
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="get",
-            url=f"{self.base_uri}/securityPolicyAudit/trafficInspection",
-            headers=self.headers,
-            cookies={
-                "JSESSIONID": self.j_session_id,
-                "ZS_SESSION_CODE": self.zs_session_code,
-            },
-            **kwargs,
-        )
-
-        return result.json()
-
     def delete_ssl_inspection_rule(
         self,
         rule_id: int,
@@ -1911,19 +1871,6 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def list_url_quota(self):
-        """Method to obtain provisioned urls and remaining urls"""
-        url = "/urlCategories/urlQuota?"
-        response = self.hp_http.get_call(
-            url=url,
-            headers=self.headers,
-            cookies={
-                "JSESSIONID": self.j_session_id,
-                "ZS_SESSION_CODE": self.zs_session_code,
-            },
-        )
-
-        return response.json()
 
     def list_rule_labels(self):
         url = "/ruleLabels?page=1&pageSize=2000"
