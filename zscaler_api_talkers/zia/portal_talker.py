@@ -1972,6 +1972,8 @@ class ZiaPortalTalker(object):
         )
 
         return response.json()
+
+
     def list_sub_locations(self, locationId) -> json:
         """
         Method to list sub-locations for specified location-id
@@ -1981,15 +1983,17 @@ class ZiaPortalTalker(object):
         """
         url = f"/locations/{locationId}/sublocations"
         response = self.hp_http.get_call(
-            url=url,
-            headers=self.headers,
-            cookies={
+            url = url,
+            headers = self.headers,
+            cookies = {
                 "JSESSIONID": self.j_session_id,
                 "ZS_SESSION_CODE": self.zs_session_code,
             },
         )
 
         return response.json()
+
+
     def list_ip_destination_groups(self) -> json:
         """
         Method to list Destination IP Groups
