@@ -1975,6 +1975,7 @@ class ZiaPortalTalker(object):
     def list_sub_locations(self, locationId) -> json:
         """
         Method to list sub-locations for specified location-id
+        :param locationId: (int) Location ID to fetch sub locations
 
         :return: (json)
         """
