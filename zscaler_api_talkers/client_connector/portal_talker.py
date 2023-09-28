@@ -94,3 +94,12 @@ class MobilePortalTalker(object):
         url = f"/webservice/api/web/autoupdate/getApplicationList"
         resp = self.hp_http.get_call(url=url, headers=self.headers)
         return resp.json()
+
+    def list_device_list(self) -> json:
+        """
+        Method to get the device list
+        :return: json
+        """
+        url = f"/webservice/api/web/device/deviceList"
+        resp = self.hp_http.get_call(url=url, headers=self.headers)
+        return resp.json()
