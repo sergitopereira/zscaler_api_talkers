@@ -683,24 +683,6 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def list_network_application_groups(self) -> json:
-        """
-        Method to list Network ApplicationGroups
-
-        :return: (json)
-        """
-        url = f"/networkApplicationGroups"
-        response = self.hp_http.get_call(
-            url=url,
-            headers=self.headers,
-            cookies={
-                "JSESSIONID": self.j_session_id,
-                "ZS_SESSION_CODE": self.zs_session_code,
-            },
-        )
-
-        return response.json()
-
     def delete_admin_role(
         self,
         role_id,
@@ -903,24 +885,6 @@ class ZiaPortalTalker(object):
         :return: (json)
         """
         url = f"/intermediateCaCertificate/lite"
-        response = self.hp_http.get_call(
-            url=url,
-            headers=self.headers,
-            cookies={
-                "JSESSIONID": self.j_session_id,
-                "ZS_SESSION_CODE": self.zs_session_code,
-            },
-        )
-
-        return response.json()
-
-    def list_security_policy_audit_traffic_inspection(self) -> json:
-        """
-        Method to list the Traffic Inspection section within the Security Policy Audit Report. Analytics > Security Policy Audit Report
-
-        :return: (json)
-        """
-        url = f"/securityPolicyAudit/trafficInspection"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
@@ -1899,20 +1863,6 @@ class ZiaPortalTalker(object):
 
     def list_url_quota(self):
         """Method to obtain provisioned urls and remaining urls"""
-        url = "/urlQuota"
-        response = self.hp_http.get_call(
-            url=url,
-            headers=self.headers,
-            cookies={
-                "JSESSIONID": self.j_session_id,
-                "ZS_SESSION_CODE": self.zs_session_code,
-            },
-        )
-
-        return response.json()
-
-    def list_url_quota(self):
-        """Method to obtain provisioned urls and remaining urls"""
         url = "/urlCategories/urlQuota?"
         response = self.hp_http.get_call(
             url=url,
@@ -1973,14 +1923,14 @@ class ZiaPortalTalker(object):
 
         return response.json()
 
-    def list_sub_locations(self, locationId) -> json:
+    def list_sub_locations(self, locationid) -> json:
         """
         Method to list sub-locations for specified location-id
-        :param locationId: (int) Location ID to fetch sub locations
+        :param locationid: (int) Location ID to fetch sub locations
 
         :return: (json)
         """
-        url = f"/locations/{locationId}/sublocations"
+        url = f"/locations/{locationid}/sublocations"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
@@ -2361,6 +2311,97 @@ class ZiaPortalTalker(object):
     def list_casb_dlp_rules(self) -> json:
         """Method to retrieve SaaS Security API control DLP rules"""
         url = "/casbDlpRules?ruleType=OFLCASB_DLP_FILE"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_dns_gateways(self) -> json:
+        """
+        Method to list DNS Gateways
+
+        :return: (json)
+        """
+        url = f"/dnsGateways"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_proxy_gateways(self) -> json:
+        """
+        Method to list Proxy Gateways
+
+        :return: (json)
+        """
+        url = f"/proxyGateways"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_zpa_gateways(self) -> json:
+        """
+        Method to list ZPA Gateways
+
+        :return: (json)
+        """
+        url = f"/zpaGateways"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_tenant_profiles(self) -> json:
+        """
+        Method to list Tenant Profiles
+
+        :return: (json)
+        """
+        url = f"/tenancyRestrictionProfile"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
+
+    def list_proxies(self) -> json:
+        """
+        Method to list Third Party Proxies
+
+        :return: (json)
+        """
+        url = f"/proxies"
+
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
