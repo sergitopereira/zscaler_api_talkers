@@ -91,7 +91,7 @@ class MobilePortalTalker(object):
         Method to list update settings
         :return: json
         """
-        url = f"/webservice/api/web/autoupdate/getApplicationList"
+        url = "/webservice/api/web/autoupdate/getApplicationList"
         resp = self.hp_http.get_call(url=url, headers=self.headers)
         return resp.json()
 
