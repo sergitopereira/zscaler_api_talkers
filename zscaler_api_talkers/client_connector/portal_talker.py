@@ -111,3 +111,24 @@ class MobilePortalTalker(object):
         url = f"/webservice/api/web/appService/policies/{id}"
         resp = self.hp_http.get_call(url=url, headers=self.headers)
         return resp.json()
+    
+    def _list_download_device_url(self) -> str:
+        """
+        Method to get the url to download id for the device list in csv format
+        :return: str 
+        """
+        url = f"/webservice/api/web/device/downloadDeviceUrl"
+        headers = self.headers
+        headers["Cookie"]="_hjSessionUser_2392174=eyJpZCI6IjA1ODk2NGQ4LTg3NTktNWQ0MS04NjI0LWQ1N2NjMjhhODU4NyIsImNyZWF0ZWQiOjE2NDM3NTAyNjY0MDgsImV4aXN0aW5nIjp0cnVlfQ==; _hjSession_2392174=eyJpZCI6ImFjNWU5YjJjLWFhMGMtNGE0OC04ZjcyLTZmYzcyMzFmODE3ZiIsImNyZWF0ZWQiOjE2OTYwMTgyOTAyNjEsImluU2FtcGxlIjp0cnVlLCJzZXNzaW9uaXplckJldGFFbmFibGVkIjpmYWxzZX0=; _hjAbsoluteSessionInProgress=1"
+        resp = self.hp_http.get_call(url=url, headers=headers)
+        return urllib.parse.urlparse(resp.json()).query
+    
+    def list_devices(self) -> str :
+        """
+        Method to list devices in csv
+        :return: 
+        """
+        query = "?" + self._list_download_device_url() + "&sortBy=keepAliveTimestamp&type=0&osId=0&user=0&version=&searchProperty=id&supportedDevice=undefined"
+        url = f"/webservice/api/webdevice/downloadDeviceList{query}"
+        resp = requests.get(url=self.base_uri + url, headers={})
+        return resp.text
