@@ -5,6 +5,7 @@ from http.cookies import SimpleCookie
 import jwt
 import base64
 import requests
+import urllib.parse
 
 from zscaler_api_talkers.helpers import HttpCalls, request_, setup_logger
 
@@ -92,5 +93,15 @@ class MobilePortalTalker(object):
         :return: json
         """
         url = f"/webservice/api/web/autoupdate/getApplicationList"
+        resp = self.hp_http.get_call(url=url, headers=self.headers)
+        return resp.json()
+    
+    def list_app_profile_bypass(self, id: int ) -> json:
+        """
+        Method to list app profile application bypasses
+        :type id: app profile ID
+        :return: json or [] if no application bypasses are configured
+        """
+        url = f"/webservice/api/web/appService/policies/{id}"
         resp = self.hp_http.get_call(url=url, headers=self.headers)
         return resp.json()
