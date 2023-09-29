@@ -119,7 +119,6 @@ class MobilePortalTalker(object):
         """
         url = f"/webservice/api/web/device/downloadDeviceUrl"
         headers = self.headers
-        headers["Cookie"]="_hjSessionUser_2392174=eyJpZCI6IjA1ODk2NGQ4LTg3NTktNWQ0MS04NjI0LWQ1N2NjMjhhODU4NyIsImNyZWF0ZWQiOjE2NDM3NTAyNjY0MDgsImV4aXN0aW5nIjp0cnVlfQ==; _hjSession_2392174=eyJpZCI6ImFjNWU5YjJjLWFhMGMtNGE0OC04ZjcyLTZmYzcyMzFmODE3ZiIsImNyZWF0ZWQiOjE2OTYwMTgyOTAyNjEsImluU2FtcGxlIjp0cnVlLCJzZXNzaW9uaXplckJldGFFbmFibGVkIjpmYWxzZX0=; _hjAbsoluteSessionInProgress=1"
         resp = self.hp_http.get_call(url=url, headers=headers)
         return urllib.parse.urlparse(resp.json()).query
     
