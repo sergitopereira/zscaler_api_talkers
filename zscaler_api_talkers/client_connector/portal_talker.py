@@ -94,3 +94,9 @@ class MobilePortalTalker(object):
         url = f"/webservice/api/web/autoupdate/getApplicationList"
         resp = self.hp_http.get_call(url=url, headers=self.headers)
         return resp.json()
+
+    def list_trusted_networks(self) -> json:
+        """Method to get trusted networks"""
+        url = "/webservice/api/web/trustedNetwork/listByCompany?page=1&pageSize=100"
+        resp = self.hp_http.get_call(url=url, headers=self.headers)
+        return resp.json()
