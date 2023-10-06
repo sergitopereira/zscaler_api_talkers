@@ -1374,7 +1374,7 @@ class ZiaPortalTalker(object):
             **kwargs,
         )
 
-        return result
+        return result.json()
 
     def delete_file_type_rule(
         self,
@@ -1451,7 +1451,7 @@ class ZiaPortalTalker(object):
     def list_firewall_ips_rule(
         self,
         **kwargs,
-    ) -> requests.Response:
+    ) -> json:
         """
         List the configured Firewall IPS Rules
 
@@ -1468,7 +1468,7 @@ class ZiaPortalTalker(object):
             **kwargs,
         )
 
-        return result
+        return result.json()
 
     def list_firewall_filtering_rules(
         self,
@@ -1543,7 +1543,7 @@ class ZiaPortalTalker(object):
         self,
         file: dict,
         **kwargs,
-    ) -> requests.Response:
+    ) -> json:
         """
         Upload Certificate file for IDP Config
 
