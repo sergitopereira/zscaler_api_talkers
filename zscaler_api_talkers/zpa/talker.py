@@ -1,10 +1,9 @@
 import json
-import pdb
 
 import requests
 
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
-from typing import Any, Dict
+from typing import Any
 
 logger = setup_logger(name=__name__)
 
