@@ -1,8 +1,10 @@
 import json
+import pdb
 
 import requests
 
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
+from typing import Any, Dict
 
 logger = setup_logger(name=__name__)
 
@@ -370,18 +372,18 @@ class ZpaTalker(object):
         :param segmentGroupId: The unique identifier of the Segment Group.
         return: response
         """
-        url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{segmentGroupId}'
+        url: str = f'/mgmtconfig/v1/admin/customers/{self.customer_id}/segmentGroup/{segmentGroupId}'
         response = self.hp_http.delete_call(url=url, error_handling=True)
         return response
 
-    def update_segment_group(self, segmentGroupId: int, payload: object) -> json:
+    def update_segment_group(self, segment_group_id: int, payload: dict) -> json:
         """
         Update Segment Group
-        :param segmentGroupId: type int. The unique identifier of the Segment Group.
+        :param segment_group_id: type int. The unique identifier of the Segment Group.
         :param payload: type dict. Segment Group details to be updated.
         :return: Json
         """
-        url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/segmentGroup/{segmentGroupId}'
+        url: str = f'/mgmtconfig/v1/admin/customers/{self.customer_id}/segmentGroup/{segment_group_id}'
         response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
         return response
 
@@ -408,6 +410,17 @@ class ZpaTalker(object):
             url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/connector"
             response = self._obtain_all_results(url)
 
+        return response
+
+    def update_connector(self, connector_id: int, payload: dict) -> requests.Response:
+        """
+        Update Connector =
+        :param connector_id: type int. The unique identifier of the App Connector.
+        :param payload: type dict.
+        :return: Json
+        """
+        url  = f'/mgmtconfig/v1/admin/customers/{self.customer_id}/connector/{connector_id}'
+        response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
         return response
 
     def delete_bulk_connector(
@@ -480,7 +493,7 @@ class ZpaTalker(object):
         :param serverGroups: type dict. Server Groups part of App Connector Group
         :param lssAppConnectorGroup: type boolean. Is App Connector Group reserved for LSS
         """
-        url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup'
+        url: str = f'/mgmtconfig/v1/admin/customers/{self.customer_id}/appConnectorGroup'
         payload: dict[str | Any, object | Any] = {
             "name": name,
             "description": description,
@@ -512,7 +525,7 @@ class ZpaTalker(object):
         :param payload: type dict. Details of App Connector group to be updated
         return response
         """
-        url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}'
+        url: str = f'/mgmtconfig/v1/admin/customers/{self.customer_id}/appConnectorGroup/{appConnectorGroupId}'
         response = self.hp_http.put_call(url, headers=self.header, error_handling=True, payload=payload)
         return response
 
@@ -522,7 +535,7 @@ class ZpaTalker(object):
             :param appConnectorGroupId: type int. The unique identifier of the Connector Group
             return response
         """
-        url: str = f'/mgmtconfig/v1/admin/customers/{self.customerId}/appConnectorGroup/{appConnectorGroupId}'
+        url: str = f'/mgmtconfig/v1/admin/customers/{self.customer_id}/appConnectorGroup/{appConnectorGroupId}'
         response = self.hp_http.delete_call(url, error_handling=True)
         return response
     # ba-certificate-controller-v-2
