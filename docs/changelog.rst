@@ -3,8 +3,8 @@ v6.1.0 (To be release)
 Feat: Added cloud_connector API Talker for Cloud and Branch Connector (by `Dominic Schimanski <mailto:dschimanski@zscaler.com>)
 Feat: Added Method to update APP connectors (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Feat: Added list_subcloud methods to ZiaPortal Talker (by `Patrick de Niet`)
-Feat: Added a place for the Druid URL which will be required for Dashboard API calls
-Feat: Added an option to provide an existing Bearer Token in Authentication
+Feat: Added a place for the Druid URL which will be required for Dashboard API calls (by `Patrick de Niet`)
+Feat: Added an option to provide an existing Bearer Token in Authentication (by `Patrick de Niet`)
 
 v6.0.0 (August 2023)
 =========================
