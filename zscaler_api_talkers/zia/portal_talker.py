@@ -2290,23 +2290,6 @@ class ZiaPortalTalker(object):
         )
         return response.json()
 
-    def list_subscriptions(self) -> json:
-        """
-        Method to list subscriptions
-
-        :return: (json)
-        """
-        url = f"//subscriptions"
-        response = self.hp_http.get_call(
-            url=url,
-            headers=self.headers,
-            cookies={
-                "JSESSIONID": self.j_session_id,
-                "ZS_SESSION_CODE": self.zs_session_code,
-            },
-        )
-
-        return response.json()
 
     def list_casb_dlp_rules(self) -> json:
         """Method to retrieve SaaS Security API control DLP rules"""
