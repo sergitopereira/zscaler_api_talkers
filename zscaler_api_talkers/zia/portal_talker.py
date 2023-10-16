@@ -2296,7 +2296,7 @@ class ZiaPortalTalker(object):
 
         :return: (json)
         """
-        url = f"//subscriptions"
+        url = f"/subscriptions"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
