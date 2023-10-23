@@ -1,5 +1,5 @@
 import json
-
+import time
 import requests
 
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger

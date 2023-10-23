@@ -2395,3 +2395,29 @@ class ZiaPortalTalker(object):
         )
 
         return response.json()
+
+    # Manage Subclouds
+
+    def list_subclouds(
+        self,
+        query: str = None,
+    ) -> json:
+        """
+        Gets a list of subclouds
+        :param query: (str)
+        :return: (json)
+        """
+        url = "/subclouds"
+        if query:
+            url = f"/subclouds?{query}"
+
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+            cookies={
+                "JSESSIONID": self.j_session_id,
+                "ZS_SESSION_CODE": self.zs_session_code,
+            },
+        )
+
+        return response.json()
