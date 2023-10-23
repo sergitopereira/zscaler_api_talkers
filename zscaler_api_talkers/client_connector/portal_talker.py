@@ -131,3 +131,13 @@ class MobilePortalTalker(object):
         url = f"/webservice/api/webdevice/downloadDeviceList{query}"
         resp = requests.get(url=self.base_uri + url, headers={})
         return resp.text
+
+    def list_failopen_configuration(self) -> json:
+        """
+        Method to list the Fail Open configuration
+
+        :return: json or [] if no application bypasses are configured
+        """
+        url = f"/webservice/api/web/failOpenPolicy/listByCompany"
+        resp = self.hp_http.get_call(url=url, headers=self.headers)
+        return resp.json()

@@ -1,5 +1,5 @@
 import json
-
+import time
 import requests
 
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
@@ -18,11 +18,13 @@ class ZpaTalker(object):
         self,
         customer_id: int,
         cloud: str = "https://config.private.zscaler.com",
+        druid_cloud: str = None,
         client_id: str = None,
         client_secret: str = "",
     ):
         """
         :param cloud: (str) Example https://config.zpabeta.net
+        :param druid_cloud: (str) Example https://us1-zpa-dds.private.zscaler.com (optional)
         :param customer_id: (int) The unique identifier of the ZPA tenant
         :param client_id: (str)
         :param client_secret: (str)
@@ -84,30 +86,35 @@ class ZpaTalker(object):
         self,
         client_id: str,
         client_secret: str,
+        bearer: str,
     ) -> None:
         """
         Method to obtain the Bearer Token. Refer to https://help.zscaler.com/zpa/adding-api-keys
         :param client_id: (str) client id
         :param client_secret. (str) client secret
+        :param bearer (str) leverage existing Bearer Token (optional)
 
         return (json))
         """
         url = f"/signin"
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        payload = {
-            "client_id": client_id,
-            "client_secret": client_secret,
-        }
-        response = self.hp_http.post_call(
-            url,
-            headers=headers,
-            error_handling=True,
-            payload=payload,
-            urlencoded=True,
-        )
-        self.header = {
-            "Authorization": f"{response.json()['token_type']} {response.json()['access_token']}"
-        }
+        if bearer:
+            self.header = dict(authorization=bearer)
+        else:
+            payload = {
+                "client_id": client_id,
+                "client_secret": client_secret,
+            }
+            response = self.hp_http.post_call(
+                url,
+                headers=headers,
+                error_handling=True,
+                payload=payload,
+                urlencoded=True,
+            )
+            self.header = {
+                "Authorization": f"{response.json()['token_type']} {response.json()['access_token']}"
+            }
 
         return
 
@@ -953,3 +960,29 @@ class ZpaTalker(object):
         response = self._obtain_all_results(url)
 
         return response
+
+    # Dashboard Data through Druidservice
+
+    def druidget_highest_healthcheck_appconnectors(
+        self,
+        starttime: time = time.time() - 86400 * 14 , # 14 Days ago
+        endtime: time = time.time(),
+        query: str = False,
+    ) -> json:
+        """
+        Get the top 100 of Application Connectors with the highest Health Check count
+
+        :param query: (str) Example ?page=1&pagesize=20&search=consequat
+        :param starttime: (time) Unix Timestamp, Example 14 days ago -> time.time() - 86400 * 14
+        :param endtime: (time) Unix Timestamp, Example now -> time.time()
+        :return: (json)
+        """
+        if not query:
+            query = "?limit=100&order=DESC"
+        url = f"/druidservice/zpn/aggregates/{self.customer_id}/api/v1/aggs/topByMetric/target_count/func/MAX/startTime/{starttime}/endTime/{endtime}{query}"
+        response = self.hp_http.get_call(
+            url,
+            headers=self.header,
+            error_handling=True,
+        )
+        return response.json()
