@@ -1,4 +1,8 @@
-v6.1.0 (To be release)
+v6.1.19 (October)
+=========================
+Feat: Fixed several bugs of ZpaPortalTalker methods.(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
+v6.1.0 (October)
 =========================
 Feat: Added cloud_connector API Talker for Cloud and Branch Connector (by `Dominic Schimanski <mailto:dschimanski@zscaler.com>)
 Feat: Added list_subcloud methods to ZiaPortalTalker (by `Patrick de Niet`)

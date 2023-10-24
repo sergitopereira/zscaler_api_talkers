@@ -137,12 +137,12 @@ class ZpaPortalTalker(object):
 
         return response.json()
 
-    def list_application(
+    def list_application_segments(
         self,
         **kwargs,
     ) -> json:
         """
-        List Applications
+        List Applications Segments
 
         :return: (requests.Response object)
         """
@@ -152,12 +152,12 @@ class ZpaPortalTalker(object):
         )
         return response
 
-    def list_application_group(
+    def list_segment_groups(
         self,
         **kwargs,
-    ) -> requests.Response:
+    ) -> json:
         """
-        List Application Groups
+        List Segment Groups
 
         :return: (requests.Response object)
         """
@@ -167,315 +167,19 @@ class ZpaPortalTalker(object):
         )
         return response
 
-
-
-    def list_assistant_group(
-        self,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        List Assistant Groups
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="get",
-            url=f"{self.base_uri}/assistantGroup",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-
-
-    def list_clientless_certificate(
-        self,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        List Clientless Certificates
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="get",
-            url=f"{self.base_uri}/clientlessCertificate",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def delete_clientless_certificate(
-        self,
-        cert_id: str,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Delete a Clientless Certificate
-
-        :param cert_id: (int) ID of the Clientless Certificate
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="delete",
-            url=f"{self.base_uri}/clientlessCertificate/{cert_id}",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def list_role(
-        self,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        List Roles
-
-        :return: (requests.Response object)
-        """
-
-        result = request_(
-            method="get",
-            url=f"{self.base_uri}/roles",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def delete_role(
-        self,
-        role_id: str,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Delete a Role
-
-        :param role_id: (int) ID of the Role
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="delete",
-            url=f"{self.base_uri}/roles/{role_id}",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def add_role(
-        self,
-        data: dict,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Create a Role
-
-        :param data: (dict) Dict of Role configuration.
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="post",
-            url=f"{self.base_uri}/roles",
-            json=data,
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def add_search_suffix(
-        self,
-        data: dict,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Create a Search Suffix
-
-        :param data: (dict) Dict of Search Suffix configuration.
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="post",
-            url=f"{self.base_uri}/v2/associationtype/SEARCH_SUFFIX/domains",
-            json=data,
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def delete_server(
-        self,
-        server_id: str,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Delete a Server
-
-        :param server_id: (int) ID of the Server
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="delete",
-            url=f"{self.base_uri}/server/{server_id}",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def delete_server_group(
-        self,
-        group_id: str,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Delete a Server Group
-
-        :param group_id: (int) ID of the Server Group
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="delete",
-            url=f"{self.base_uri}/serverGroup/{group_id}",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def add_support_access(
-        self,
-        data: dict,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Create a Support Access
-
-        :param data: (dict) Dict of Support Access configuration.
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="post",
-            url=f"{self.base_uri}/ancestorPolicy",
-            json=data,
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def delete_admin_user(
-        self,
-        user_id: str,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Delete an Admin User
-
-        :param user_id: (int) ID of the Admin User
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="delete",
-            url=f"{self.base_uri}/users/{user_id}",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def add_admin_user(
-        self,
-        data: dict,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Create an Admin User
-
-        :param data: (dict) Dict of Admin User configuration.
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="post",
-            url=f"{self.base_uri}/users",
-            json=data,
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def update_admin_user(
-        self,
-        user_id: int,
-        data: dict,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Update an Admin User
-
-        :param user_id: (int) ID of user.
-        :param data: (dict) Dict of Admin User configuration.
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="put",
-            url=f"{self.base_uri}/users/{user_id}",
-            json=data,
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def list_user_portal(
+    def list_server_groups(
         self,
         **kwargs,
     ) -> json:
         """
-        List User Portals
-
-        :return: (requests.Response object)
+        List Server Groups
+        :return: (list)
         """
-        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/userPortal"
-        response = self.hp_http.get_call(url=url, headers=self.headers)
-        return response.json()
-
-    def delete_user_portal(
-        self,
-        portal_id: str,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Delete a User Portal
-
-        :param portal_id: (int) ID of the User Portal
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="delete",
-            url=f"{self.base_uri}/userPortal/{portal_id}",
-            helpers=self.headers,
-            **kwargs,
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/serverGroup"
+        response = self._obtain_all_pages(
+            url
         )
-
-        return result
+        return response
 
     def list_sso_login_options(self) -> json:
         """
@@ -506,3 +210,36 @@ class ZpaPortalTalker(object):
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/configOverrides"
         response = self.hp_http.get_call(url=url, headers=self.headers)
         return response.json()
+    def list_app_connector_groups(self) -> json:
+        """
+        List APP Connector Groups
+        :return: (json)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/assistantGroup"
+        response = self._obtain_all_pages(
+            url
+        )
+        return response
+
+    def list_app_connectors(self) -> json:
+        """
+        List App Connector
+        :return: (json)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/assistant"
+        response = self._obtain_all_pages(
+            url
+        )
+        return response
+
+    def list_policies(self,
+                      policy_type :str ='GLOBAL_POLICY') -> json:
+        """
+        List App Connector
+        :param policy_type: string. possible values GLOBAL_POLICY, REAUTH_POLICY,BYPASS_POLICY, ISOLATION_POLICY,INSPECTION_POLICY
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/policySet/rules/policyType/{policy_type}"
+        response = self._obtain_all_pages(
+            url
+        )
+        return response
