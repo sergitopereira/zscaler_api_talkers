@@ -1,5 +1,3 @@
-import pdb
-
 import requests
 import json
 from zscaler_api_talkers.helpers import HttpCalls, request_, setup_logger
@@ -48,21 +46,25 @@ class ZpaPortalTalker(object):
         url: str,
     ) -> list:
         result = []
-        response = requests.request(
-            "GET",
+        if "?pagesize" not in url:
+            url = f"{url}?page=1&pagesize=500"
+        response = self.hp_http.get_call(
             url,
-            headers=self.token,
+            headers=self.headers,
+            error_handling=True,
         )
+        if "list" not in response.json().keys():
+            return []
         if int(response.json()["totalPages"]) > 1:
-            i = 1
+            i = 0
             while i <= int(response.json()["totalPages"]):
-                result = (  # FIXME: I think this should be an list append instead of a string add.
-                    result
-                    + requests.request(
-                        "GET",
-                        url,
-                        headers=self.token,
-                    ).json()["list"]
+                result = (
+                        result
+                        + self.hp_http.get_call(
+                    f"{url}&page={i}",
+                    headers=self.headers,
+                    error_handling=True,
+                ).json()["list"]
                 )
                 i += 1
         else:
@@ -74,13 +76,23 @@ class ZpaPortalTalker(object):
         self,
         username: str,
         password: str,
+        bearer_token: str=None,
     ):
         """
         Method to obtain authorization token for subsequent calls.
 
         :param username: Email address
         :param password: Password for given user
+        :param bearer_token: Optional. Bearer token
         """
+        if bearer_token:
+            self.headers = {
+                "Content-Type": "application/json text/javascript, */*; q=0.01",
+                "Accept": "*/*",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Authorization": f"Bearer {bearer_token}",
+            }
+            return
         url = "/base/api/zpa/signin"
         payload = {
             "username": username,
@@ -95,33 +107,23 @@ class ZpaPortalTalker(object):
         )
         self.token = response.json()["Z-AUTH-TOKEN"]
         self.headers = {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json text/javascript, */*; q=0.01",
             "Accept": "*/*",
             "Accept-Encoding": "gzip, deflate, br",
             "Authorization": f"Bearer {self.token}",
         }
 
-    def list_admin_users(self) -> list:
+    def list_admin_users(self) -> json:
         """
         List admins users
 
         :return: (list)
         """
         url = f"/shift/api/v2/admin/customers/{self.customer_id}/users"
-        response = self.hp_http.get_call(
-            url=url,
-            headers=self.headers,
-        )
-        if int(response.json()["totalPages"]) > 1:
-            response = self._obtain_all_pages(
-                url
-            )  # FIXME: url isn't the whole URL thus _obtain_all_pages is failing
-        else:
-            response = response.json()["list"]
-
+        response = self._obtain_all_pages(url)
         return response
 
-    def list_admin_roles(self) -> requests.Response:
+    def list_admin_roles(self) -> json:
         """
         List admins roles
 
@@ -133,129 +135,22 @@ class ZpaPortalTalker(object):
             headers=self.headers,
         )
 
-        return response
-
-    def list_api_key(
-        self,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        List the configured API Keys
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="get",
-            url=f"{self.base_uri}/clientCredentials",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
-
-    def add_api_key(
-        self,
-        data: dict,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Create an API Key
-
-        :param data: (dict) Dict of API Key configuration.
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="post",
-            url=f"{self.base_uri}/clientCredentials",
-            helpers=self.headers,
-            json=data,
-            **kwargs,
-        )
-
-        return result
-
-    def update_api_key(
-        self,
-        data: dict,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Update an API Key
-
-        :param data: (dict) Dict of API Key configuration.
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="put",
-            url=f"{self.base_uri}/clientCredentials/{data.get('id')}",
-            helpers=self.headers,
-            json=data,
-            **kwargs,
-        )
-
-        return result
-
-    def delete_api_key(
-        self,
-        key_id: str,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Delete an API Key.
-
-        :param key_id: (int) ID of the API Key
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="delete",
-            url=f"{self.base_uri}/clientCredentials/{key_id}",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
+        return response.json()
 
     def list_application(
         self,
         **kwargs,
-    ) -> requests.Response:
+    ) -> json:
         """
         List Applications
 
         :return: (requests.Response object)
         """
-        result = request_(
-            method="get",
-            url=f"{self.base_uri}/v2/application",
-            helpers=self.headers,
-            **kwargs,
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/v2/application"
+        response = self._obtain_all_pages(
+            url
         )
-
-        return result
-
-    def delete_application(
-        self,
-        application_id: str,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Delete an Application.
-
-        :param application_id: (int) ID of the application
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="delete",
-            url=f"{self.base_uri}/v2/application/{application_id}",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
+        return response
 
     def list_application_group(
         self,
@@ -266,35 +161,13 @@ class ZpaPortalTalker(object):
 
         :return: (requests.Response object)
         """
-        result = request_(
-            method="get",
-            url=f"{self.base_uri}/applicationGroup",
-            helpers=self.headers,
-            **kwargs,
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/applicationGroup"
+        response = self._obtain_all_pages(
+            url
         )
+        return response
 
-        return result
 
-    def delete_application_group(
-        self,
-        group_id: str,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Delete an Application Group.
-
-        :param group_id: (int) ID of the application group
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="delete",
-            url=f"{self.base_uri}/applicationGroup/{group_id}",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
 
     def list_assistant_group(
         self,
@@ -314,26 +187,7 @@ class ZpaPortalTalker(object):
 
         return result
 
-    def delete_assistant_group(
-        self,
-        group_id,
-        **kwargs,
-    ) -> requests.Response:
-        """
-        Delete an Assistant Group.
 
-        :param group_id: (int) ID of the assistant group
-
-        :return: (requests.Response object)
-        """
-        result = request_(
-            method="delete",
-            url=f"{self.base_uri}/assistantGroup/{group_id}",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
 
     def list_clientless_certificate(
         self,
@@ -383,6 +237,7 @@ class ZpaPortalTalker(object):
 
         :return: (requests.Response object)
         """
+
         result = request_(
             method="get",
             url=f"{self.base_uri}/roles",
@@ -591,20 +446,15 @@ class ZpaPortalTalker(object):
     def list_user_portal(
         self,
         **kwargs,
-    ) -> requests.Response:
+    ) -> json:
         """
         List User Portals
 
         :return: (requests.Response object)
         """
-        result = request_(
-            method="get",
-            url=f"{self.base_uri}/userPortal",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/userPortal"
+        response = self.hp_http.get_call(url=url, headers=self.headers)
+        return response.json()
 
     def delete_user_portal(
         self,
@@ -634,7 +484,7 @@ class ZpaPortalTalker(object):
         :return: (json)
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/v2/ssoLoginOptions"
-        response = self.hp_http.get_call(url=url,headers=self.headers)
+        response = self.hp_http.get_call(url=url, headers=self.headers)
         return response.json()
 
     def list_session_timeout(self) -> json:
@@ -644,7 +494,7 @@ class ZpaPortalTalker(object):
         :return: (json)
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/v2/ssoLoginOptions"
-        response = self.hp_http.get_call(url=url,headers=self.headers)
+        response = self.hp_http.get_call(url=url, headers=self.headers)
         return response.json()
 
     def list_config_overrides(self) -> json:
@@ -654,5 +504,5 @@ class ZpaPortalTalker(object):
         :return: (json)
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/configOverrides"
-        response = self.hp_http.get_call(url=url,headers=self.headers)
+        response = self.hp_http.get_call(url=url, headers=self.headers)
         return response.json()
