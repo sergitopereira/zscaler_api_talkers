@@ -1,4 +1,4 @@
-v6.1.19 (October)
+v6.2.0 (October)
 =========================
 Feat: Fixed several bugs of ZpaPortalTalker methods.(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
