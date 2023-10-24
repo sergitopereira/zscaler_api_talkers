@@ -245,3 +245,17 @@ class ZpaPortalTalker(object):
         )
 
         return response.json()
+
+    def list_sso_login_options(
+        self,
+    ) -> json:
+        """
+        Method to obtain SSO login for admins >Authentication?Settings>Enforce SS) loging for admins
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/v2/ssoLoginOptions"
+        response = self.hp_http.get_call(
+            url=url,
+            headers=self.headers,
+        )
+
+        return response.json()
