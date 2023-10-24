@@ -59,12 +59,12 @@ class ZpaPortalTalker(object):
             i = 0
             while i <= int(response.json()["totalPages"]):
                 result = (
-                        result
-                        + self.hp_http.get_call(
-                    f"{url}&page={i}",
-                    headers=self.headers,
-                    error_handling=True,
-                ).json()["list"]
+                    result
+                    + self.hp_http.get_call(
+                        f"{url}&page={i}",
+                        headers=self.headers,
+                        error_handling=True,
+                    ).json()["list"]
                 )
                 i += 1
         else:
@@ -76,7 +76,7 @@ class ZpaPortalTalker(object):
         self,
         username: str,
         password: str,
-        bearer_token: str=None,
+        bearer_token: str = None,
     ):
         """
         Method to obtain authorization token for subsequent calls.
@@ -147,9 +147,7 @@ class ZpaPortalTalker(object):
         :return: (requests.Response object)
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/v2/application"
-        response = self._obtain_all_pages(
-            url
-        )
+        response = self._obtain_all_pages(url)
         return response
 
     def list_segment_groups(
@@ -162,9 +160,7 @@ class ZpaPortalTalker(object):
         :return: (requests.Response object)
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/applicationGroup"
-        response = self._obtain_all_pages(
-            url
-        )
+        response = self._obtain_all_pages(url)
         return response
 
     def list_server_groups(
@@ -176,9 +172,7 @@ class ZpaPortalTalker(object):
         :return: (list)
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/serverGroup"
-        response = self._obtain_all_pages(
-            url
-        )
+        response = self._obtain_all_pages(url)
         return response
 
     def list_sso_login_options(self) -> json:
@@ -210,15 +204,14 @@ class ZpaPortalTalker(object):
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/configOverrides"
         response = self.hp_http.get_call(url=url, headers=self.headers)
         return response.json()
+
     def list_app_connector_groups(self) -> json:
         """
         List APP Connector Groups
         :return: (json)
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/assistantGroup"
-        response = self._obtain_all_pages(
-            url
-        )
+        response = self._obtain_all_pages(url)
         return response
 
     def list_app_connectors(self) -> json:
@@ -227,19 +220,14 @@ class ZpaPortalTalker(object):
         :return: (json)
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/assistant"
-        response = self._obtain_all_pages(
-            url
-        )
+        response = self._obtain_all_pages(url)
         return response
 
-    def list_policies(self,
-                      policy_type :str ='GLOBAL_POLICY') -> json:
+    def list_policies(self, policy_type: str = "GLOBAL_POLICY") -> json:
         """
         List App Connector
         :param policy_type: string. possible values GLOBAL_POLICY, REAUTH_POLICY,BYPASS_POLICY, ISOLATION_POLICY,INSPECTION_POLICY
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/policySet/rules/policyType/{policy_type}"
-        response = self._obtain_all_pages(
-            url
-        )
+        response = self._obtain_all_pages(url)
         return response
