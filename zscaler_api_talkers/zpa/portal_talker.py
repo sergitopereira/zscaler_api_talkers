@@ -1,6 +1,7 @@
 import requests
 import json
 from zscaler_api_talkers.helpers import HttpCalls, request_, setup_logger
+import time
 
 logger = setup_logger(name=__name__)
 
@@ -40,6 +41,7 @@ class ZpaPortalTalker(object):
                 username=username,
                 password=password,
             )
+        self.hp_http_druid = None
 
     def _obtain_all_pages(
         self,
@@ -92,6 +94,10 @@ class ZpaPortalTalker(object):
                 "Accept-Encoding": "gzip, deflate, br",
                 "Authorization": f"Bearer {bearer_token}",
             }
+            self.hp_http_druid = HttpCalls(
+                host=self._list_zone_details()["serviceEndpoints"]["service.zpa.druid"],
+                verify=True,
+            )
             return
         url = "/base/api/zpa/signin"
         payload = {
@@ -112,6 +118,13 @@ class ZpaPortalTalker(object):
             "Accept-Encoding": "gzip, deflate, br",
             "Authorization": f"Bearer {self.token}",
         }
+        self.druid_service = self._list_zone_details()["serviceEndpoints"][
+            "service.zpa.druid"
+        ]
+        self.hp_http_druid = HttpCalls(
+            host=self._list_zone_details()["serviceEndpoints"]["service.zpa.druid"],
+            verify=True,
+        )
 
     def list_admin_users(self) -> json:
         """
@@ -258,4 +271,28 @@ class ZpaPortalTalker(object):
             headers=self.headers,
         )
 
+        return response.json()
+
+    def list_druidget_highest_healthcheck_appconnectors(
+        self,
+        starttime: time = int(time.time()) - 86400 * 14,  # 14 Days ago
+        endtime: time = int(time.time()),
+        query: str = False,
+    ) -> json:
+        """
+        Get the top 100 of Application Connectors with the highest Health Check count
+
+        :param query: (str) Example ?page=1&pagesize=20&search=consequat
+        :param starttime: (time) Unix Timestamp, Example 14 days ago -> time.time() - 86400 * 14
+        :param endtime: (time) Unix Timestamp, Example now -> time.time()
+        :return: (json)
+        """
+        if not query:
+            query = "?limit=100&order=DESC"
+        url = f"/druidservice/zpn/aggregates/{self.customer_id}/api/v1/aggs/topByMetric/target_count/func/MAX/startTime/{starttime}/endTime/{endtime}{query}"
+        response = self.hp_http_druid.get_call(
+            url,
+            headers=self.headers,
+            error_handling=True,
+        )
         return response.json()

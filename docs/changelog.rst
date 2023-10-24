@@ -1,6 +1,8 @@
 v6.2.0 (October)
 =========================
 Feat: Fixed several bugs of ZpaPortalTalker methods.(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Fix: Add Method to obtain ZPA services and druid cloud (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
 
 v6.1.0 (October)
 =========================
