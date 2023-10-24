@@ -1,5 +1,4 @@
 import json
-import time
 import requests
 
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
@@ -18,13 +17,11 @@ class ZpaTalker(object):
         self,
         customer_id: int,
         cloud: str = "https://config.private.zscaler.com",
-        druid_cloud: str = None,
         client_id: str = None,
         client_secret: str = "",
     ):
         """
         :param cloud: (str) Example https://config.zpabeta.net
-        :param druid_cloud: (str) Example https://us1-zpa-dds.private.zscaler.com (optional)
         :param customer_id: (int) The unique identifier of the ZPA tenant
         :param client_id: (str)
         :param client_secret: (str)
@@ -86,7 +83,7 @@ class ZpaTalker(object):
         self,
         client_id: str,
         client_secret: str,
-        bearer: str,
+        bearer: str=None,
     ) -> None:
         """
         Method to obtain the Bearer Token. Refer to https://help.zscaler.com/zpa/adding-api-keys
@@ -947,7 +944,7 @@ class ZpaTalker(object):
     def list_issued_certificates(
         self,
         query: str = None,
-    ) -> list:
+    ) -> json:
         """
         Method to get all issued certificates
 
@@ -961,28 +958,3 @@ class ZpaTalker(object):
 
         return response
 
-    # Dashboard Data through Druidservice
-
-    def druidget_highest_healthcheck_appconnectors(
-        self,
-        starttime: time = time.time() - 86400 * 14 , # 14 Days ago
-        endtime: time = time.time(),
-        query: str = False,
-    ) -> json:
-        """
-        Get the top 100 of Application Connectors with the highest Health Check count
-
-        :param query: (str) Example ?page=1&pagesize=20&search=consequat
-        :param starttime: (time) Unix Timestamp, Example 14 days ago -> time.time() - 86400 * 14
-        :param endtime: (time) Unix Timestamp, Example now -> time.time()
-        :return: (json)
-        """
-        if not query:
-            query = "?limit=100&order=DESC"
-        url = f"/druidservice/zpn/aggregates/{self.customer_id}/api/v1/aggs/topByMetric/target_count/func/MAX/startTime/{starttime}/endTime/{endtime}{query}"
-        response = self.hp_http.get_call(
-            url,
-            headers=self.header,
-            error_handling=True,
-        )
-        return response.json()

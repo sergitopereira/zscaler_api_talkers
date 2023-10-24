@@ -1,19 +1,18 @@
 import pdb
-
+import time
 import requests
 import json
 from zscaler_api_talkers.helpers import HttpCalls, request_, setup_logger
 
 logger = setup_logger(name=__name__)
 
-
 class ZpaPortalTalker(object):
     def __init__(
-        self,
-        customer_id: int,
-        cloud: str = "https://api.private.zscaler.com",
-        username: str = "",
-        password: str = "",
+            self,
+            customer_id: int,
+            cloud: str = "https://api.private.zscaler.com",
+            username: str = "",
+            password: str = "",
     ):
         """
         Method to start the class
@@ -44,8 +43,8 @@ class ZpaPortalTalker(object):
             )
 
     def _obtain_all_pages(
-        self,
-        url: str,
+            self,
+            url: str,
     ) -> list:
         result = []
         response = requests.request(
@@ -57,12 +56,12 @@ class ZpaPortalTalker(object):
             i = 1
             while i <= int(response.json()["totalPages"]):
                 result = (  # FIXME: I think this should be an list append instead of a string add.
-                    result
-                    + requests.request(
-                        "GET",
-                        url,
-                        headers=self.token,
-                    ).json()["list"]
+                        result
+                        + requests.request(
+                    "GET",
+                    url,
+                    headers=self.token,
+                ).json()["list"]
                 )
                 i += 1
         else:
@@ -71,9 +70,9 @@ class ZpaPortalTalker(object):
         return result
 
     def authenticate(
-        self,
-        username: str,
-        password: str,
+            self,
+            username: str,
+            password: str,
     ):
         """
         Method to obtain authorization token for subsequent calls.
@@ -101,7 +100,7 @@ class ZpaPortalTalker(object):
             "Authorization": f"Bearer {self.token}",
         }
 
-    def list_admin_users(self) -> list:
+    def list_admin_users(self) -> json:
         """
         List admins users
 
@@ -121,7 +120,7 @@ class ZpaPortalTalker(object):
 
         return response
 
-    def list_admin_roles(self) -> requests.Response:
+    def list_admin_roles(self) -> json:
         """
         List admins roles
 
@@ -133,30 +132,25 @@ class ZpaPortalTalker(object):
             headers=self.headers,
         )
 
-        return response
+        return response.json()
 
     def list_api_key(
-        self,
-        **kwargs,
-    ) -> requests.Response:
+            self,
+            **kwargs,
+    ) -> json:
         """
         List the configured API Keys
 
         :return: (requests.Response object)
         """
-        result = request_(
-            method="get",
-            url=f"{self.base_uri}/clientCredentials",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/clientCredentials"
+        response = self.hp_http.get_call(url=url, headers=self.headers)
+        return response.json()
 
     def add_api_key(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Create an API Key
@@ -176,9 +170,9 @@ class ZpaPortalTalker(object):
         return result
 
     def update_api_key(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Update an API Key
@@ -198,9 +192,9 @@ class ZpaPortalTalker(object):
         return result
 
     def delete_api_key(
-        self,
-        key_id: str,
-        **kwargs,
+            self,
+            key_id: str,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete an API Key.
@@ -219,8 +213,8 @@ class ZpaPortalTalker(object):
         return result
 
     def list_application(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> requests.Response:
         """
         List Applications
@@ -237,9 +231,9 @@ class ZpaPortalTalker(object):
         return result
 
     def delete_application(
-        self,
-        application_id: str,
-        **kwargs,
+            self,
+            application_id: str,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete an Application.
@@ -258,8 +252,8 @@ class ZpaPortalTalker(object):
         return result
 
     def list_application_group(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> requests.Response:
         """
         List Application Groups
@@ -276,9 +270,9 @@ class ZpaPortalTalker(object):
         return result
 
     def delete_application_group(
-        self,
-        group_id: str,
-        **kwargs,
+            self,
+            group_id: str,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete an Application Group.
@@ -297,8 +291,8 @@ class ZpaPortalTalker(object):
         return result
 
     def list_assistant_group(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> requests.Response:
         """
         List Assistant Groups
@@ -315,9 +309,9 @@ class ZpaPortalTalker(object):
         return result
 
     def delete_assistant_group(
-        self,
-        group_id,
-        **kwargs,
+            self,
+            group_id,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete an Assistant Group.
@@ -336,8 +330,8 @@ class ZpaPortalTalker(object):
         return result
 
     def list_clientless_certificate(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> requests.Response:
         """
         List Clientless Certificates
@@ -354,9 +348,9 @@ class ZpaPortalTalker(object):
         return result
 
     def delete_clientless_certificate(
-        self,
-        cert_id: str,
-        **kwargs,
+            self,
+            cert_id: str,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete a Clientless Certificate
@@ -375,14 +369,15 @@ class ZpaPortalTalker(object):
         return result
 
     def list_role(
-        self,
-        **kwargs,
+            self,
+            **kwargs,
     ) -> requests.Response:
         """
         List Roles
 
         :return: (requests.Response object)
         """
+
         result = request_(
             method="get",
             url=f"{self.base_uri}/roles",
@@ -393,9 +388,9 @@ class ZpaPortalTalker(object):
         return result
 
     def delete_role(
-        self,
-        role_id: str,
-        **kwargs,
+            self,
+            role_id: str,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete a Role
@@ -414,9 +409,9 @@ class ZpaPortalTalker(object):
         return result
 
     def add_role(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Create a Role
@@ -436,9 +431,9 @@ class ZpaPortalTalker(object):
         return result
 
     def add_search_suffix(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Create a Search Suffix
@@ -458,9 +453,9 @@ class ZpaPortalTalker(object):
         return result
 
     def delete_server(
-        self,
-        server_id: str,
-        **kwargs,
+            self,
+            server_id: str,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete a Server
@@ -479,9 +474,9 @@ class ZpaPortalTalker(object):
         return result
 
     def delete_server_group(
-        self,
-        group_id: str,
-        **kwargs,
+            self,
+            group_id: str,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete a Server Group
@@ -500,9 +495,9 @@ class ZpaPortalTalker(object):
         return result
 
     def add_support_access(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Create a Support Access
@@ -522,9 +517,9 @@ class ZpaPortalTalker(object):
         return result
 
     def delete_admin_user(
-        self,
-        user_id: str,
-        **kwargs,
+            self,
+            user_id: str,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete an Admin User
@@ -543,9 +538,9 @@ class ZpaPortalTalker(object):
         return result
 
     def add_admin_user(
-        self,
-        data: dict,
-        **kwargs,
+            self,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Create an Admin User
@@ -565,10 +560,10 @@ class ZpaPortalTalker(object):
         return result
 
     def update_admin_user(
-        self,
-        user_id: int,
-        data: dict,
-        **kwargs,
+            self,
+            user_id: int,
+            data: dict,
+            **kwargs,
     ) -> requests.Response:
         """
         Update an Admin User
@@ -589,27 +584,22 @@ class ZpaPortalTalker(object):
         return result
 
     def list_user_portal(
-        self,
-        **kwargs,
-    ) -> requests.Response:
+            self,
+            **kwargs,
+    ) -> json:
         """
         List User Portals
 
         :return: (requests.Response object)
         """
-        result = request_(
-            method="get",
-            url=f"{self.base_uri}/userPortal",
-            helpers=self.headers,
-            **kwargs,
-        )
-
-        return result
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/userPortal"
+        response = self.hp_http.get_call(url=url, headers=self.headers)
+        return response.json()
 
     def delete_user_portal(
-        self,
-        portal_id: str,
-        **kwargs,
+            self,
+            portal_id: str,
+            **kwargs,
     ) -> requests.Response:
         """
         Delete a User Portal
@@ -634,7 +624,7 @@ class ZpaPortalTalker(object):
         :return: (json)
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/v2/ssoLoginOptions"
-        response = self.hp_http.get_call(url=url,headers=self.headers)
+        response = self.hp_http.get_call(url=url, headers=self.headers)
         return response.json()
 
     def list_session_timeout(self) -> json:
@@ -644,7 +634,7 @@ class ZpaPortalTalker(object):
         :return: (json)
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/v2/ssoLoginOptions"
-        response = self.hp_http.get_call(url=url,headers=self.headers)
+        response = self.hp_http.get_call(url=url, headers=self.headers)
         return response.json()
 
     def list_config_overrides(self) -> json:
@@ -654,5 +644,6 @@ class ZpaPortalTalker(object):
         :return: (json)
         """
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/configOverrides"
-        response = self.hp_http.get_call(url=url,headers=self.headers)
+        response = self.hp_http.get_call(url=url, headers=self.headers)
         return response.json()
+
