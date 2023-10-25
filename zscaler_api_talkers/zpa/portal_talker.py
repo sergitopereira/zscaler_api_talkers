@@ -188,6 +188,76 @@ class ZpaPortalTalker(object):
         response = self._obtain_all_pages(url)
         return response
 
+    def list_servers(
+        self,
+        **kwargs,
+    ) -> json:
+        """
+        List Servers
+        :return: (list)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/server"
+        response = self._obtain_all_pages(url)
+        return response
+
+    def list_saml_attributes(
+        self,
+        **kwargs,
+    ) -> json:
+        """
+        List SAML attributes
+        :return: (list)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/samlAttribute"
+        response = self.hp_http.get_call(url=url, headers=self.headers)
+        return response.json()
+
+    def list_service_edges(self) -> json:
+        """
+        List Service Edges
+
+        :return: (list)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/privateBroker"
+        response = self._obtain_all_pages(url)
+        return response
+
+    def list_privileged_portals(self) -> json:
+        """
+        List Privileged portals
+        :return: (list)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/sraPortal"
+        response = self._obtain_all_pages(url)
+        return response
+
+    def list_privileged_consoles(self) -> json:
+        """
+        List Privileged portals
+        :return: (list)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/sraConsole"
+        response = self._obtain_all_pages(url)
+        return response
+
+    def list_portal_links(self) -> json:
+        """
+        List Portal Links
+        :return: (list)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/userPortalLink"
+        response = self._obtain_all_pages(url)
+        return response
+
+    def list_user_portals(self) -> json:
+        """
+        List Portal Links
+        :return: (list)
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/userPortal"
+        response = self._obtain_all_pages(url)
+        return response
+
     def list_sso_login_options(self) -> json:
         """
         List SSO login options
@@ -245,6 +315,13 @@ class ZpaPortalTalker(object):
         response = self._obtain_all_pages(url)
         return response
 
+    def list_certificates(self) -> json:
+        """
+        list certificates
+        """
+        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/clientlessCertificate"
+        response = self._obtain_all_pages(url)
+        return response
     def _list_zone_details(
         self,
     ) -> json:

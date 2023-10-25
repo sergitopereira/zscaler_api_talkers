@@ -1,3 +1,7 @@
+v6.2.1 (To be released)
+=========================
+Feat: Added list_servers, list_saml_attributes,list_service_edges, list_privileged_portals, etc to ZpaPortalTalker methods.(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
 v6.2.0 (October)
 =========================
 Feat: Fixed several bugs of ZpaPortalTalker methods.(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
