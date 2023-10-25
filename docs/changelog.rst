@@ -1,6 +1,7 @@
-v6.2.1 (To be released)
+v6.2.1 (Octiber)
 =========================
 Feat: Added list_servers, list_saml_attributes,list_service_edges, list_privileged_portals, etc to ZpaPortalTalker methods.(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Feat: Added ability to specify query for ZccPortalTalker list_devices().(by `Patrick de Niet`)
 
 v6.2.0 (October)
 =========================
