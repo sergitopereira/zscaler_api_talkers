@@ -122,12 +122,15 @@ class MobilePortalTalker(object):
         resp = self.hp_http.get_call(url=url, headers=headers)
         return urllib.parse.urlparse(resp.json()).query
     
-    def list_devices(self) -> str :
+    def list_devices(
+            self,
+            sub_query: str = "&sortBy=keepAliveTimestamp&type=0&osId=0&user=0&version=&searchProperty=id&supportedDevice=undefined"
+        ):
         """
         Method to list devices in csv
         :return: 
         """
-        query = "?" + self._list_download_device_url() + "&sortBy=keepAliveTimestamp&type=0&osId=0&user=0&version=&searchProperty=id&supportedDevice=undefined"
+        query = "?" + self._list_download_device_url() + sub_query
         url = f"/webservice/api/webdevice/downloadDeviceList{query}"
         resp = requests.get(url=self.base_uri + url, headers={})
         return resp.text
