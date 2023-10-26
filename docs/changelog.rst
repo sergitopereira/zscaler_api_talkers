@@ -1,4 +1,8 @@
-v6.2.1 (Octiber)
+v6.2.2 (October)
+=========================
+Feat: Added list_forwarding_profile_detail to Client Connector Portal Talker methods.(by `Eric Reyes <mailto:ereyes@zscaler.com>`_)
+
+v6.2.1 (October)
 =========================
 Feat: Added list_servers, list_saml_attributes,list_service_edges, list_privileged_portals, etc to ZpaPortalTalker methods.(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Feat: Added ability to specify query for ZccPortalTalker list_devices().(by `Patrick de Niet`)
