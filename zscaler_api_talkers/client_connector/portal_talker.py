@@ -77,8 +77,13 @@ class MobilePortalTalker(object):
         resp = self.hp_http.get_call(url=url, headers=self.headers)
         return resp.json()
 
-    def list_forwarding_profile_detail(self, id) -> json:
-        """Method to retrieve specific forwarding profile information Takes single arguement with profile ID"""
+    def list_forwarding_profile_detail(self, id: int) -> json:
+        """
+        Method to retrieve specific forwarding profile information, takes single arguement with profile ID
+        
+        :param id: value of "id" from forwarding profile API response
+        :type id: int
+        """
         url = "/webservice/api/web/trustedNetwork/forwardingProfiles/" + id
         resp = self.hp_http.get_call(url=url, headers=self.headers)
         return resp.json()
