@@ -1,5 +1,6 @@
 v6.2.2 (October)
 =========================
+Feat: Added Retries to main HTTP class.(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Feat: Added list_forwarding_profile_detail to Client Connector Portal Talker methods.(by `Eric Reyes <mailto:ereyes@zscaler.com>`_)
 
 v6.2.1 (October)
