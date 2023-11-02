@@ -1,3 +1,8 @@
+v6.2.4 (October)
+=========================
+Feat: Added method to list App Connectors by peak Memory Utilization.(by `Andre Betzler <mailto:abetzler@zscaler.com>`_)
+Feat: Added method to list App Connectors by peak File Descriptor Utilization.(by `Andre Betzler <mailto:abetzler@zscaler.com>`_)
+
 v6.2.3 (October)
 =========================
 Feat: Added method to list App Connectors by peak CPU Utilization.(by `Andre Betzler <mailto:abetzler@zscaler.com>`_)
