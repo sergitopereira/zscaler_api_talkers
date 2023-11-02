@@ -5,11 +5,11 @@ Feat: Added Method to update APP connectors (by `Sergio Pereira <mailto:spereira
 FIX: Proper defaults for ZIA __init__() attributes.  (by `Dax Mickelson <mailto:dmickelson@zscaler.com>`_)
 FIX: All instead of Any for ZIA username/password/api_key auth method.  (by `Dax Mickelson <mailto:dmickelson@zscaler
 .com>`_)
-Feat: Add warning message about needing to auth if not done during ZIA __init__().  (by `Dax Mickelson <mailto:dmickelson@zscaler.com>`_)
-FIX: Improve logic flow in ZIA._obtain_all().  No need to break for else.  Just return.  (by `Dax Mickelson
+Feat: Add warning message about needing to auth if not done during ZIA __init__().  (by `Dax Mickelson
 <mailto:dmickelson@zscaler.com>`_)
-FIX: Clean up excess if logic in http_calls methods.  (by `Dax Mickelson <mailto:dmickelson@zscaler.com>`_)
-TODO: We really need to build retry logic for 429 Retry status_codes.  (by `Dax Mickelson <mailto:dmickelson@zscaler.com>`_)
+Feat: Add warning message about needing to auth if not done during ZIA __init__().  (by `Dax Mickelson
+<mailto:dmickelson@zscaler.com>`_)
+Feat: Updated main http_call helper to perform exponential backoff retries (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v6.0.0 (August 2023)
 =========================
