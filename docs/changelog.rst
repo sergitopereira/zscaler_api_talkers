@@ -7,6 +7,9 @@ FIX: All instead of Any for ZIA username/password/api_key auth method.  (by `Dax
 .com>`_)
 Feat: Add warning message about needing to auth if not done during ZIA __init__().  (by `Dax Mickelson
 <mailto:dmickelson@zscaler.com>`_)
+Feat: Add warning message about needing to auth if not done during ZIA __init__().  (by `Dax Mickelson
+<mailto:dmickelson@zscaler.com>`_)
+Feat: Updated main http_call helper to perform exponential backoff retries (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v6.0.0 (August 2023)
 =========================

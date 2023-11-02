@@ -1,5 +1,5 @@
 import requests
-
+from requests.adapters import HTTPAdapter, Retry
 from .logger import setup_logger
 
 logger = setup_logger(name=__name__)
@@ -66,6 +66,12 @@ class HttpCalls(object):
             self.headers.update(header)
         self.cookies = None
         self.verify = verify
+        self.requests = requests.Session()
+        retries = Retry(total=12,  # 2^12 = 4096 sec so max wait time in last retry 1.1 h
+                        backoff_factor=2,
+                        status_forcelist=[429],
+                        allowed_methods=["GET", "PUT", "DELETE", "POST"])
+        self.requests.mount('https://', HTTPAdapter(max_retries=retries))
 
     def get_call(
         self,
