@@ -322,6 +322,7 @@ class ZpaPortalTalker(object):
         url = f"/zpn/api/v1/admin/customers/{self.customer_id}/clientlessCertificate"
         response = self._obtain_all_pages(url)
         return response
+
     def _list_zone_details(
         self,
     ) -> json:
@@ -329,20 +330,6 @@ class ZpaPortalTalker(object):
         Internal Method to obtain service endpoints, server configurations etc
         """
         url = f"/zpn/api/v1/admin/zoneDetails?accessingCustomerId={self.customer_id}"
-        response = self.hp_http.get_call(
-            url=url,
-            headers=self.headers,
-        )
-
-        return response.json()
-
-    def list_sso_login_options(
-        self,
-    ) -> json:
-        """
-        Method to obtain SSO login for admins >Authentication?Settings>Enforce SS) loging for admins
-        """
-        url = f"/zpn/api/v1/admin/customers/{self.customer_id}/v2/ssoLoginOptions"
         response = self.hp_http.get_call(
             url=url,
             headers=self.headers,
@@ -367,6 +354,30 @@ class ZpaPortalTalker(object):
         if not query:
             query = "?limit=100&order=DESC"
         url = f"/druidservice/zpn/aggregates/{self.customer_id}/api/v1/aggs/topByMetric/target_count/func/MAX/startTime/{starttime}/endTime/{endtime}{query}"
+        response = self.hp_http_druid.get_call(
+            url,
+            headers=self.headers,
+            error_handling=True,
+        )
+        return response.json()
+
+    def list_druidget_peak_cpu_appconnectors(
+        self,
+        starttime: time = int(time.time()) - 86400 * 14,  # 14 Days ago
+        endtime: time = int(time.time()),
+        query: str = False,
+    ) -> json:
+        """
+        Get the top 100 Application Connectors with the highest Peak CPU Utilization
+
+        :param query: (str) Example ?page=1&pagesize=20&search=consequat
+        :param starttime: (time) Unix Timestamp, Example 14 days ago -> time.time() - 86400 * 14
+        :param endtime: (time) Unix Timestamp, Example now -> time.time()
+        :return: (json)
+        """
+        if not query:
+            query = "?limit=100&order=DESC"
+        url = f"/druidservice/zpn/aggregates/{self.customer_id}/api/v1/aggs/topByMetric/cpu_util_percent/func/MAX/startTime/{starttime}/endTime/{endtime}{query}"
         response = self.hp_http_druid.get_call(
             url,
             headers=self.headers,
