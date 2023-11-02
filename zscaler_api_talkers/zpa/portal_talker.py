@@ -408,3 +408,27 @@ class ZpaPortalTalker(object):
             error_handling=True,
         )
         return response.json()
+
+    def list_druidget_peak_fd_util(
+        self,
+        starttime: time = int(time.time()) - 86400 * 14,  # 14 Days ago
+        endtime: time = int(time.time()),
+        query: str = False,
+    ) -> json:
+        """
+        Get the top 100 App Connectors with the highest Peak File Descriptor Utilization
+
+        :param query: (str) Example ?page=1&pagesize=20&search=consequat
+        :param starttime: (time) Unix Timestamp, Example 14 days ago -> time.time() - 86400 * 14
+        :param endtime: (time) Unix Timestamp, Example now -> time.time()
+        :return: (json)
+        """
+        if not query:
+            query = "?limit=100&order=DESC"
+        url = f"/druidservice/zpn/aggregates/{self.customer_id}/api/v1/aggs/topByMetric/process_fd_percentage/func/MAX/startTime/{starttime}/endTime/{endtime}{query}"
+        response = self.hp_http_druid.get_call(
+            url,
+            headers=self.headers,
+            error_handling=True,
+        )
+        return response.json()
