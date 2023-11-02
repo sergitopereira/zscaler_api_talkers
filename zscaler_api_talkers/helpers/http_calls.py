@@ -31,7 +31,7 @@ def _zia_http_codes(response: requests.Response):
     elif response.status_code == 415:
         raise ValueError("Unsupported media type")
     elif response.status_code == 429:
-        raise ValueError("Exceeded the rate limit or quota")
+        raise ValueError("Exceeded the rate limit or quota")  # FIXME: We really should retry after rate limit timer.
     elif response.status_code == 500:
         raise ValueError("Unexpected error")
     elif response.status_code == 503:
@@ -99,9 +99,8 @@ class HttpCalls(object):
             )
             if error_handling:
                 _zia_http_codes(response)
-            else:
-                if response.status_code not in [200, 201, 204]:
-                    raise ValueError(f"{response.status_code} -> {response.content}")
+            elif response.status_code not in [200, 201, 204]:
+                raise ValueError(f"{response.status_code} -> {response.content}")
             return response
         except requests.HTTPError as e:
             raise ValueError(e)
@@ -154,9 +153,8 @@ class HttpCalls(object):
                 )
             if error_handling:
                 _zia_http_codes(response)
-            else:
-                if response.status_code not in [200, 201, 204]:
-                    raise ValueError(f"{response.status_code} -> {response.content}")
+            elif response.status_code not in [200, 201, 204]:
+                raise ValueError(f"{response.status_code} -> {response.content}")
             return response
         except requests.HTTPError as e:
             raise ValueError(e)
@@ -226,14 +224,8 @@ class HttpCalls(object):
             )
             if error_handling:
                 _zia_http_codes(response)
-            else:
-                if response.status_code not in [200, 201, 204]:
-                    try:
-                        raise ValueError(
-                            f"HTTPS Response code {response.status_code} : {response.json()}"
-                        )
-                    except ValueError:
-                        raise ValueError(response.status_code)
+            elif response.status_code not in [200, 201, 204]:
+                raise ValueError(f"HTTPS Response code {response.status_code} : {response.json()}")
             return response
         except requests.HTTPError as e:
             raise ValueError(e)
@@ -270,9 +262,8 @@ class HttpCalls(object):
             )
             if error_handling:
                 _zia_http_codes(response)
-            else:
-                if response.status_code not in [200, 201, 204]:
-                    raise ValueError(response.status_code)
+            elif response.status_code not in [200, 201, 204]:
+                raise ValueError(response.status_code)
             return response
         except requests.HTTPError as e:
             raise ValueError(e)
