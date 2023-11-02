@@ -31,7 +31,7 @@ def _zia_http_codes(response: requests.Response):
     elif response.status_code == 415:
         raise ValueError("Unsupported media type")
     elif response.status_code == 429:
-        raise ValueError("Exceeded the rate limit or quota")  # FIXME: We really should retry after rate limit timer.
+        raise ValueError("Exceeded the rate limit or quota")
     elif response.status_code == 500:
         raise ValueError("Unexpected error")
     elif response.status_code == 503:
