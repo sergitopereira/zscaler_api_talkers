@@ -27,9 +27,9 @@ class ZiaTalker(object):
         self,
         cloud_name: str,
         bearer: str = None,
-        api_key: str = "",
-        username: str = "",
-        password: str = "",
+        api_key: str = None,
+        username: str = None,
+        password: str = None,
     ):
         """
         Method to start the class
@@ -47,12 +47,14 @@ class ZiaTalker(object):
         self.headers = None
         if bearer:
             self.headers = {"Authorization": f"Bearer {bearer}"}
-        elif username and any([password, api_key]):
+        elif all([username, password, api_key]):
             self.authenticate(
                 username=username,
                 api_key=api_key,
                 password=password,
             )
+        else:
+            logger.warning("No authentication method provided.  Use authenticate() method before continuing.")
 
     def authenticate(
         self,
