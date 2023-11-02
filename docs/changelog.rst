@@ -10,6 +10,9 @@ Feat: Add warning message about needing to auth if not done during ZIA __init__(
 Feat: Add warning message about needing to auth if not done during ZIA __init__().  (by `Dax Mickelson
 <mailto:dmickelson@zscaler.com>`_)
 Feat: Updated main http_call helper to perform exponential backoff retries (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+FIX: Improve logic flow in ZIA._obtain_all().  No need to break for else.  Just return.  (by `Dax Mickelson
+<mailto:dmickelson@zscaler.com>`_)
+FIX: Improve logic flow for "if/else" on http_calls' methods.  (by `Dax Mickelson <mailto:dmickelson@zscaler.com>`_)
 
 v6.0.0 (August 2023)
 =========================
