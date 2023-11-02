@@ -139,9 +139,7 @@ class ZiaTalker(object):
                 page += 1
                 time.sleep(1)
             else:
-                break
-
-        return result
+                return result
 
     def get_status(self) -> json:
         """

@@ -7,6 +7,7 @@ FIX: All instead of Any for ZIA username/password/api_key auth method.  (by `Dax
 .com>`_)
 Feat: Add warning message about needing to auth if not done during ZIA __init__().  (by `Dax Mickelson
 <mailto:dmickelson@zscaler.com>`_)
+FIX: Improve logic flow in ZIA._obtain_all().  No need to break for else.  Just return.
 
 v6.0.0 (August 2023)
 =========================
