@@ -1,3 +1,7 @@
+v6.2.3 (October)
+=========================
+Feat: Added method to list App Connectors by peak CPU Utilization.(by `Andre Betzler <mailto:abetzler@zscaler.com>`_)
+
 v6.2.2 (October)
 =========================
 Feat: Added Retries to main HTTP class.(by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
