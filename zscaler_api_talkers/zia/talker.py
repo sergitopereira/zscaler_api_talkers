@@ -556,13 +556,11 @@ class ZiaTalker(object):
 
         :return:  (json)
         """
-        """if categoryId not in valid_category_ids:
-            print(f'Error -> Invalid category id')
-            raise ValueError("Invalid category id")"""
+
         url = f"/urlCategories/{category_id}"
         parameters = {}
 
-        if action and action not in ["ADD_TO_LIST", "REMOVE_FROM_LIST"]:
+        if action not in ["ADD_TO_LIST", "REMOVE_FROM_LIST"]:
             logger.error(f"Invalid action: {action}")
             raise ValueError("Invalid action")
         else:
