@@ -54,7 +54,9 @@ class ZiaTalker(object):
                 password=password,
             )
         else:
-            logger.warning("No authentication method provided.  Use authenticate() method before continuing.")
+            logger.warning(
+                "No authentication method provided.  Use authenticate() method before continuing."
+            )
 
     def authenticate(
         self,
@@ -292,20 +294,28 @@ class ZiaTalker(object):
 
         return self._obtain_all(url)
 
-    def add_admin_users(self, loginName: str, userName: str, email: str, password: str, role: dict, comments: str = '',
-                       adminScopeType: str ='ORGANIZATION',
-                       adminScopeScopeEntities: list =[],
-                       adminScopescopeGroupMemberEntities: list =[],
-                       isNonEditable: bool = False,
-                       disabled: bool = False,
-                       isAuditor: bool = False,
-                       isPasswordLoginAllowed: object = False,
-                       isSecurityReportCommEnabled: object = False,
-                       isServiceUpdateCommEnabled: object = False,
-                       isProductUpdateCommEnabled: object = False,
-                       isPasswordExpired: object = False,
-                       isExecMobileAppEnabled: object = False,
-                       execMobileAppTokens: object = []) -> json:
+    def add_admin_users(
+        self,
+        loginName: str,
+        userName: str,
+        email: str,
+        password: str,
+        role: dict,
+        comments: str = "",
+        adminScopeType: str = "ORGANIZATION",
+        adminScopeScopeEntities: list = [],
+        adminScopescopeGroupMemberEntities: list = [],
+        isNonEditable: bool = False,
+        disabled: bool = False,
+        isAuditor: bool = False,
+        isPasswordLoginAllowed: object = False,
+        isSecurityReportCommEnabled: object = False,
+        isServiceUpdateCommEnabled: object = False,
+        isProductUpdateCommEnabled: object = False,
+        isPasswordExpired: object = False,
+        isExecMobileAppEnabled: object = False,
+        execMobileAppTokens: object = [],
+    ) -> json:
         """
         Adds a new Admininstrator.
                :param loginName: string. Admin or auditor's login name. loginName is in email format
@@ -328,7 +338,7 @@ class ZiaTalker(object):
                :param isPasswordExpired: boolean. Expire password to force user to change password on logon. default: False.
                :param isExecMobileAppEnabled: boolean. Indicates whether or not Executive Insights App access is enabled for the admin. default: False.
                :return:json()
-               """
+        """
         url = "/adminUsers"
         payload = {
             "loginName": loginName,
@@ -349,7 +359,7 @@ class ZiaTalker(object):
             "isProductUpdateCommEnabled": isProductUpdateCommEnabled,
             "isPasswordExpired": isPasswordExpired,
             "isExecMobileAppEnabled": isExecMobileAppEnabled,
-            "execMobileAppTokens": execMobileAppTokens
+            "execMobileAppTokens": execMobileAppTokens,
         }
         response = self.hp_http.post_call(
             url,
@@ -359,6 +369,7 @@ class ZiaTalker(object):
             headers=self.headers,
         )
         return response.json()
+
     def list_admin_roles(
         self,
         query: str = None,
@@ -1679,7 +1690,7 @@ class ZiaTalker(object):
         response = self.hp_http.post_call(
             url,
             cookies=self.cookies,
-            payload=payload,  # TODO: payload is typically dict but here it is str?
+            payload=pattern,
             error_handling=True,
             headers=self.headers,
         )
@@ -2005,12 +2016,44 @@ class ZiaTalker(object):
         self,
     ) -> json:
         """
-        Gets a summary list of all network service groups.
+        Gets a list of all network application groups. The search parameters find matching values within the name or description attributes.
 
         :return: (json)
         """
         response = self.hp_http.get_call(
             "/networkServices/lite",
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+
+        return response.json()
+
+    def list_network_service_groups(
+        self,
+    ) -> json:
+        """
+        Gets a name and ID dictionary of all network service groups.
+        :return: (json)
+        """
+        response = self.hp_http.get_call(
+            "/networkServiceGroups",
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+
+        return response.json()
+
+    def list_network_service_groups_lite(
+        self,
+    ) -> json:
+        """
+        Gets a name and ID dictionary of all network service groups.
+        :return: (json)
+        """
+        response = self.hp_http.get_call(
+            "/networkServiceGroups/lite",
             cookies=self.cookies,
             error_handling=True,
             headers=self.headers,

@@ -1,9 +1,17 @@
-v6.1.0 (To be release)
+v6.X.X (To be released)
+=========================
+
+
+v6.1.1 (December 2023)
+=========================
+Feat: Added method to list_network_service_groups()  and list_network_service_groups_lite() to ZiaTalker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
+v6.1.0 (October 2023)
 =========================
 Feat: Added cloud_connector API Talker for Cloud and Branch Connector (by `Dominic Schimanski <mailto:dschimanski@zscaler.com>)
 Feat: Added Method to update APP connectors (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
-FIX: Proper defaults for ZIA __init__() attributes.  (by `Dax Mickelson <mailto:dmickelson@zscaler.com>`_)
-FIX: All instead of Any for ZIA username/password/api_key auth method.  (by `Dax Mickelson <mailto:dmickelson@zscaler
+Fix: Proper defaults for ZIA __init__() attributes.  (by `Dax Mickelson <mailto:dmickelson@zscaler.com>`_)
+Fix: All instead of Any for ZIA username/password/api_key auth method.  (by `Dax Mickelson <mailto:dmickelson@zscaler
 .com>`_)
 Feat: Add warning message about needing to auth if not done during ZIA __init__().  (by `Dax Mickelson
 <mailto:dmickelson@zscaler.com>`_)
