@@ -2195,6 +2195,7 @@ class ZiaTalker(object):
         dest_ip_categories: list = None,
         labels=None,
         nw_services: list = None,
+        nw_service_groups: list = None,
         rank: int = 0,
     ) -> requests.Response:
         """
@@ -2212,6 +2213,7 @@ class ZiaTalker(object):
         :param dest_ip_categories:(list) list of destination IP categories
         :param labels: (?)
         :param nw_services: (list) List of user-defined network services on with the rule is applied
+        :param nw_service_groups: (list) List of user-defined network services groups with the rule is applied
         :param rank: (int), Admin rank of the Firewall Filtering policy rule
 
         :return: (requests.Response Object)
@@ -2243,6 +2245,8 @@ class ZiaTalker(object):
             payload.update(destIpCategories=dest_ip_categories)
         if nw_services:
             payload.update(nwServices=nw_services)
+        if nw_service_groups:
+            payload.update(nwServiceGroups=nw_service_groups)
         response = self.hp_http.post_call(
             url,
             payload=payload,

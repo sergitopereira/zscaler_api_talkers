@@ -1,6 +1,9 @@
-v6.X.X (To be released)
+v6.1.3 (To be release)
 =========================
 
+v6.1.2 (December 2023)
+=========================
+Feat: Updated add_firewall_filtering_rules to support network service groups to ZiaTalker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v6.1.1 (December 2023)
 =========================
