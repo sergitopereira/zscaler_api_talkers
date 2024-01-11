@@ -1,5 +1,7 @@
-v6.1.3 (To be release)
+v6.2.0 (January 2024)
 =========================
+Fix: Bug Fix with response of ZiaTalker.delete_web_dlp_rules method  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+Fix: Bug Fix with response of ZiaTalker.list_static_ip method  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
 v6.1.2 (December 2023)
 =========================

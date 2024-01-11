@@ -27,9 +27,9 @@ class ZiaTalker(object):
         self,
         cloud_name: str,
         bearer: str = None,
-        api_key: str = None,
-        username: str = None,
-        password: str = None,
+        api_key: str = "",
+        username: str = "",
+        password: str = "",
     ):
         """
         Method to start the class
@@ -735,7 +735,8 @@ class ZiaTalker(object):
 
         return response.json()
 
-    def add_url_filtering_rules(  # FIXME: docstring lists params that aren't options and some params I don't know what their typehint should be.
+    def add_url_filtering_rules(
+        # FIXME: docstring lists params that aren't options and some params I don't know what their typehint should be.
         self,
         name: str,
         order: int,
@@ -1352,10 +1353,11 @@ class ZiaTalker(object):
 
         :return: (json)
         """
-        url = "/staticIP"
-        if ip_id:
-            url = f"/staticIP/{ip_id}"
-
+        if not ip_id:
+            url = "/staticIP?pageSize=10000"
+            return self._obtain_all(url)
+        else:
+            url = "/staticIP"
         response = self.hp_http.get_call(
             url,
             cookies=self.cookies,
@@ -1690,7 +1692,7 @@ class ZiaTalker(object):
         response = self.hp_http.post_call(
             url,
             cookies=self.cookies,
-            payload=pattern,
+            payload=payload,  # TODO: payload is typically dict but here it is str?
             error_handling=True,
             headers=self.headers,
         )
@@ -1992,7 +1994,7 @@ class ZiaTalker(object):
     def delete_web_dlp_rules(
         self,
         rule_id: int,
-    ) -> json:
+    ) -> requests.Response:
         """
         Deletes a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
 
@@ -2008,7 +2010,7 @@ class ZiaTalker(object):
             headers=self.headers,
         )
 
-        return response.json()
+        return response
 
     # Firewall Policies
 
@@ -2016,7 +2018,7 @@ class ZiaTalker(object):
         self,
     ) -> json:
         """
-        Gets a list of all network application groups. The search parameters find matching values within the name or description attributes.
+        Gets a summary list of all network service groups.
 
         :return: (json)
         """

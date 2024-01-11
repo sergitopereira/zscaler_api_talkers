@@ -105,17 +105,6 @@ a.list_OTP('companyID','user device id')
 print(dir(a))
 ```
 
-## Zscaler Digital Experience SDK
-
-### Usage ZdxTalker
-``` python
-from zscaler_api_talkers import ZdxTalker
-a=ZdxTalker(username='<username>', password='<password>', zia_cloud='<zia_cloud_domain>')
-result = a.get_alerts()
-print(result.json())
-print(dir(a))
-```
-
 ## Zscaler Cloud & Branch Connector SDK
 
 ### Usage CloudConnectorTalker

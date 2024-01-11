@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zscaler_api_talkers"
-version = "6.1.2"
+version = "6.2.0"
 description = "Unofficial Zscaler API python SDK for ZIA, ZPA and Zscaler Client Connector"
 authors = ["Sergio Pereira <sergitopereira@hotmail.com>"]
 readme = "README.md"
