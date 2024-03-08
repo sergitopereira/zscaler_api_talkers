@@ -64,7 +64,7 @@ We provide two methods to build a Docker container.  Either using the code hoste
 from zscaler_api_talkers import ZiaTalker
 zia=ZiaTalker('<Zscaler Cloud Name>')
 zia.authenticate(apikey='API_KEY', username='USERNAME', password='PASSWORD')
-zia.list_urlcategories()
+zia.list_url_categories()
 zia.list_users()
 # To view all methods available
 print(dir(zia))
@@ -73,9 +73,9 @@ print(dir(zia))
 ### Usage ZiaTalker with OAUTH2.0
 ``` python
 from zscaler_api_talkers import ZiaTalker
-a=ZiaTalker('<Zscaler Cloud Name>', '<Bear oauth2.0 token>')
-a.list_url_categorie.url_categories()
-a.list_users()
+zia=ZiaTalker('<Zscaler Cloud Name>', '<Bear oauth2.0 token>')
+zia.list_url_categories()
+zia.list_users()
 # To view all methods available
 print(dir(a))
 ```
