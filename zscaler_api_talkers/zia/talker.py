@@ -2650,3 +2650,62 @@ class ZiaTalker(object):
         )
 
         return response.json()
+
+    def list_cloud_applications_lite(self) -> json:
+        """
+        Gets the list of predefined and custom cloud applications
+        """
+        url = "/cloudApplications/lite"
+        response = self.hp_http.get_call(
+            url,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+
+        return response.json()
+
+    def list_custom_tags(self) -> json:
+        """
+        Gets the list of custom tags available to assign to cloud applications
+        """
+        url = "/customTags"
+        response = self.hp_http.get_call(
+            url,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+
+        return response.json()
+
+    def update_cloud_applications(
+        self, sanctioned_state: str, application_ids: list, custom_tags=None
+    ) -> requests.Response:
+        """
+        Updates application status and tag information for predefined or custom cloud applications based on the IDs specified
+        :param sanctioned_state:  The list of cloud application IDs for which the status (sanctioned or unsanctioned) and tags have to be updated
+        :type sanctioned_state: string. Possible values UN_SANCTIONED, SANCTIONED, ANY
+        :param application_ids:  The list of cloud application IDs for which the status (sanctioned or unsanctioned) and tags have to be updated
+        :type application_ids: list
+        :param custom_tags: The list of custom tags that must be assigned to the cloud applications
+        :type custom_tags: list
+        :return:
+        :rtype: HTTP response
+        """
+        if custom_tags is None:
+            custom_tags = []
+        url = "/cloudApplications/bulkUpdate"
+        payload = {
+            "sanctionedState": sanctioned_state,
+            "applicationIds": application_ids,
+            "customTags": custom_tags,
+        }
+        response = self.hp_http.put_call(
+            url,
+            payload=payload,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+        return response
