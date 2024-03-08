@@ -1,4 +1,4 @@
-v6.2.1 (MArch 2024)
+v6.2.1 (March 2024)
 =========================
 Feat: Added methods list_cloud_applications_lite, list_custom_tags and update_cloud_applications to ZiaTalker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 Fix: Updated README.md file (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
