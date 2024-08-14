@@ -1,3 +1,7 @@
+v6.3.0 (August 2024)
+=========================
+Feat: Added methods list_microtenants, add_microtenant, delete_microtenant to  ZpaTalker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
 v6.2.1 (March 2024)
 =========================
 Feat: Added methods list_cloud_applications_lite, list_custom_tags and update_cloud_applications to ZiaTalker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
