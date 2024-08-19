@@ -47,7 +47,7 @@ class ZpaTalker(object):
         API response can have multiple pages. This method return the whole response in a list
 
         :param url: (str) url
-
+        :param url_params: (dict) url query
         :return: (list)
         """
         result = []
@@ -191,6 +191,7 @@ class ZpaTalker(object):
         is_cname_enabled: bool = True,
         select_connector_close_to_app: bool = False,
         passive_health_enabled: bool = True,
+        match_stype: str = 'EXCLUSIVE'
     ) -> json:
         """
         Adds a new Application Segment for a ZPA tenant.
@@ -221,6 +222,7 @@ class ZpaTalker(object):
         :param is_cname_enabled: (bool) (True|False)
         :param select_connector_close_to_app: (bool) (True|False)
         :param passive_health_enabled: (bool) (True|False)
+        :param match_stype:  If enabled (INCLUSIVE), the request allows traffic to match multiple applications.
 
         :return: (json)
         """
@@ -251,6 +253,7 @@ class ZpaTalker(object):
             "segmentGroupId": segment_group_id,
             "segmentGroupName": segment_group_name,
             "serverGroups": server_groups,
+            "matchStyle": match_stype
         }
         response = self.hp_http.post_call(
             url=url,
