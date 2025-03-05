@@ -1,3 +1,7 @@
+v6.3.2 (August 2024)
+=========================
+Feat: added methods list_web_application_rules and  list_web_application_rule_type_mapping to ZiaTalker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
 v6.3.1 (August 2024)
 =========================
 Feat: Updated  add_application_segment method of ZpaTalker to support multi match and pattern matching (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)

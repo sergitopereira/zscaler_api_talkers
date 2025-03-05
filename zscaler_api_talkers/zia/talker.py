@@ -24,12 +24,12 @@ class ZiaTalker(object):
     """
 
     def __init__(
-        self,
-        cloud_name: str,
-        bearer: str = None,
-        api_key: str = "",
-        username: str = "",
-        password: str = "",
+            self,
+            cloud_name: str,
+            bearer: str = None,
+            api_key: str = "",
+            username: str = "",
+            password: str = "",
     ):
         """
         Method to start the class
@@ -59,10 +59,10 @@ class ZiaTalker(object):
             )
 
     def authenticate(
-        self,
-        api_key: str,
-        username: str,
-        password: str = None,
+            self,
+            api_key: str,
+            username: str,
+            password: str = None,
     ):
         """
         Method to authenticate.
@@ -84,6 +84,37 @@ class ZiaTalker(object):
             payload=payload,
         )
         self.cookies = {"JSESSIONID": response.cookies["JSESSIONID"]}
+
+    def authenticate_oneapi(self, url: str, client_id: str, client_secret: str):
+        """
+
+        :param url: Domain name used by your organization example <Vanity Domain>.zslogin.net
+        :param client_id:
+        :param client_secret:
+        :return:
+        """
+        payload = {
+            "grant_type": "client_credentials",
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "audience": "https://api.zscaler.com",
+        }
+        hp_http_oneapi = HttpCalls(
+            host=f"{url}",
+            verify=True,
+        )
+        headers = {"Content-Type": "application/x-www-form-urlencoded"}
+        url = "/oauth2/v1/token"
+
+        response = hp_http_oneapi.post_call(
+            url=url,
+            payload=payload,
+            headers=headers,
+            urlencoded=True
+        )
+        bear_token = json.loads(response.content)
+        # self.headers = {"Authorization": f"Bearer {bear_token['access_token']}"}
+        self.headers = {"Authorization": f"Bearer {bear_token['access_token']}"}
 
     def authenticated_session(self) -> json:
         """
@@ -117,8 +148,8 @@ class ZiaTalker(object):
         return response.json()
 
     def _obtain_all(
-        self,
-        url: str,
+            self,
+            url: str,
     ) -> list:
         """
         Internal method that queries all pages
@@ -217,13 +248,13 @@ class ZiaTalker(object):
         return response
 
     def add_auditlog_entry_report(
-        self,
-        start_time: int,
-        end_time: int,
-        action_types: list = None,
-        category: str = None,
-        subcategories: list = None,
-        action_interface: str = None,
+            self,
+            start_time: int,
+            end_time: int,
+            action_types: list = None,
+            category: str = None,
+            subcategories: list = None,
+            action_interface: str = None,
     ) -> requests.Response:
         """
          Creates an audit log report for the specified time period and saves it as a CSV file. The report includes
@@ -266,9 +297,9 @@ class ZiaTalker(object):
 
     # Admin & Role Management
     def list_admin_users(
-        self,
-        user_id: int = None,
-        query: str = None,
+            self,
+            user_id: int = None,
+            query: str = None,
     ) -> json:
         """
         Gets a list of admin users. By default, auditor user information is not included.
@@ -291,30 +322,29 @@ class ZiaTalker(object):
                 url = f"/adminUsers?{query}?pageSize=1000"
             else:
                 url = "/adminUsers?pageSize=1000"
-
         return self._obtain_all(url)
 
     def add_admin_users(
-        self,
-        loginName: str,
-        userName: str,
-        email: str,
-        password: str,
-        role: dict,
-        comments: str = "",
-        adminScopeType: str = "ORGANIZATION",
-        adminScopeScopeEntities: list = [],
-        adminScopescopeGroupMemberEntities: list = [],
-        isNonEditable: bool = False,
-        disabled: bool = False,
-        isAuditor: bool = False,
-        isPasswordLoginAllowed: object = False,
-        isSecurityReportCommEnabled: object = False,
-        isServiceUpdateCommEnabled: object = False,
-        isProductUpdateCommEnabled: object = False,
-        isPasswordExpired: object = False,
-        isExecMobileAppEnabled: object = False,
-        execMobileAppTokens: object = [],
+            self,
+            loginName: str,
+            userName: str,
+            email: str,
+            password: str,
+            role: dict,
+            comments: str = "",
+            adminScopeType: str = "ORGANIZATION",
+            adminScopeScopeEntities: list = [],
+            adminScopescopeGroupMemberEntities: list = [],
+            isNonEditable: bool = False,
+            disabled: bool = False,
+            isAuditor: bool = False,
+            isPasswordLoginAllowed: object = False,
+            isSecurityReportCommEnabled: object = False,
+            isServiceUpdateCommEnabled: object = False,
+            isProductUpdateCommEnabled: object = False,
+            isPasswordExpired: object = False,
+            isExecMobileAppEnabled: object = False,
+            execMobileAppTokens: object = [],
     ) -> json:
         """
         Adds a new Admininstrator.
@@ -371,8 +401,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_admin_roles(
-        self,
-        query: str = None,
+            self,
+            query: str = None,
     ) -> json:
         """
         Gets a name and ID dictionary of al admin roles
@@ -396,8 +426,8 @@ class ZiaTalker(object):
 
     # URL Categories
     def list_url_categories(
-        self,
-        custom: bool = False,
+            self,
+            custom: bool = False,
     ) -> json:
         """
         Gets information about all or custom URL categories
@@ -437,18 +467,18 @@ class ZiaTalker(object):
         return response.json()
 
     def add_url_categories(
-        self,
-        name: str,
-        super_category: str,
-        type_list: str = None,
-        urls: list = None,
-        db_categorized_urls: list = None,
-        keywords_retaining_parent_category: list = None,
-        keywords: list = None,
-        custom_category: bool = False,
-        ip_ranges: list = None,
-        ip_ranges_retaining_parent_category: list = None,
-        description: str = None,
+            self,
+            name: str,
+            super_category: str,
+            type_list: str = None,
+            urls: list = None,
+            db_categorized_urls: list = None,
+            keywords_retaining_parent_category: list = None,
+            keywords: list = None,
+            custom_category: bool = False,
+            ip_ranges: list = None,
+            ip_ranges_retaining_parent_category: list = None,
+            description: str = None,
     ) -> json:
         """
          Adds a new custom URL category.
@@ -510,8 +540,8 @@ class ZiaTalker(object):
         return response.json()
 
     def add_raw_url_categories(
-        self,
-        payload: dict,
+            self,
+            payload: dict,
     ) -> json:
         """
          Adds a new custom URL category.
@@ -532,14 +562,14 @@ class ZiaTalker(object):
         return response.json()
 
     def update_url_categories(
-        self,
-        category_id: str,
-        action: str = None,
-        configured_name: str = None,
-        urls: list = None,
-        db_categorized_urls: list = None,
-        keywords: list = None,
-        keywords_retaining_parent_category: list = None,
+            self,
+            category_id: str,
+            action: str = None,
+            configured_name: str = None,
+            urls: list = None,
+            db_categorized_urls: list = None,
+            keywords: list = None,
+            keywords_retaining_parent_category: list = None,
     ) -> json:
         """
         Updates the URL category for the specified ID. If keywords are included within the request, then they will
@@ -600,8 +630,8 @@ class ZiaTalker(object):
         return response.json()
 
     def delete_url_categories(
-        self,
-        category_id: str,
+            self,
+            category_id: str,
     ) -> requests.Response:
         """
         Deletes the custom URL category for the specified ID. You cannot delete a custom category while it is being
@@ -622,8 +652,8 @@ class ZiaTalker(object):
         return response
 
     def delete_url_filtering_rules(
-        self,
-        rule_id: int,
+            self,
+            rule_id: int,
     ) -> requests.Response:
         """
         Deletes the custom URL category for the specified ID. You cannot delete a custom category while it is being
@@ -661,8 +691,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_url_categories_id(
-        self,
-        category_id: int,
+            self,
+            category_id: int,
     ) -> json:
         """
         Gets the URL category information for the specified ID
@@ -685,8 +715,8 @@ class ZiaTalker(object):
         return response.json()
 
     def url_lookup(
-        self,
-        url_list: list,
+            self,
+            url_list: list,
     ) -> list:
         """
         Method to look up the categorization of the given list of URLs, ["abc.com","zyz.com"]
@@ -700,7 +730,7 @@ class ZiaTalker(object):
         # Verify urls format
         list(set(url_list))
         # Rate limit 1/sec  and 400 hr and 100 URLs per call
-        list_of_lists = [url_list[i : i + 100] for i in range(0, len(url_list), 100)]
+        list_of_lists = [url_list[i: i + 100] for i in range(0, len(url_list), 100)]
         for item in list_of_lists:
             response = self.hp_http.post_call(
                 url,
@@ -736,29 +766,29 @@ class ZiaTalker(object):
         return response.json()
 
     def add_url_filtering_rules(
-        # FIXME: docstring lists params that aren't options and some params I don't know what their typehint should be.
-        self,
-        name: str,
-        order: int,
-        protocols: str,
-        state: str,
-        action: str,
-        url_categories: list = None,
-        request_methods: list = None,
-        description=None,
-        groups: list = None,
-        locations: list = None,
-        departments: list = None,
-        users: list = None,
-        rank: int = 7,
-        location_groups=None,
-        enforce_time_validity: bool = False,
-        validity_end_time=None,
-        validity_start_time=None,
-        validity_time_zone_id=None,
-        cbi_profile_id: int = 0,
-        block_override: bool = False,
-        **kwargs,
+            # FIXME: docstring lists params that aren't options and some params I don't know what their typehint should be.
+            self,
+            name: str,
+            order: int,
+            protocols: str,
+            state: str,
+            action: str,
+            url_categories: list = None,
+            request_methods: list = None,
+            description=None,
+            groups: list = None,
+            locations: list = None,
+            departments: list = None,
+            users: list = None,
+            rank: int = 7,
+            location_groups=None,
+            enforce_time_validity: bool = False,
+            validity_end_time=None,
+            validity_start_time=None,
+            validity_time_zone_id=None,
+            cbi_profile_id: int = 0,
+            block_override: bool = False,
+            **kwargs,
     ) -> json:
         """
          Adds a URL Filtering Policy rule. If you are using the Rank feature, refer to About Admin Rank to
@@ -845,9 +875,9 @@ class ZiaTalker(object):
         return response.json()
 
     def update_url_filtering_rules(
-        self,
-        rule_id: int,
-        **kwargs,
+            self,
+            rule_id: int,
+            **kwargs,
     ) -> json:
         url = f"/urlFilteringRules/{rule_id}"
         payload = kwargs
@@ -864,8 +894,8 @@ class ZiaTalker(object):
     # User Management
 
     def list_departments(
-        self,
-        department_id: int = None,
+            self,
+            department_id: int = None,
     ) -> json or list:
         """
         Gets a list of departments. The search parameters find matching values within the "name" or "comments"
@@ -890,8 +920,8 @@ class ZiaTalker(object):
             return response.json()
 
     def list_groups(
-        self,
-        group_id: int = None,
+            self,
+            group_id: int = None,
     ) -> json or list:
         """
         Gets a list of groups if ID, gets the group for the specified ID
@@ -914,9 +944,9 @@ class ZiaTalker(object):
             return response.json()
 
     def list_users(
-        self,
-        user_id: int = None,
-        query: str = None,
+            self,
+            user_id: int = None,
+            query: str = None,
     ) -> json or list:
         """
         Gets a list of all users and allows user filtering by name, department, or group. The name search parameter
@@ -949,14 +979,14 @@ class ZiaTalker(object):
         return self._obtain_all(url)
 
     def add_users(
-        self,
-        name: str,
-        email: str,
-        groups: list,
-        department: dict,
-        comments: str,
-        password: str,
-        admin_user: bool = False,
+            self,
+            name: str,
+            email: str,
+            groups: list,
+            department: dict,
+            comments: str,
+            password: str,
+            admin_user: bool = False,
     ) -> json:
         """
         Adds a new user. A user can belong to multiple groups, but can only belong to one department.
@@ -992,8 +1022,8 @@ class ZiaTalker(object):
         return response.json()
 
     def delete_bulk_users(
-        self,
-        user_ids: list,
+            self,
+            user_ids: list,
     ) -> json:
         """
         Bulk delete users up to a maximum of 500 users per request. The response returns the user IDs that were
@@ -1020,8 +1050,8 @@ class ZiaTalker(object):
     # Location Management
 
     def list_locations(
-        self,
-        location_id: int = None,
+            self,
+            location_id: int = None,
     ) -> json:
         """
         Gets locations only, not sub-locations. When a location matches the given search parameter criteria only its
@@ -1045,8 +1075,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_sublocations(
-        self,
-        location_id: int,
+            self,
+            location_id: int,
     ) -> json:
         """
         Gets the sub-location information for the location with the specified ID
@@ -1085,8 +1115,8 @@ class ZiaTalker(object):
         return response.json()
 
     def delete_bulk_locations(
-        self,
-        location_ids: list,
+            self,
+            location_ids: list,
     ) -> json:
         """
         Bulk delete locations up to a maximum of 100 users per request. The response returns the location IDs that
@@ -1111,8 +1141,8 @@ class ZiaTalker(object):
             raise ValueError("Maximum 100 locations per request")
 
     def delete_locations(
-        self,
-        location_id: int,
+            self,
+            location_id: int,
     ) -> requests.Response:
         """
         Deletes the location or sub-location for the specified ID
@@ -1134,8 +1164,8 @@ class ZiaTalker(object):
     #   Traffic Forwarding
 
     def list_gre_tunnels(
-        self,
-        gre_tunnel_id: int = None,
+            self,
+            gre_tunnel_id: int = None,
     ) -> json:
         """
         Gets the GRE tunnel information for the specified ID
@@ -1158,14 +1188,14 @@ class ZiaTalker(object):
         return response.json()
 
     def add_gre_tunnels(
-        self,
-        source_ip: str,
-        primary_dest_vip: dict,
-        secondary_dest_vip: dict,
-        internal_ip_range: str,
-        within_country: bool,
-        comment: str,
-        ip_unnumbered: bool,
+            self,
+            source_ip: str,
+            primary_dest_vip: dict,
+            secondary_dest_vip: dict,
+            internal_ip_range: str,
+            within_country: bool,
+            comment: str,
+            ip_unnumbered: bool,
     ) -> json:
         """
         Adds a GRE tunnel configuration.
@@ -1221,8 +1251,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_gre_recommended_vips(
-        self,
-        query: str,
+            self,
+            query: str,
     ) -> json:
         """
         Gets a list of recommended GRE tunnel virtual IP addresses (VIPs), based on source IP address or
@@ -1243,8 +1273,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_gre_validate_ip(
-        self,
-        ip: str,
+            self,
+            ip: str,
     ) -> json:
         """
         Gets the static IP address and location mapping information for the specified GRE tunnel IP address
@@ -1264,8 +1294,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_vpn_credentials(
-        self,
-        vpn_id: int = None,
+            self,
+            vpn_id: int = None,
     ) -> json:
         """
         Gets VPN credentials that can be associated to locations.
@@ -1286,11 +1316,11 @@ class ZiaTalker(object):
         return response.json()
 
     def add_vpn_credentials(
-        self,
-        fqdn: str,
-        pre_shared_key: str,
-        auth_type: str = "UFQDN",
-        comments: str = None,
+            self,
+            fqdn: str,
+            pre_shared_key: str,
+            auth_type: str = "UFQDN",
+            comments: str = None,
     ) -> json:
         """
         Adds VPN credentials that can be associated to locations.
@@ -1322,8 +1352,8 @@ class ZiaTalker(object):
         return response.json()
 
     def delete_vpn_credentials(
-        self,
-        vpn_id: int,
+            self,
+            vpn_id: int,
     ) -> requests.Response:  # TODO: Move to returning json
         """
         Deletes the VPN credentials for the specified ID.
@@ -1343,8 +1373,8 @@ class ZiaTalker(object):
         return response
 
     def list_static_ip(
-        self,
-        ip_id: int = None,
+            self,
+            ip_id: int = None,
     ) -> json:
         """
         Gets all provisioned static IP addresses.
@@ -1368,13 +1398,13 @@ class ZiaTalker(object):
         return response.json()
 
     def add_static_ip(
-        self,
-        ip_address: str,
-        geo_override: bool = False,
-        routable_ip: bool = True,
-        latitude: float = 0,
-        longitude: float = 0,
-        comment: str = "",
+            self,
+            ip_address: str,
+            geo_override: bool = False,
+            routable_ip: bool = True,
+            latitude: float = 0,
+            longitude: float = 0,
+            comment: str = "",
     ) -> json:
         """
         Adds a static IP address
@@ -1416,8 +1446,8 @@ class ZiaTalker(object):
         return response.json()
 
     def delete_static_ip(
-        self,
-        ip_address_id: int,
+            self,
+            ip_address_id: int,
     ) -> requests.Response:
         """
         Deletes the static IP address for the specified ID.
@@ -1454,8 +1484,8 @@ class ZiaTalker(object):
         return response.json()
 
     def add_exempted_urls(
-        self,
-        urls: list,
+            self,
+            urls: list,
     ) -> json:
         """
         Adds URLs to the cookie authentication exempt list to the list
@@ -1477,8 +1507,8 @@ class ZiaTalker(object):
         return response.json()
 
     def delete_exempted_urls(
-        self,
-        urls: list,
+            self,
+            urls: list,
     ) -> json:
         """
         Removed URLs to the cookie authentication exempt list to the list
@@ -1520,8 +1550,8 @@ class ZiaTalker(object):
         return response.json()
 
     def update_security_whitelisted_urls(
-        self,
-        urls: list,
+            self,
+            urls: list,
     ) -> json:
         """
         Updates the list of white-listed URLs. This will overwrite a previously-generated white list. If you need to
@@ -1560,8 +1590,8 @@ class ZiaTalker(object):
         return response.json()
 
     def update_security_blacklisted_urls(
-        self,
-        urls: list,
+            self,
+            urls: list,
     ) -> json:
         """
         Updates the list of black-listed URLs. This will overwrite a previously-generated black list. If you need to
@@ -1584,8 +1614,8 @@ class ZiaTalker(object):
         return response.json()
 
     def add_security_blacklist_urls(
-        self,
-        urls: list,
+            self,
+            urls: list,
     ) -> requests.Response:  # TODO: Move to return json
         """
         Adds a URL from the black list. To add a URL to the black list.
@@ -1609,8 +1639,8 @@ class ZiaTalker(object):
         return response
 
     def remove_security_blacklist_urls(
-        self,
-        urls: list,
+            self,
+            urls: list,
     ) -> json:
         """
         Removes a URL from the black list.
@@ -1636,8 +1666,8 @@ class ZiaTalker(object):
     # DLP Policies
 
     def list_dlp_dictionaries(
-        self,
-        dlp_dic_id: int = None,
+            self,
+            dlp_dic_id: int = None,
     ) -> json:
         """
         Gets a list of all DLP Dictionaries.
@@ -1676,8 +1706,8 @@ class ZiaTalker(object):
         return response.json()
 
     def validate_dlp_pattern(
-        self,
-        pattern: str,
+            self,
+            pattern: str,
     ) -> json:
         """
         Validates the pattern used by a Pattern and Phrases DLP dictionary type, and provides error information if
@@ -1700,8 +1730,8 @@ class ZiaTalker(object):
         return response.json()
 
     def delete_dlp_dictionaries(
-        self,
-        dlp_dic_id: int,
+            self,
+            dlp_dic_id: int,
     ) -> requests.Response:
         """
         Deletes the custom DLP category for the specified ID. You cannot delete predefined DLP dictionaries. You
@@ -1723,12 +1753,12 @@ class ZiaTalker(object):
         return response
 
     def add_dlp_dictionaries(
-        self,
-        dlp_dic_name: str,
-        custom_phrase_match_type: str = "MATCH_ANY_CUSTOM_PHRASE_PATTERN_DICTIONARY",
-        description: str = None,
-        phrases: list = None,
-        patterns: list = None,
+            self,
+            dlp_dic_name: str,
+            custom_phrase_match_type: str = "MATCH_ANY_CUSTOM_PHRASE_PATTERN_DICTIONARY",
+            description: str = None,
+            phrases: list = None,
+            patterns: list = None,
     ) -> json:
         """
         Adds a new custom DLP dictionary that uses either Patterns and/or Phrases.
@@ -1789,8 +1819,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_dlp_engines(
-        self,
-        dlp_engine_id: int = None,
+            self,
+            dlp_engine_id: int = None,
     ) -> json:
         """
         Get a list of DLP engines.
@@ -1833,8 +1863,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_dlp_notification_templates(
-        self,
-        template_id: int = None,
+            self,
+            template_id: int = None,
     ) -> json:
         """
         Gets a list of DLP notification templates
@@ -1857,13 +1887,13 @@ class ZiaTalker(object):
         return response.json()
 
     def add_dlp_notification_templates(
-        self,
-        name: str,
-        subject: str,
-        plain_text_message: str,
-        html_message: str,
-        attach_content: bool = True,
-        tls_enabled: bool = True,
+            self,
+            name: str,
+            subject: str,
+            plain_text_message: str,
+            html_message: str,
+            attach_content: bool = True,
+            tls_enabled: bool = True,
     ) -> json:
         """
         :param name: (str) The DLP notification template name
@@ -1898,8 +1928,8 @@ class ZiaTalker(object):
         return response.json()
 
     def delete_dlp_notification_templates(
-        self,
-        template_id: int,
+            self,
+            template_id: int,
     ) -> requests.Response:  # TODO: return json instead
         """
         Deletes a DLP notification template
@@ -1918,8 +1948,8 @@ class ZiaTalker(object):
         return response
 
     def list_icap_server(
-        self,
-        icap_server_id: int = None,
+            self,
+            icap_server_id: int = None,
     ) -> json:
         """
         Gets a list of DLP notification templates
@@ -1942,8 +1972,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_idm_profile(
-        self,
-        profile_id: int = None,
+            self,
+            profile_id: int = None,
     ) -> json:
         """
         List all the IDM templates for all Index Tools used by the organization. If profileId, it lists the IDM
@@ -1967,8 +1997,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_web_dlp_rules(
-        self,
-        rule_id: int = None,
+            self,
+            rule_id: int = None,
     ) -> json:
         """
         list DLP policy rules, excluding SaaS Security API DLP policy rules. If ruleId, list DLP policy rule
@@ -1992,8 +2022,8 @@ class ZiaTalker(object):
         return response.json()
 
     def delete_web_dlp_rules(
-        self,
-        rule_id: int,
+            self,
+            rule_id: int,
     ) -> requests.Response:
         """
         Deletes a DLP policy rule. This endpoint is not applicable to SaaS Security API DLP policy rules.
@@ -2015,7 +2045,7 @@ class ZiaTalker(object):
     # Firewall Policies
 
     def list_network_services_lite(
-        self,
+            self,
     ) -> json:
         """
         Gets a summary list of all network service groups.
@@ -2032,7 +2062,7 @@ class ZiaTalker(object):
         return response.json()
 
     def list_network_service_groups(
-        self,
+            self,
     ) -> json:
         """
         Gets a name and ID dictionary of all network service groups.
@@ -2048,7 +2078,7 @@ class ZiaTalker(object):
         return response.json()
 
     def list_network_service_groups_lite(
-        self,
+            self,
     ) -> json:
         """
         Gets a name and ID dictionary of all network service groups.
@@ -2064,8 +2094,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_network_services(
-        self,
-        service_id: int = None,
+            self,
+            service_id: int = None,
     ) -> json:
         """
         Gets a list of all network service groups. The search parameters find matching values within the "name" or
@@ -2089,16 +2119,16 @@ class ZiaTalker(object):
         return response.json()
 
     def add_network_services(
-        self,
-        name: str,
-        tag: str = None,
-        src_tcp_ports: list = None,
-        dest_tcp_ports: list = None,
-        src_udp_ports: list = None,
-        dest_udp_ports: list = None,
-        service_type: str = "CUSTOM",
-        description: str = None,
-        is_name_l10n_tag: bool = False,
+            self,
+            name: str,
+            tag: str = None,
+            src_tcp_ports: list = None,
+            dest_tcp_ports: list = None,
+            src_udp_ports: list = None,
+            dest_udp_ports: list = None,
+            service_type: str = "CUSTOM",
+            description: str = None,
+            is_name_l10n_tag: bool = False,
     ) -> requests.Response:  # TODO: return json
         """
         Adds a new network service.
@@ -2139,8 +2169,8 @@ class ZiaTalker(object):
         return response
 
     def delete_network_services(
-        self,
-        service_id: int,
+            self,
+            service_id: int,
     ) -> requests.Response:
         """
         :param service_id: (int) The unique identifier for the network service
@@ -2158,8 +2188,8 @@ class ZiaTalker(object):
         return response
 
     def list_firewall_filtering_rules(
-        self,
-        rule_id: int = None,
+            self,
+            rule_id: int = None,
     ) -> json:
         """
         Gets all rules in the Firewall Filtering policy.
@@ -2182,23 +2212,23 @@ class ZiaTalker(object):
         return response.json()
 
     def add_firewall_filtering_rules(
-        self,
-        name: str,
-        order: int,
-        state: str,
-        action: str,
-        description: str = None,
-        default_rule: bool = False,
-        predefined: bool = False,
-        src_ips: list = None,
-        dest_addresses: list = None,
-        dest_ip_groups: list = None,
-        src_ip_groups: list = None,
-        dest_ip_categories: list = None,
-        labels=None,
-        nw_services: list = None,
-        nw_service_groups: list = None,
-        rank: int = 0,
+            self,
+            name: str,
+            order: int,
+            state: str,
+            action: str,
+            description: str = None,
+            default_rule: bool = False,
+            predefined: bool = False,
+            src_ips: list = None,
+            dest_addresses: list = None,
+            dest_ip_groups: list = None,
+            src_ip_groups: list = None,
+            dest_ip_categories: list = None,
+            labels=None,
+            nw_services: list = None,
+            nw_service_groups: list = None,
+            rank: int = 0,
     ) -> requests.Response:
         """
         :param name: (str) Name of the Firewall Filtering policy rule ["String"]
@@ -2260,8 +2290,8 @@ class ZiaTalker(object):
         return response
 
     def delete_firewall_filtering_rules(
-        self,
-        rule_id: int,
+            self,
+            rule_id: int,
     ) -> requests.Response:
         """
         Deletes a Firewall Filtering policy rule for the specified ID.
@@ -2281,8 +2311,8 @@ class ZiaTalker(object):
         return response
 
     def list_ip_source_groups(
-        self,
-        ip_group_id: int = None,
+            self,
+            ip_group_id: int = None,
     ) -> json:
         """
         Gets a list of all IP source groups. The search parameters find matching values within the "name" or
@@ -2322,8 +2352,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_ip_destination_groups(
-        self,
-        ip_group_id: int = None,
+            self,
+            ip_group_id: int = None,
     ) -> json:
         """
         Gets a list of all IP source groups. The search parameters find matching values within the "name" or
@@ -2363,10 +2393,10 @@ class ZiaTalker(object):
         return response.json()
 
     def add_ip_source_groups(
-        self,
-        name: str,
-        ip_addresses: list,
-        description: str = None,
+            self,
+            name: str,
+            ip_addresses: list,
+            description: str = None,
     ) -> json:
         """
         :param name: (str) Name
@@ -2392,8 +2422,8 @@ class ZiaTalker(object):
         return response.json()
 
     def delete_ip_source_groups(
-        self,
-        ip_group_id: int,
+            self,
+            ip_group_id: int,
     ) -> requests.Response:
         """
         Deletes the IP source group for the specified ID
@@ -2414,8 +2444,8 @@ class ZiaTalker(object):
         return response
 
     def delete_ip_destination_groups(
-        self,
-        ip_group_id: int,
+            self,
+            ip_group_id: int,
     ) -> requests.Response:
         """
         Deletes the IP destination group for the specified ID
@@ -2436,13 +2466,13 @@ class ZiaTalker(object):
         return response
 
     def add_ip_destination_groups(
-        self,
-        name: str,
-        dest_ip_group_type: str,
-        addresses: list,
-        ip_categories: list = None,
-        countries: list = None,
-        description: str = None,
+            self,
+            name: str,
+            dest_ip_group_type: str,
+            addresses: list,
+            ip_categories: list = None,
+            countries: list = None,
+            description: str = None,
     ) -> json:
         """
         :param name: (str) Name
@@ -2496,8 +2526,8 @@ class ZiaTalker(object):
     # Device Groups
 
     def list_devices_groups(
-        self,
-        query: str = None,
+            self,
+            query: str = None,
     ) -> json:
         """
         Gets a list of device groups
@@ -2520,8 +2550,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_devices(
-        self,
-        query: str = None,
+            self,
+            query: str = None,
     ) -> json:
         """
         Gets a list of devices. Any given search parameters will be applied during device search. Search parameters
@@ -2547,8 +2577,8 @@ class ZiaTalker(object):
 
     # Rule Labels
     def list_rule_labels(
-        self,
-        rule_label_id: int = None,
+            self,
+            rule_label_id: int = None,
     ) -> json:
         """
         Gets rule label information for the specified ID
@@ -2571,10 +2601,10 @@ class ZiaTalker(object):
         return response.json()
 
     def add_rule_label(
-        self,
-        name: str,
-        description: str = "",
-        payload: dict = None,
+            self,
+            name: str,
+            description: str = "",
+            payload: dict = None,
     ) -> json:
         """
         Adds new rule labels with the given name
@@ -2606,9 +2636,9 @@ class ZiaTalker(object):
         return response
 
     def update_call(
-        self,
-        url: str,
-        payload: json,
+            self,
+            url: str,
+            payload: json,
     ) -> json:
         """
         Generic PUT call. This call will overwrite all the configuration with the new payload
@@ -2625,13 +2655,12 @@ class ZiaTalker(object):
             error_handling=True,
             headers=self.headers,
         )
-
         return response.json()
 
     def add_call(
-        self,
-        url: str,
-        payload: json,
+            self,
+            url: str,
+            payload: json,
     ) -> json:
         """
         Generic POST call. This call will add all the configuration with the new payload
@@ -2662,7 +2691,35 @@ class ZiaTalker(object):
             error_handling=True,
             headers=self.headers,
         )
+        return response.json()
 
+    def list_web_application_rule_type_mapping(self):
+        """
+        Gets the backend keys that match the application type string.
+        """
+        url = "/webApplicationRules/ruleTypeMapping"
+        response = self.hp_http.get_call(
+            url,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+        return response.json()
+    def list_web_application_rules(self, rule_type):
+        """
+        Gets the list of cloud application rules by the type of rule.
+        :return:
+        :type rule_type: str. Possible values refer to https://help.zscaler.com/zia/cloud-app-control-policy#/webApplicationRules/{rule_type}-get
+        or use list_web_application_rule_type_mapping
+        """
+
+        url = f"/webApplicationRules/{rule_type}"
+        response = self.hp_http.get_call(
+            url,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
         return response.json()
 
     def list_custom_tags(self) -> json:
@@ -2680,7 +2737,7 @@ class ZiaTalker(object):
         return response.json()
 
     def update_cloud_applications(
-        self, sanctioned_state: str, application_ids: list, custom_tags=None
+            self, sanctioned_state: str, application_ids: list, custom_tags=None
     ) -> requests.Response:
         """
         Updates application status and tag information for predefined or custom cloud applications based on the IDs specified
