@@ -85,36 +85,6 @@ class ZiaTalker(object):
         )
         self.cookies = {"JSESSIONID": response.cookies["JSESSIONID"]}
 
-    def authenticate_oneapi(self, url: str, client_id: str, client_secret: str):
-        """
-
-        :param url: Domain name used by your organization example <Vanity Domain>.zslogin.net
-        :param client_id:
-        :param client_secret:
-        :return:
-        """
-        payload = {
-            "grant_type": "client_credentials",
-            "client_id": client_id,
-            "client_secret": client_secret,
-            "audience": "https://api.zscaler.com",
-        }
-        hp_http_oneapi = HttpCalls(
-            host=f"{url}",
-            verify=True,
-        )
-        headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        url = "/oauth2/v1/token"
-
-        response = hp_http_oneapi.post_call(
-            url=url,
-            payload=payload,
-            headers=headers,
-            urlencoded=True
-        )
-        bear_token = json.loads(response.content)
-        # self.headers = {"Authorization": f"Bearer {bear_token['access_token']}"}
-        self.headers = {"Authorization": f"Bearer {bear_token['access_token']}"}
 
     def authenticated_session(self) -> json:
         """
