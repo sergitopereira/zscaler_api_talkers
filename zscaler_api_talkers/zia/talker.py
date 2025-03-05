@@ -291,7 +291,6 @@ class ZiaTalker(object):
                 url = f"/adminUsers?{query}?pageSize=1000"
             else:
                 url = "/adminUsers?pageSize=1000"
-
         return self._obtain_all(url)
 
     def add_admin_users(
@@ -2625,7 +2624,6 @@ class ZiaTalker(object):
             error_handling=True,
             headers=self.headers,
         )
-
         return response.json()
 
     def add_call(
@@ -2662,7 +2660,36 @@ class ZiaTalker(object):
             error_handling=True,
             headers=self.headers,
         )
+        return response.json()
 
+    def list_web_application_rule_type_mapping(self):
+        """
+        Gets the backend keys that match the application type string.
+        """
+        url = "/webApplicationRules/ruleTypeMapping"
+        response = self.hp_http.get_call(
+            url,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
+        return response.json()
+
+    def list_web_application_rules(self, rule_type):
+        """
+        Gets the list of cloud application rules by the type of rule.
+        :return:
+        :type rule_type: str. Possible values refer to https://help.zscaler.com/zia/cloud-app-control-policy#/webApplicationRules/{rule_type}-get
+        or use list_web_application_rule_type_mapping
+        """
+
+        url = f"/webApplicationRules/{rule_type}"
+        response = self.hp_http.get_call(
+            url,
+            cookies=self.cookies,
+            error_handling=True,
+            headers=self.headers,
+        )
         return response.json()
 
     def list_custom_tags(self) -> json:
