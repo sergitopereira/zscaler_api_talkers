@@ -191,7 +191,7 @@ class ZpaTalker(object):
         is_cname_enabled: bool = True,
         select_connector_close_to_app: bool = False,
         passive_health_enabled: bool = True,
-        match_stype: str = 'EXCLUSIVE'
+        match_stype: str = "EXCLUSIVE",
     ) -> json:
         """
         Adds a new Application Segment for a ZPA tenant.
@@ -253,7 +253,7 @@ class ZpaTalker(object):
             "segmentGroupId": segment_group_id,
             "segmentGroupName": segment_group_name,
             "serverGroups": server_groups,
-            "matchStyle": match_stype
+            "matchStyle": match_stype,
         }
         response = self.hp_http.post_call(
             url=url,
