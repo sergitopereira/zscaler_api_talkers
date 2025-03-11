@@ -1,5 +1,5 @@
 import json
-import pdb
+import time
 import requests
 
 from zscaler_api_talkers.helpers import HttpCalls, setup_logger
@@ -42,7 +42,7 @@ class ZpaTalker(object):
                 client_secret=client_secret,
             )
 
-    def _obtain_all_results(self, url: str, url_params: dict = {}) -> list:
+    def _obtain_all_results(self, url: str, url_params: None) -> list:
         """
         API response can have multiple pages. This method return the whole response in a list
 
@@ -50,10 +50,8 @@ class ZpaTalker(object):
         :param url_params: (dict) url query
         :return: (list)
         """
-        result = []
-        if not url_params:
+        if url_params is None:
             url_params = {"pagesize": 500, "page": 1}
-
         response = self.hp_http.get_call(
             url, headers=self.header, error_handling=True, params=url_params
         )
@@ -61,17 +59,21 @@ class ZpaTalker(object):
             return []
         if int(response.json()["totalPages"]) > 1:
             i = 1
+            result = []
             while i <= int(response.json()["totalPages"]):
+                url_params = {"pagesize": 500, "page": i}
                 result = (
                     result
                     + self.hp_http.get_call(
                         url=url,
                         headers=self.header,
                         error_handling=True,
-                        params=url_params.update(page=i),
+                        params=url_params,
                     ).json()["list"]
                 )
                 i += 1
+                time.sleep(1)
+
         else:
             result = response.json()["list"]
 
@@ -328,10 +330,9 @@ class ZpaTalker(object):
             ).json()
         else:
             if not query:
-                query = "?pagesize=500"
-            url = (
-                f"/mgmtconfig/v1/admin/customers/{self.customer_id}/segmentGroup{query}"
-            )
+                url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/segmentGroup"
+            else:
+                url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/segmentGroup{query}"
             response = self._obtain_all_results(url)
 
         return response
