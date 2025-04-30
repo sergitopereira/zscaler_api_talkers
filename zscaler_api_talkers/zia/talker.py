@@ -85,6 +85,29 @@ class ZiaTalker(object):
         )
         self.cookies = {"JSESSIONID": response.cookies["JSESSIONID"]}
 
+    def authenticate_one_api(self,
+                             client_id: str,
+                             client_secret: str,
+                             vanity: str,
+                             grant_type: str = "client_credentials",
+                             audience: str = "https://api.zscaler.com",
+                             ) -> json:
+
+        """Method to authenticate the client and retrieve an access token"""
+        response = self.hp_http.post_call(
+            host=vanity,
+            url="/oauth2/v1/token",
+            payload={"grant_type": grant_type,
+                     "client_id": client_id,
+                     "client_secret": client_secret,
+                     "audience": audience
+                     },
+            urlencoded=True,
+        )
+        if '200' in str(response.status_code):
+            self.headers = {"Authorization": f"Bearer {response.json()['access_token']}"}
+        return
+
     def authenticated_session(self) -> json:
         """
         Checks if there is an authenticated session
@@ -117,8 +140,8 @@ class ZiaTalker(object):
         return response.json()
 
     def _obtain_all(
-        self,
-        url: str,
+            self,
+            url: str,
     ) -> list:
         """
         Internal method that queries all pages
@@ -288,9 +311,10 @@ class ZiaTalker(object):
             ).json()
         else:
             if query:
-                url = f"/adminUsers?{query}?pageSize=1000"
+                url = f"/adminUsers?{query}&pageSize=1000"
             else:
                 url = "/adminUsers?pageSize=1000"
+
         return self._obtain_all(url)
 
     def add_admin_users(
@@ -395,19 +419,22 @@ class ZiaTalker(object):
 
     # URL Categories
     def list_url_categories(
-        self,
-        custom: bool = False,
+            self,
+            custom: bool = False,
+            tld: bool = False,
     ) -> json:
         """
         Gets information about all or custom URL categories
 
         :param custom: (bool) If True it will return custom categories only.  Default is False.
-
+        :param tld: (bool) If True it will return tld custom categories
         :return: (json)
         """
 
         if custom:
             url = "/urlCategories?customOnly=true"
+        elif tld:
+            url = "/urlCategories?type=TLD_CATEGORY"
         else:
             url = "/urlCategories"
         response = self.hp_http.get_call(
@@ -531,14 +558,15 @@ class ZiaTalker(object):
         return response.json()
 
     def update_url_categories(
-        self,
-        category_id: str,
-        action: str = None,
-        configured_name: str = None,
-        urls: list = None,
-        db_categorized_urls: list = None,
-        keywords: list = None,
-        keywords_retaining_parent_category: list = None,
+            self,
+            category_id: str,
+            action: str = None,
+            configured_name: str = None,
+            urls: list = None,
+            db_categorized_urls: list = None,
+            keywords: list = None,
+            keywords_retaining_parent_category: list = None,
+            description: str = None,
     ) -> json:
         """
         Updates the URL category for the specified ID. If keywords are included within the request, then they will
@@ -556,7 +584,7 @@ class ZiaTalker(object):
         :param db_categorized_urls: (list) URL retaining parent category
         :param keywords: (list)
         :param keywords_retaining_parent_category: (list) List of key works
-
+        :param description (str): Optional paramener
         :return:  (json)
         """
         """if categoryId not in valid_category_ids:
@@ -571,9 +599,7 @@ class ZiaTalker(object):
         else:
             parameters.update({"action": action})
 
-        payload = {
-            "configuredName": configured_name,
-        }
+        payload = {"configuredName": configured_name, "description": description}
         if keywords_retaining_parent_category:
             payload.update(
                 keywordsRetainingParentCategory=keywords_retaining_parent_category
@@ -586,7 +612,8 @@ class ZiaTalker(object):
             payload.update(urls=urls)
         if db_categorized_urls:
             payload.update(dbCategorizedUrls=db_categorized_urls)
-
+        if "custom" in category_id.lower():
+            payload.update(customCategory=True)
         response = self.hp_http.put_call(
             url,
             params=parameters,
@@ -708,14 +735,9 @@ class ZiaTalker(object):
                 headers=self.headers,
                 error_handling=True,
             )
-            result.append(response.json())
+            result += response.json()
             time.sleep(1)
-        final_result = []
-        for i in result:
-            for j in i:
-                final_result.append(j)
-
-        return final_result
+        return result
 
     # URL filtering Policies
     def list_url_filtering_rules(self) -> json:
@@ -1030,8 +1052,10 @@ class ZiaTalker(object):
 
         :return: (json)
         """
-        url = "/locations"
-        if location_id:
+        if not location_id:
+            url = "/locations?pageSize=500"
+            return self._obtain_all(url)
+        else:
             url = f"/locations/{location_id}"
 
         response = self.hp_http.get_call(
@@ -1044,8 +1068,8 @@ class ZiaTalker(object):
         return response.json()
 
     def list_sublocations(
-        self,
-        location_id: int,
+            self,
+            location_id: int,
     ) -> json:
         """
         Gets the sub-location information for the location with the specified ID

@@ -83,31 +83,60 @@ class ZpaTalker(object):
         self,
         client_id: str,
         client_secret: str,
+        bearer: str = None,
     ) -> None:
         """
         Method to obtain the Bearer Token. Refer to https://help.zscaler.com/zpa/adding-api-keys
         :param client_id: (str) client id
         :param client_secret. (str) client secret
+        :param bearer (str) leverage existing Bearer Token (optional)
 
         return (json))
         """
         url = f"/signin"
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        payload = {
-            "client_id": client_id,
-            "client_secret": client_secret,
-        }
+        if bearer:
+            self.header = dict(authorization=bearer)
+        else:
+            payload = {
+                "client_id": client_id,
+                "client_secret": client_secret,
+            }
+            response = self.hp_http.post_call(
+                url,
+                headers=headers,
+                error_handling=True,
+                payload=payload,
+                urlencoded=True,
+            )
+            self.header = {
+                "Authorization": f"{response.json()['token_type']} {response.json()['access_token']}"
+            }
+
+        return
+
+    def authenticate_one_api(self,
+                             client_id: str,
+                             client_secret: str,
+                             vanity: str,
+                             grant_type: str = "client_credentials",
+                             audience: str = "https://api.zscaler.com",
+                             ) -> json:
+
+        """Method to authenticate the client and retrieve an access token"""
         response = self.hp_http.post_call(
-            url,
-            headers=headers,
-            error_handling=True,
-            payload=payload,
+            host=vanity,
+            url="/oauth2/v1/token",
+            payload={"grant_type": grant_type,
+                     "client_id": client_id,
+                     "client_secret": client_secret,
+                     "audience": audience
+                     },
             urlencoded=True,
         )
-        self.header = {
-            "Authorization": f"{response.json()['token_type']} {response.json()['access_token']}"
-        }
-
+        if '200' in str(response.status_code):
+            self.header = {"Authorization": f"Bearer {response.json()['access_token']}"}
+            self.base_uri = 'https://api.zsapi.net/zpa'
         return
 
     # app-server-controller
@@ -225,7 +254,7 @@ class ZpaTalker(object):
         :param select_connector_close_to_app: (bool) (True|False)
         :param passive_health_enabled: (bool) (True|False)
         :param match_stype:  If enabled (INCLUSIVE), the request allows traffic to match multiple applications.
-
+        If disabled (EXCLUSIVE), the request allows traffic to match a single application
         :return: (json)
         """
 
@@ -286,7 +315,6 @@ class ZpaTalker(object):
             headers=self.header,
             error_handling=True,
         )
-
         return response
 
     def delete_application_segment(
@@ -310,6 +338,21 @@ class ZpaTalker(object):
 
     # segment-group-controller
 
+    def delete_access_policy(self, policy_id: int, rule_id: int) -> requests.Response:
+        """
+        Method to delete policy
+        :param policy_id: (int) The ID of the Global policySet
+        :param rule_id: (int) The ID of the tule
+        :return: (requests.Response Object)
+        """
+        url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/policySet/{policy_id}/rule/{rule_id}"
+        response = self.hp_http.delete_call(
+            url=url,
+            error_handling=True,
+        )
+
+        return response
+
     def list_segment_group(
         self,
         segment_group_id: int = None,
@@ -329,10 +372,9 @@ class ZpaTalker(object):
                 url, headers=self.header, error_handling=True
             ).json()
         else:
-            if not query:
-                url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/segmentGroup"
-            else:
-                url = f"/mgmtconfig/v1/admin/customers/{self.customer_id}/segmentGroup{query}"
+            url = (
+                f"/mgmtconfig/v1/admin/customers/{self.customer_id}/segmentGroup"
+            )
             response = self._obtain_all_results(url)
 
         return response
@@ -976,7 +1018,7 @@ class ZpaTalker(object):
     def list_issued_certificates(
         self,
         query: str = None,
-    ) -> list:
+    ) -> json:
         """
         Method to get all issued certificates
 

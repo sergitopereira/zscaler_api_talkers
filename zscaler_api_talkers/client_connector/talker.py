@@ -63,6 +63,30 @@ class ClientConnectorTalker(object):
         )
         self.header = {"auth-token": response.json()["jwtToken"]}
 
+    def authenticate_one_api(self,
+                             client_id: str,
+                             client_secret: str,
+                             vanity: str,
+                             grant_type: str = "client_credentials",
+                             audience: str = "https://api.zscaler.com",
+                             ) -> json:
+
+        """Method to authenticate the client and retrieve an access token"""
+        response = self.hp_http.post_call(
+            host=vanity,
+            url="/oauth2/v1/token",
+            payload={"grant_type": grant_type,
+                     "client_id": client_id,
+                     "client_secret": client_secret,
+                     "audience": audience
+                     },
+            urlencoded=True,
+        )
+        if '200' in str(response.status_code):
+            self.header = {"Authorization": f"Bearer {response.json()['access_token']}"}
+            self.base_uri  = 'https://api.zsapi.net/zcc/papi'
+        return
+
     def _obtain_all(
             self,
             url: str,
