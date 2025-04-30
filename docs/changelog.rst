@@ -1,8 +1,12 @@
-v6.3.3 (March 2025)
+v6.4.0 (April 2025)
+=========================
+Feat: Zscaler API talkers and ZIdentity support (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
+
+v6.3.3.0 (March 2025)
 =========================
 Fix: Added delay to obtain_all method and refactored logic in order to obtain all objects from all pages ZpaTalker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
-v6.3.2 (March 2025)
+v6.3.2.0 (March 2025)
 =========================
 Feat: Added methods list_web_application_rules and  list_web_application_rule_type_mapping to ZiaTalker (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 
