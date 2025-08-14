@@ -1,3 +1,6 @@
+v6.4.0 (August 2025)
+=========================
+Fix: ZIdentity authentication  (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
 v6.4.0 (April 2025)
 =========================
 Feat: Zscaler API talkers and ZIdentity support (by `Sergio Pereira <mailto:spereira@zscaler.com>`_)
