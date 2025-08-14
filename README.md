@@ -69,6 +69,16 @@ zia.list_users()
 # To view all methods available
 print(dir(zia))
 ```
+### Usage ZiaTalker with OneAPI
+``` python
+from zscaler_api_talkers import ZiaTalker
+zia=ZiaTalker('<Zscaler Cloud Name>')
+zia.authenticate_one_api(client_id='CLIENT_ID', client_secret='CLIENT_SECRET', vanity='https://vanity.zslogin.net')
+zia.list_url_categories()
+zia.list_users()
+# To view all methods available
+print(dir(zia))
+```
 
 ### Usage ZiaTalker with OAUTH2.0
 ``` python
@@ -81,6 +91,7 @@ print(dir(a))
 ```
 
 
+
 ## Zscaler Secure Private Access SDK
 
 ### Usage ZpaTalker
@@ -88,6 +99,15 @@ print(dir(a))
 from zscaler_api_talkers import ZpaTalker
 a=ZpaTalker('customerID')
 a.authenticate(client_id='clientID',client_secret='clientSecret')
+# To view all methods available
+print(dir(a))
+```
+
+### Usage ZpaTalker with OneAPI
+``` python
+from zscaler_api_talkers import ZpaTalker
+a=ZpaTalker('customerID')
+a.authenticate_one_api(client_id='clientID',client_secret='clientSecret', vanity=https://vanity.zslogin.net)
 # To view all methods available
 print(dir(a))
 ```

@@ -116,6 +116,7 @@ class HttpCalls(object):
         self,
         url: str,
         payload: dict,
+        host: str = None,
         params: dict = None,
         headers: dict = None,
         cookies: dict = None,
@@ -135,7 +136,10 @@ class HttpCalls(object):
 
         :return: (requests.Response Object)
         """
-        full_url = f"{self.host}{url}"
+        if host:
+            full_url = f"{host}{url}"
+        else:
+            full_url = f"{self.host}{url}"
         try:
             if urlencoded:
                 url_encoded_headers = headers
